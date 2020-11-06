@@ -16,22 +16,67 @@ public class Product {
     private double mPrice;
     private int mAmountSold;
 
-    //private double mTotalSales;
-    //private double mTotalCost;
-    //private double mTotalProfit;
-    //private double mProfitPercent;
-
     public Product() {
         this.mName = "john doe";
-        this.mQuantityAvailable = 1234;
+        this.mQuantityAvailable = 12;
         this.mPrice = 0.0;
         this.mAmountSold = 1234;
     }
 
-    public Product(String mName, int mQuantityAvailable, double mPrice, int mAmountSold) {
+    public Product(String mName, int mQuantityAvailable,
+                   double mPrice, int mAmountSold) {
         this.mName = mName;
         this.mQuantityAvailable = mQuantityAvailable;
         this.mPrice = mPrice;
         this.mAmountSold = mAmountSold;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public int getQuantityAvailable() {
+        return mQuantityAvailable;
+    }
+
+    public void setQuantityAvailable(int quantityAvailable) {
+        mQuantityAvailable = quantityAvailable;
+    }
+
+    public double getPrice() {
+        return mPrice;
+    }
+
+    public void setPrice(double price) {
+        mPrice = price;
+    }
+
+    public int getAmountSold() {
+        return mAmountSold;
+    }
+
+    public void setAmountSold(int amountSold) {
+        mAmountSold = amountSold;
+    }
+
+    public double calculateTotalSales() {
+        double totalSales = 0.0;
+        return totalSales;
+    }
+    public double calculateTotalCost() {
+        double totalCost = 0.0;
+        return totalCost;
+    }
+    public double calculateTotalProfit() {
+        double totalProfit = 0.0;
+        return totalProfit;
+    }
+    public double calculateProfitPercent() {
+        double profitPercent = 0.0;
+        return profitPercent;
     }
 }
