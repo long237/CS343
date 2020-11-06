@@ -5,9 +5,7 @@
 // KKKKK: (sub sub-headers)          (#b97474)
 //
 // TODO: (incomplete)                (#ccff00)
-//# QUESTION: (wtf did i just do)    (#00b9ff)
-
-import java.util.HashSet;
+// QUESTION: (wtf did i just do)    (#00b9ff)
 
 public class Product {
 
