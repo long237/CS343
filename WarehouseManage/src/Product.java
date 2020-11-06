@@ -34,21 +34,11 @@ public class Product {
     public String getName() {
         return mName;
     }
-    public void setName(String name) {
-        mName = name;
-    }
-    public int getQuantityAvailable() {
-        return mQuantityAvailable;
-    }
-    public void setQuantityAvailable(int quantityAvailable) {
-        mQuantityAvailable = quantityAvailable;
-    }
-    public double getPrice() {
-        return mPrice;
-    }
-    public void setPrice(double price) {
-        mPrice = price;
-    }
+    public void setName(String name) { mName = name;  }
+    public int getQuantityAvailable() { return mQuantityAvailable; }
+    public void setQuantityAvailable(int quantityAvailable) { mQuantityAvailable = quantityAvailable; }
+    public double getPrice() { return mPrice; }
+    public void setPrice(double price) { mPrice = price; }
     public int getAmountSold() { return mAmountSold; }
     public void setAmountSold(int amountSold) {
         mAmountSold = amountSold;
