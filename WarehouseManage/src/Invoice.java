@@ -30,4 +30,40 @@ public class Invoice {
         this.mAddress = mAddress;
         this.mProductsPurchased = mProductsPurchased;
     }
+
+    public int getInvoiceId() {
+        return mInvoiceId;
+    }
+
+    public String getCustomerName() {
+        return mCustomerName;
+    }
+
+    public boolean getInvoiceStatus() {
+        return mInvoiceStatus;
+    }
+
+    public double getTaxRate() {
+        return mTaxRate;
+    }
+
+    public boolean getDeliveryStatus() {
+        return mDeliveryStatus;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public HashSet<Product> getProductsPurchased() {
+        return mProductsPurchased;
+    }
+
+    public void addProductsPurchased(HashSet<Product> newProducts) {
+        mProductsPurchased.addAll(newProducts);
+    }
+
+    public void removePurchasedProduct(Product product) {
+        mProductsPurchased.remove(product);
+    }
 }
