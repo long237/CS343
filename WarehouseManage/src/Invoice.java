@@ -1,3 +1,5 @@
+
+import Products.Product;
 import java.util.HashSet;
 
 public class Invoice {
