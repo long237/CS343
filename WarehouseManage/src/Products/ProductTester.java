@@ -27,19 +27,19 @@ public class ProductTester {
         System.out.println(getProductsTable(products));
 
         // KEIRA: ( methods ) ------------------------------------------------------------------------------------------
-        System.out.println("\n ...PRODUCT methods at work... \n");
-        System.out.println("   " + getProductsTableHeader());
+        System.out.println("\n ...PRODUCT METHODS at work... \n");
+        System.out.println("  " + getProductsTableHeader());
 
         // KKKKK: 1) A new product is added to the warehouse...
         Product krabby_patty = new Product("krabby patty", 25.00, 10.00, 30);
-        System.out.println("1) " + krabby_patty.toString());
+        System.out.println("1)" + krabby_patty.toString());
 
         // KKKKK: 2) 5 customers each order 5 krabby_patty's...
-        String num = "2) ";
+        String num = "2)";
         for (int i = 0; i < 5; i++) {
             krabby_patty.addQuantitySold(5);
             System.out.println(num + krabby_patty.toString());
-            num = "   ";
+            num = "  ";
         }
 
         // KKKKK: 3) When the warehouse is low in stock on krabby_patty's,
@@ -47,20 +47,20 @@ public class ProductTester {
         if (krabby_patty.isLowStock()) {
             krabby_patty.addQuantityInStock(30);
         }
-        System.out.println("3) " + krabby_patty.toString());
+        System.out.println("3)" + krabby_patty.toString());
 
         // KKKKK: 4) Another 5 customers each order 5 krabby_patty's...
-        num = "4) ";
+        num = "4)";
         for (int i = 0; i < 5; i++) {
             krabby_patty.addQuantitySold(5);
             System.out.println(num + krabby_patty.toString());
-            num = "   ";
+            num = "  ";
         }
     }
 
     // KEIRA: ( PRODUCTs TABLE methods ) -------------------------------------------------------------------------------
     public static String getProductsTableHeader() {
-        return String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
+        return " " + String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
                              "PRODUCT-NAME", "RETAIL-PRICE", "COST",
                              "#-IN-STOCK", "#-SOLD", "TOTAL-SALES",
                              "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
