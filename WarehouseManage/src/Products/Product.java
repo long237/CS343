@@ -6,7 +6,7 @@ package Products;
 // KKKKK:       (sub sub-headers)   (#b97474)
 //
 // TODO:        (incomplete)        (#ccff00)
-// QUESTION:    (review later)      (#00b9ff)
+// REVIEW:      (check / relay)     (#00b9ff)
 
 public class Product {
 
@@ -16,7 +16,7 @@ public class Product {
     private int mQuantityInStock;
     private int mQuantitySold;
 
-    // QUESTION: (Needed to add these variables b/c these must update as products are sold or re-ordered from a supplier.)
+    // REVIEW: (Needed to add these variables b/c these must update as products are sold or re-ordered from a supplier.)
     private double mTotalSales;
     private double mTotalCost;
 
@@ -83,7 +83,7 @@ public class Product {
         double totalProfit = mTotalSales - mTotalCost;
         return totalProfit;
     }
-    // QUESTION: ( double-check )
+    // REVIEW: ( getTotalProfitPercent() )
     public double getTotalProfitPercent() {
         double totalProfitPercent = (getTotalProfit() / mTotalCost) * 100;
         return totalProfitPercent;

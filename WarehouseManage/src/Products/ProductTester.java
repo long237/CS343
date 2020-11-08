@@ -9,8 +9,8 @@ public class ProductTester {
     {
         // KEIRA: ( constructors & toString() ) ------------------------------------------------------------------------
 
-        // QUESTION: (Need to replace HashSet w/ TreeSet & implement Comparator
-        //  to Sort Products Alphabetically in Future)
+        // REVIEW: (Need to replace HashSet w/ TreeSet & implement Comparator
+        //          to Sort Products Alphabetically in Future)
         Set<Product> products = new HashSet<Product>();
 
         Product jelly_patty = new Product("jelly patty", 15.00, 5.00, 50);
@@ -49,7 +49,7 @@ public class ProductTester {
         }
         System.out.println("3) " + krabby_patty.toString());
 
-        // KKKKK: 4) 5 customers each order 5 krabby_patty's...
+        // KKKKK: 4) Another 5 customers each order 5 krabby_patty's...
         num = "4) ";
         for (int i = 0; i < 5; i++) {
             krabby_patty.addQuantitySold(5);
@@ -61,9 +61,9 @@ public class ProductTester {
     // KEIRA: ( PRODUCTs TABLE methods ) -------------------------------------------------------------------------------
     public static String getProductsTableHeader() {
         return String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
-                "PRODUCT-NAME", "RETAIL-PRICE", "COST",
-                "#-IN-STOCK", "#-SOLD", "TOTAL-SALES",
-                "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
+                             "PRODUCT-NAME", "RETAIL-PRICE", "COST",
+                             "#-IN-STOCK", "#-SOLD", "TOTAL-SALES",
+                             "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
     }
     public static String getProductsTable(Set<Product> products) {
         StringBuilder productsTable = new StringBuilder();
