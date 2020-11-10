@@ -34,10 +34,6 @@ public class Invoice {
         this.mProductsPurchased = new HashSet<Product>();
     }
 
-//    public double calculateTotalProfit() {
-//        return ()
-//    }
-
     public int getInvoiceId() {
         return mInvoiceId;
     }
