@@ -11,8 +11,7 @@ public class Invoice {
     private boolean mDeliveryStatus;
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
-    private int mQuantity;
-    private int mAmountSold;
+
 
     public Invoice() {
         this.mInvoiceId = 1234;
@@ -36,7 +35,7 @@ public class Invoice {
     }
 
 //    public double calculateTotalProfit() {
-//        return
+//        return ()
 //    }
 
     public int getInvoiceId() {
@@ -98,14 +97,6 @@ public class Invoice {
     public void setmAddress(String mAddress) {
         this.mAddress = mAddress;
     }
-
-    public int getQuantity() { return mQuantity; }
-
-    public void setQuantity(int mQuantity) { this.mQuantity = mQuantity; }
-
-    public int getAmountSold() { return mAmountSold; }
-
-    public void setAmountSold(int mAmountSold) { this.mAmountSold = mAmountSold; }
 
     @Override
     public String toString() {

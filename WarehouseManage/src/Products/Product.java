@@ -19,6 +19,8 @@ public class Product {
     // REVIEW: (Needed to add these variables b/c these must update as products are sold or re-ordered from a supplier.)
     private double mTotalSales;
     private double mTotalCost;
+    private int mQuantity;
+    private int mAmountSold;
 
     public Product() {
         this.mName = "none";
@@ -88,6 +90,13 @@ public class Product {
         double totalProfitPercent = (getTotalProfit() / mTotalCost) * 100;
         return totalProfitPercent;
     }
+    public int getQuantity() { return mQuantity; }
+
+    public void setQuantity(int mQuantity) { this.mQuantity = mQuantity; }
+
+    public int getAmountSold() { return mAmountSold; }
+
+    public void setAmountSold(int mAmountSold) { this.mAmountSold = mAmountSold; }
 
     @Override
     public String toString() {
