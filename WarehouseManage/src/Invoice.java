@@ -12,6 +12,7 @@ public class Invoice {
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
 
+
     public Invoice() {
         this.mInvoiceId = 1234;
         this.mCustomerName = "john doe";
