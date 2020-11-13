@@ -90,8 +90,8 @@ public class Product {
         // "s":      string
         // "f":      float (".2f": formats floats as "0.00")
 
-        return String.format(" %-20s %15.2f %15.2f %15s %10s %18.2f %18.2f %18.2f %17.1f%%",
-                             mName, mRetailPrice, mCost, mQuantityInStock, mQuantitySold,
+        return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
+                             mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
                              mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
     }
 }

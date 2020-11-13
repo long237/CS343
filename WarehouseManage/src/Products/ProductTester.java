@@ -61,8 +61,7 @@ public class ProductTester {
     // KEIRA: ( PRODUCTs TABLE methods ) -------------------------------------------------------------------------------
     public static String getProductsTableHeader() {
         return " " + String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
-                             "PRODUCT-NAME", "RETAIL-PRICE", "COST",
-                             "#-IN-STOCK", "#-SOLD", "TOTAL-SALES",
+                             "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD", "TOTAL-SALES",
                              "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
     }
     public static String getProductsTable(Set<Product> products) {
