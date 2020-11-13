@@ -1,4 +1,12 @@
+<<<<<<< Updated upstream
+=======
+
+import Products.Product;
+
+import java.io.*;
+>>>>>>> Stashed changes
 import java.util.HashSet;
+import java.util.Scanner;
 
 public class Invoice {
 
@@ -59,11 +67,109 @@ public class Invoice {
         return mProductsPurchased;
     }
 
-    public void addProductsPurchased(HashSet<Product> newProducts) {
-        mProductsPurchased.addAll(newProducts);
+    public void addProductPurchased(Product newProduct) {
+        mProductsPurchased.add(newProduct);
     }
 
     public void removePurchasedProduct(Product product) {
         mProductsPurchased.remove(product);
     }
+<<<<<<< Updated upstream
+=======
+
+    public void setInvoiceId(int mInvoiceId) {
+        this.mInvoiceId = mInvoiceId;
+    }
+
+    public void setmCustomerName(String mCustomerName) {
+        this.mCustomerName = mCustomerName;
+    }
+
+    public void setmInvoiceStatus(boolean mInvoiceStatus) {
+        this.mInvoiceStatus = mInvoiceStatus;
+    }
+
+    public void setmTaxRate(double mTaxRate) {
+        this.mTaxRate = mTaxRate;
+    }
+
+    public void setmDeliveryStatus(boolean mDeliveryStatus) {
+        this.mDeliveryStatus = mDeliveryStatus;
+    }
+
+    public void setmAddress(String mAddress) {
+        this.mAddress = mAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "mInvoiceId=" + mInvoiceId +
+                ", mCustomerName='" + mCustomerName + '\'' +
+                ", mInvoiceStatus=" + mInvoiceStatus +
+                ", mTaxRate=" + mTaxRate +
+                ", mDeliveryStatus=" + mDeliveryStatus +
+                ", mAddress='" + mAddress + '\'' +
+                ", mProductsPurchased=" + mProductsPurchased +
+                '}';
+    }
+
+    //Code for testing
+    public static void main(String[] args) {
+        Invoice invoice1 = new Invoice();
+        System.out.println("This is invoice testing. ");
+        System.out.println("Invoice: " + invoice1);
+
+        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st");
+        System.out.println("Invoice 2: " + invoice2);
+        invoice2.setmAddress("123 Second st");
+        invoice2.setmCustomerName("Alatreon");
+        invoice2.setmDeliveryStatus(false);
+        invoice2.setmTaxRate(15);
+        System.out.println("After: " + invoice2);
+
+        //Testing Products In Invoice
+
+        Invoice invoice3 = new Invoice();
+        Product p1 = new Product();
+        Product p2 = new Product();
+        Product p3 = new Product();
+        invoice3.addProductPurchased(p1);
+        invoice3.addProductPurchased(p2);
+        invoice3.addProductPurchased(p3);
+        HashSet<Product> products = invoice3.getProductsPurchased();
+
+        for (Product p : products) {
+            System.out.println(p);
+        }
+        //delete product from invoice
+        System.out.println("deleting");
+        invoice3.removePurchasedProduct(p1);
+        products = invoice3.getProductsPurchased();
+
+        for (Product p : products) {
+            System.out.println(p);
+        }
+
+
+
+        try (
+            FileWriter outputFile = new FileWriter("iData.txt", true);
+            BufferedWriter bw = new BufferedWriter(outputFile);
+            PrintWriter out = new PrintWriter(bw)) {
+
+            for (Product p : products) {
+                out.println(p.getName() + " " + p.getCost());
+            }
+        }
+        catch (FileNotFoundException fnf){
+            System.out.println("File not found!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+>>>>>>> Stashed changes
 }
