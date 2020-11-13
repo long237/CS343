@@ -11,60 +11,53 @@ package Products;
 public class Product {
 
     private String mName;
-    private double mRetailPrice;
-    private double mCost;
     private int mQuantityInStock;
-    private int mQuantitySold;
-
-    // REVIEW: (Needed to add these variables b/c these must update as products are sold or re-ordered from a supplier.)
-    private double mTotalSales;
+    private double mCost;
     private double mTotalCost;
+    private double mRetailPrice;
+    private int mQuantitySold;
+    private double mTotalSales;
 
     public Product() {
         this.mName = "none";
-        this.mRetailPrice = 0.0;
-        this.mCost = 0.0;
         this.mQuantityInStock = 0;
-        this.mQuantitySold = 0;
-        this.mTotalSales = 0.0;
+        this.mCost = 0.0;
         this.mTotalCost = 0.0;
-    }
-
-    public Product(String mName, double mRetailPrice, double mCost, int mQuantityInStock) {
-        this.mName = mName;
-        this.mRetailPrice = mRetailPrice;
-        this.mCost = mCost;
-        this.mQuantityInStock = mQuantityInStock;
+        this.mRetailPrice = 0.0;
         this.mQuantitySold = 0;
         this.mTotalSales = 0.0;
-        this.mTotalCost = mQuantityInStock * mCost;
     }
 
-    public Product(String mName, double mRetailPrice, double mCost, int mQuantityInStock, int mQuantitySold) {
+    public Product(String mName, int mQuantityInStock, double mCost, double mRetailPrice) {
         this.mName = mName;
-        this.mRetailPrice = mRetailPrice;
-        this.mCost = mCost;
         this.mQuantityInStock = mQuantityInStock;
-        this.mQuantitySold = mQuantitySold;
-        this.mTotalSales = mQuantitySold * mRetailPrice;
+        this.mCost = mCost;
         this.mTotalCost = mQuantityInStock * mCost;
+        this.mRetailPrice = mRetailPrice;
+        this.mQuantitySold = 0;
+        this.mTotalSales = 0.0;
     }
 
     public String getName() { return mName; }
     public void setName(String name) { mName = name; }
 
-    public double getRetailPrice() { return mRetailPrice; }
-    public void setRetailPrice(double price) { mRetailPrice = price; }
-
-    public double getCost() { return mCost; }
-    public void setCost(double cost) { mCost = cost; }
-
     public int getQuantityInStock() { return mQuantityInStock; }
+    public void setQuantityInStock(int quantityInStock) { mQuantityInStock = quantityInStock; }
     public void addQuantityInStock(int quantityReordered) {
         mQuantityInStock += quantityReordered;
         mTotalCost += quantityReordered * mCost;
     }
     public boolean isLowStock() { return mQuantityInStock <= 5; }
+
+    public double getCost() { return mCost; }
+    public void setCost(double cost) { mCost = cost; }
+
+    public double getTotalCost() {
+        return mTotalCost;
+    }
+
+    public double getRetailPrice() { return mRetailPrice; }
+    public void setRetailPrice(double price) { mRetailPrice = price; }
 
     public int getQuantitySold() { return mQuantitySold; }
     public void addQuantitySold(int quantitySold) {
@@ -76,13 +69,11 @@ public class Product {
     public double getTotalSales() {
         return mTotalSales;
     }
-    public double getTotalCost() {
-        return mTotalCost;
-    }
     public double getTotalProfit() {
         double totalProfit = mTotalSales - mTotalCost;
         return totalProfit;
     }
+
     // REVIEW: ( getTotalProfitPercent() )
     public double getTotalProfitPercent() {
         double totalProfitPercent = (getTotalProfit() / mTotalCost) * 100;

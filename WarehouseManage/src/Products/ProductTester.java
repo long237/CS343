@@ -13,10 +13,10 @@ public class ProductTester {
         //          to Sort Products Alphabetically in Future)
         Set<Product> products = new HashSet<Product>();
 
-        Product jelly_patty = new Product("jelly patty", 15.00, 5.00, 50);
-        Product kerglooginpfiefer = new Product("kerglooginpfiefer", 10.00, 5.00, 20);
-        Product seanut_brittle = new Product("seanut brittle", 4.00, 0.50, 20);
-        Product barnacle_chips = new Product("barnacle chips", 1.00, 0.50, 20);
+        Product jelly_patty = new Product("jelly patty", 50, 5.00, 15.00);
+        Product kerglooginpfiefer = new Product("kerglooginpfiefer", 20, 5.00, 10.00);
+        Product seanut_brittle = new Product("seanut brittle", 20, 0.50, 4.00);
+        Product barnacle_chips = new Product("barnacle chips", 20, 0.50, 1.00);
 
         products.add(jelly_patty);
         products.add(kerglooginpfiefer);
@@ -31,7 +31,7 @@ public class ProductTester {
         System.out.println("  " + getProductsTableHeader());
 
         // KKKKK: 1) A new product is added to the warehouse...
-        Product krabby_patty = new Product("krabby patty", 25.00, 10.00, 30);
+        Product krabby_patty = new Product("krabby patty", 30, 10.00, 25.00);
         System.out.println("1)" + krabby_patty.toString());
 
         // KKKKK: 2) 5 customers each order 5 krabby_patty's...
