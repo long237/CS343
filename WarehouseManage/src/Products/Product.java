@@ -8,6 +8,12 @@ package Products;
 // TODO:        (incomplete)        (#ccff00)
 // REVIEW:      (check / relay)     (#00b9ff)
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Product {
 
     private String mName;
@@ -93,5 +99,49 @@ public class Product {
         return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
                              mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
                              mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
+    }
+
+    public void Save_Database (){
+        try {
+            FileWriter outfile = new FileWriter("ProductsDatabase.txt", true);
+            PrintWriter printWriter = new PrintWriter(outfile);
+            printWriter.println(this.getName() + ";" + this.getQuantityInStock() + ";" + this.getCost() + ";"
+                    + this.getTotalSales() + ";" + this.getTotalProfit() + ";" + this.getTotalProfitPercent() + ";");
+            printWriter.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Invoice Data base does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
+    }
+
+    public static void main(String[] args) {
+        boolean contLoop = true;
+        Scanner in = new Scanner(System.in);
+        while (contLoop) {
+            System.out.print("Enter product Name: ");
+            String productName = in.nextLine();
+            System.out.print("Enter quantityInStock: ");
+            int quantityInStock = in.nextInt();
+            in.nextLine();
+            System.out.print("Enter cost: ");
+            double cost = in.nextDouble();
+            in.nextLine();
+            System.out.print("Enter retailPrice: ");
+            double retailPrice = in.nextDouble();
+            in.nextLine();
+            Product newProduct = new Product(productName, quantityInStock, cost, retailPrice);
+            newProduct.Save_Database();
+
+            // Continue?
+            System.out.print("Do you want to enter more products? (y/n): ");
+
+            String enterProducts = in.nextLine();
+            if (enterProducts.equals("n") || enterProducts.equals("N")){
+                contLoop = false;
+            }
+        }
     }
 }
