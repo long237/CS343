@@ -14,6 +14,7 @@ public class Invoice {
     private boolean mDeliveryStatus;
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
+    private double totalCost = 0;
 
 
     public Invoice() {
@@ -110,14 +111,21 @@ public class Invoice {
                 '}';
     }
 
+    public void calCost() {
+        for (Product product : mProductsPurchased){
+            this.totalCost += product.getCost();
+        }
+    }
+
     public void Save_Database (){
         try {
             FileWriter outfile = new FileWriter("InvoiceData.txt", true);
             PrintWriter printWriter = new PrintWriter(outfile);
-            printWriter.print(this.getInvoiceId() + ";" + this.getCustomerName() + ";" + this.getInvoiceStatus() + ";"
-                    + this.getTaxRate() + ";" + this.getDeliveryStatus() + ";" + this.getAddress() + ";Product;");
+            printWriter.print (this.getInvoiceId() + ";" + this.getCustomerName() + ";" + this.getInvoiceStatus() + ";"
+                    + this.getTaxRate() + ";" + this.getDeliveryStatus() + ";"
+                    + this.getAddress() + ";" + this.totalCost + ";Product;");
             for (Product temp : mProductsPurchased) {
-                printWriter.print(temp.getName() + ";");
+                printWriter.print(temp.getName() + ";" + temp.getCost() + ";");
             }
             printWriter.println("");
             printWriter.close();
@@ -150,14 +158,19 @@ public class Invoice {
         product1.setName("RTX 3070");
         product2.setName("RX 6800");
         product3.setName("R7 5700");
+        product1.setCost(30);
+        product2.setCost(20);
+        product3.setCost(50);
 
         invoice1.addProductsPurchased(product1);
         invoice1.addProductsPurchased(product2);
         invoice1.addProductsPurchased(product3);
+        invoice1.calCost();
 
         invoice2.addProductsPurchased(product1);
         invoice2.addProductsPurchased(product2);
         invoice2.addProductsPurchased(product3);
+        invoice2.calCost();
 
         invoice1.Save_Database();
         invoice2.Save_Database();

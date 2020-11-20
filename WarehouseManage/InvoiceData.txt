@@ -1,24 +1,7 @@
 this is a test
-1234 john doe 0.0
-4567 Alatreon 15.0
-1234 john doe false 0.0 false
-4567 Alatreon true 15.0 false
-1234;john doe;false;0.0;false
-4567;Alatreon;true;15.0;false
-1234 john doe false 0.0 false
-4567 Alatreon true 15.0 false
-1234;john doe;false;0.0;false
-4567;Alatreon;true;15.0;false
-1234;john doe;false;0.0;false;1234 address
-4567;Alatreon;true;15.0;false;123 Second st
-1234;john doe;false;0.0;false;1234 address;Product;
-4567;Alatreon;true;15.0;false;123 Second st;Product;
-1234;john doe;false;0.0;false;1234 address;Product;
-4567;Alatreon;true;15.0;false;123 Second st;Product;
-1234;john doe;false;0.0;false;1234 address;Product;
-1234;john doe;false;0.0;false;1234 address;Product;
-RX 6800;RTX 3070;R7 5700;
-4567;Alatreon;true;15.0;false;123 Second st;Product;
-RX 6800;RTX 3070;R7 5700;
-1234;john doe;false;0.0;false;1234 address;Product;RX 6800;RTX 3070;R7 5700;
-4567;Alatreon;true;15.0;false;123 Second st;Product;RX 6800;RTX 3070;R7 5700;
+1234;john doe;false;0.0;false;1234 address;100.0;Product;RX 6800;20.0;RTX 3070;30.0;R7 5700;50.0;
+4567;Alatreon;true;15.0;false;123 Second st;100.0;Product;RX 6800;20.0;RTX 3070;30.0;R7 5700;50.0;
+1234;john doe;false;0.0;false;1234 address;100.0;Product;RX 6800;20.0;RTX 3070;30.0;R7 5700;50.0;
+4567;Alatreon;true;15.0;false;123 Second st;100.0;Product;RX 6800;20.0;RTX 3070;30.0;R7 5700;50.0;
+1234;john doe;false;0.0;false;1234 address;100.0;Product;RX 6800;20.0;RTX 3070;30.0;R7 5700;50.0;
+4567;Alatreon;true;15.0;false;123 Second st;100.0;Product;RX 6800;20.0;RTX 3070;30.0;R7 5700;50.0;
