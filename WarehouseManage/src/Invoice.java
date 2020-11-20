@@ -1,12 +1,9 @@
-<<<<<<< Updated upstream
-=======
 
 import Products.Product;
 
 import java.io.*;
->>>>>>> Stashed changes
 import java.util.HashSet;
-import java.util.Scanner;
+import java.util.Iterator;
 
 public class Invoice {
 
@@ -17,6 +14,8 @@ public class Invoice {
     private boolean mDeliveryStatus;
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
+    private double totalCost = 0;
+
 
     public Invoice() {
         this.mInvoiceId = 1234;
@@ -29,14 +28,14 @@ public class Invoice {
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress, HashSet<Product> mProductsPurchased) {
+                   boolean mDeliveryStatus, String mAddress) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = mInvoiceStatus;
         this.mTaxRate = mTaxRate;
         this.mDeliveryStatus = mDeliveryStatus;
         this.mAddress = mAddress;
-        this.mProductsPurchased = mProductsPurchased;
+        this.mProductsPurchased = new HashSet<Product>();
     }
 
     public int getInvoiceId() {
@@ -67,17 +66,15 @@ public class Invoice {
         return mProductsPurchased;
     }
 
-    public void addProductPurchased(Product newProduct) {
-        mProductsPurchased.add(newProduct);
+    public void addProductsPurchased(Product newProducts) {
+        mProductsPurchased.add(newProducts);
     }
 
     public void removePurchasedProduct(Product product) {
         mProductsPurchased.remove(product);
     }
-<<<<<<< Updated upstream
-=======
 
-    public void setInvoiceId(int mInvoiceId) {
+    public void setmInvoiceId(int mInvoiceId) {
         this.mInvoiceId = mInvoiceId;
     }
 
@@ -114,6 +111,33 @@ public class Invoice {
                 '}';
     }
 
+    public void calCost() {
+        for (Product product : mProductsPurchased){
+            this.totalCost += product.getCost();
+        }
+    }
+
+    public void Save_Database (){
+        try {
+            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
+            PrintWriter printWriter = new PrintWriter(outfile);
+            printWriter.print (this.getInvoiceId() + ";" + this.getCustomerName() + ";" + this.getInvoiceStatus() + ";"
+                    + this.getTaxRate() + ";" + this.getDeliveryStatus() + ";"
+                    + this.getAddress() + ";" + this.totalCost + ";Product;");
+            for (Product temp : mProductsPurchased) {
+                printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
+            }
+            printWriter.println("");
+            printWriter.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Invoice Data base does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
+    }
+
     //Code for testing
     public static void main(String[] args) {
         Invoice invoice1 = new Invoice();
@@ -128,48 +152,44 @@ public class Invoice {
         invoice2.setmTaxRate(15);
         System.out.println("After: " + invoice2);
 
-        //Testing Products In Invoice
+        Product product1 = new Product();
+        Product product2 = new Product();
+        Product product3 = new Product();
+        product1.setName("RTX 3070");
+        product2.setName("RX 6800");
+        product3.setName("R7 5700");
+        product1.setCost(30);
+        product2.setCost(20);
+        product3.setCost(50);
+        product1.addQuantitySold(3);
+        product2.addQuantitySold(2);
+        product3.addQuantitySold(5);
 
-        Invoice invoice3 = new Invoice();
-        Product p1 = new Product();
-        Product p2 = new Product();
-        Product p3 = new Product();
-        invoice3.addProductPurchased(p1);
-        invoice3.addProductPurchased(p2);
-        invoice3.addProductPurchased(p3);
-        HashSet<Product> products = invoice3.getProductsPurchased();
+        invoice1.addProductsPurchased(product1);
+        invoice1.addProductsPurchased(product2);
+        invoice1.addProductsPurchased(product3);
+        invoice1.calCost();
 
-        for (Product p : products) {
-            System.out.println(p);
-        }
-        //delete product from invoice
-        System.out.println("deleting");
-        invoice3.removePurchasedProduct(p1);
-        products = invoice3.getProductsPurchased();
+        invoice2.addProductsPurchased(product1);
+        invoice2.addProductsPurchased(product2);
+        invoice2.addProductsPurchased(product3);
+        invoice2.calCost();
 
-        for (Product p : products) {
-            System.out.println(p);
-        }
+        invoice1.Save_Database();
+        invoice2.Save_Database();
 
-
-
-        try (
-            FileWriter outputFile = new FileWriter("iData.txt", true);
-            BufferedWriter bw = new BufferedWriter(outputFile);
-            PrintWriter out = new PrintWriter(bw)) {
-
-            for (Product p : products) {
-                out.println(p.getName() + " " + p.getCost());
-            }
-        }
-        catch (FileNotFoundException fnf){
-            System.out.println("File not found!!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
+//        try {
+//            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
+//            PrintWriter printWriter = new PrintWriter(outfile);
+//            printWriter.println(invoice1.getInvoiceId() + " " + invoice1.getCustomerName() + " " + invoice1.getTaxRate());
+//            printWriter.println(invoice2.getInvoiceId() + " " + invoice2.getCustomerName() + " " + invoice2.getTaxRate());
+//            printWriter.close();
+//        }
+//        catch (FileNotFoundException e) {
+//            System.out.println("Invoice Data base does not exist.");
+//        }
+//        catch (IOException e) {
+//            System.out.println("IO exception !!!!");
+//        }
     }
->>>>>>> Stashed changes
 }
