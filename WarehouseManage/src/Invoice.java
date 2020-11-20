@@ -1,5 +1,7 @@
 
 import Products.Product;
+
+import java.io.*;
 import java.util.HashSet;
 
 public class Invoice {
@@ -107,6 +109,22 @@ public class Invoice {
                 '}';
     }
 
+    public void Save_Database (){
+        try {
+            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
+            PrintWriter printWriter = new PrintWriter(outfile);
+            printWriter.println(this.getInvoiceId() + " " + this.getCustomerName() + " " + this.getInvoiceStatus() + " "
+                    + this.getTaxRate() + " " + this.getDeliveryStatus());
+            printWriter.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Invoice Data base does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
+    }
+
     //Code for testing
     public static void main(String[] args) {
         Invoice invoice1 = new Invoice();
@@ -120,5 +138,22 @@ public class Invoice {
         invoice2.setmDeliveryStatus(false);
         invoice2.setmTaxRate(15);
         System.out.println("After: " + invoice2);
+
+        invoice1.Save_Database();
+        invoice2.Save_Database();
+
+//        try {
+//            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
+//            PrintWriter printWriter = new PrintWriter(outfile);
+//            printWriter.println(invoice1.getInvoiceId() + " " + invoice1.getCustomerName() + " " + invoice1.getTaxRate());
+//            printWriter.println(invoice2.getInvoiceId() + " " + invoice2.getCustomerName() + " " + invoice2.getTaxRate());
+//            printWriter.close();
+//        }
+//        catch (FileNotFoundException e) {
+//            System.out.println("Invoice Data base does not exist.");
+//        }
+//        catch (IOException e) {
+//            System.out.println("IO exception !!!!");
+//        }
     }
 }

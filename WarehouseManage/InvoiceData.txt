@@ -1,0 +1,9 @@
+this is a test
+1234 john doe 0.0
+4567 Alatreon 15.0
+1234 john doe false 0.0 false
+4567 Alatreon true 15.0 false
+1234;john doe;false;0.0;false
+4567;Alatreon;true;15.0;false
+1234 john doe false 0.0 false
+4567 Alatreon true 15.0 false
