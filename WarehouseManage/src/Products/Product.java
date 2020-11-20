@@ -117,6 +117,21 @@ public class Product {
         }
     }
 
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Product)) {
+            return false;
+        }
+
+        Product p = (Product)o;
+        return (mName == p.mName && mCost == p.mCost);
+
+    }
+
     public static void main(String[] args) {
         boolean contLoop = true;
         Scanner in = new Scanner(System.in);
