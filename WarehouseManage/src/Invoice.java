@@ -3,6 +3,7 @@ import Products.Product;
 
 import java.io.*;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Invoice {
 
@@ -64,8 +65,8 @@ public class Invoice {
         return mProductsPurchased;
     }
 
-    public void addProductsPurchased(HashSet<Product> newProducts) {
-        mProductsPurchased.addAll(newProducts);
+    public void addProductsPurchased(Product newProducts) {
+        mProductsPurchased.add(newProducts);
     }
 
     public void removePurchasedProduct(Product product) {
@@ -113,8 +114,12 @@ public class Invoice {
         try {
             FileWriter outfile = new FileWriter("InvoiceData.txt", true);
             PrintWriter printWriter = new PrintWriter(outfile);
-            printWriter.println(this.getInvoiceId() + " " + this.getCustomerName() + " " + this.getInvoiceStatus() + " "
-                    + this.getTaxRate() + " " + this.getDeliveryStatus());
+            printWriter.print(this.getInvoiceId() + ";" + this.getCustomerName() + ";" + this.getInvoiceStatus() + ";"
+                    + this.getTaxRate() + ";" + this.getDeliveryStatus() + ";" + this.getAddress() + ";Product;");
+            for (Product temp : mProductsPurchased) {
+                printWriter.print(temp.getName() + ";");
+            }
+            printWriter.println("");
             printWriter.close();
         }
         catch (FileNotFoundException e) {
@@ -138,6 +143,21 @@ public class Invoice {
         invoice2.setmDeliveryStatus(false);
         invoice2.setmTaxRate(15);
         System.out.println("After: " + invoice2);
+
+        Product product1 = new Product();
+        Product product2 = new Product();
+        Product product3 = new Product();
+        product1.setName("RTX 3070");
+        product2.setName("RX 6800");
+        product3.setName("R7 5700");
+
+        invoice1.addProductsPurchased(product1);
+        invoice1.addProductsPurchased(product2);
+        invoice1.addProductsPurchased(product3);
+
+        invoice2.addProductsPurchased(product1);
+        invoice2.addProductsPurchased(product2);
+        invoice2.addProductsPurchased(product3);
 
         invoice1.Save_Database();
         invoice2.Save_Database();
