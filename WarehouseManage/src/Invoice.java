@@ -125,7 +125,7 @@ public class Invoice {
                     + this.getTaxRate() + ";" + this.getDeliveryStatus() + ";"
                     + this.getAddress() + ";" + this.totalCost + ";Product;");
             for (Product temp : mProductsPurchased) {
-                printWriter.print(temp.getName() + ";" + temp.getCost() + ";");
+                printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
             }
             printWriter.println("");
             printWriter.close();
@@ -161,6 +161,9 @@ public class Invoice {
         product1.setCost(30);
         product2.setCost(20);
         product3.setCost(50);
+        product1.addQuantitySold(3);
+        product2.addQuantitySold(2);
+        product3.addQuantitySold(5);
 
         invoice1.addProductsPurchased(product1);
         invoice1.addProductsPurchased(product2);
