@@ -56,9 +56,8 @@ public class Warehouse {
         Scanner in = new Scanner(System.in);
         Warehouse warehouse = new Warehouse();
         warehouse.setWarehouseNumber(1); // Warehouse set as "Warehouse 1"
+        System.out.println("ADDING PRODUCTS to WAREHOUSE " + warehouse.getWarehouseNumber() + "...");
         while (contLoop) {
-            System.out.println("ADDING PRODUCTS to WAREHOUSE ...");
-
             System.out.print("Enter product name: ");
             String productName = in.nextLine();
             System.out.print("Enter quantity in stock: ");
@@ -88,9 +87,8 @@ public class Warehouse {
         contLoop = true;
         warehouse = new Warehouse();
         warehouse.setWarehouseNumber(2);
+        System.out.println("ADDING PRODUCTS to WAREHOUSE " + warehouse.getWarehouseNumber() + "...");
         while (contLoop) {
-            System.out.println("ADDING PRODUCTS to WAREHOUSE ...");
-
             System.out.print("Enter product name: ");
             String productName = in.nextLine();
             System.out.print("Enter quantity in stock: ");
@@ -113,6 +111,5 @@ public class Warehouse {
             }
         }
         warehouse.Save_Database();
-
     }
 }
