@@ -34,7 +34,8 @@ public class Warehouse {
             PrintWriter printWriter = new PrintWriter(outfile);
             for (Product p : mWarehouseProducts) {
                 printWriter.print(p.getName() + ";" + p.getQuantityInStock() + ";" + p.getCost() + ";"
-                        + p.getTotalSales() + ";" + p.getTotalProfit() + ";" + p.getTotalProfitPercent() + ";");
+                        + p.getRetailPrice() + ";" + p.getTotalSales() + ";" + p.getTotalCost() + ";"
+                        + p.getTotalProfit() + ";" + p.getTotalProfitPercent());
                 printWriter.println();
             }
             printWriter.close();
