@@ -34,13 +34,14 @@ public class Product {
         this.mTotalSales = 0.0;
     }
 
-    public Product(String name, int quanitity, double cost){
+    // REVIEW: should this constructor be allowed ...
+    public Product(String name, int quantitySold, double cost){
         this.mName = name;
         this.mQuantityInStock = 0;
         this.mCost = cost;
         this.mTotalCost = 0.0;
         this.mRetailPrice = 0.0;
-        this.mQuantitySold = quanitity;
+        this.mQuantitySold = quantitySold;
         this.mTotalSales = 0.0;
     }
 
@@ -52,6 +53,17 @@ public class Product {
         this.mRetailPrice = mRetailPrice;
         this.mQuantitySold = 0;
         this.mTotalSales = 0.0;
+    }
+
+    // REVIEW: (11/21: Added this constructor to use to add to list of Products when reading from .txt file)
+    public Product(String mName, int mQuantityInStock, double mCost, double mRetailPrice, int mQuantitySold) {
+        this.mName = mName;
+        this.mQuantityInStock = mQuantityInStock;
+        this.mCost = mCost;
+        this.mTotalCost = mQuantityInStock * mCost;
+        this.mRetailPrice = mRetailPrice;
+        this.mQuantitySold = mQuantitySold;
+        this.mTotalSales = mQuantitySold * mRetailPrice;
     }
 
     public String getName() { return mName; }

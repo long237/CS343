@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class WarehouseController {
 
-    public static void Pcontroller() {
+    public static void Wcontroller() {
         //ArrayList<Product> pDatabase = read_data();
 
         //add product 1

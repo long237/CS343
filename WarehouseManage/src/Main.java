@@ -1,5 +1,5 @@
 import Invoices.InvoiceController;
-import Warehouses.ProductController;
+import Warehouses.WarehouseController;
 
 public class Main {
 
@@ -15,7 +15,7 @@ public class Main {
             InvoiceController.Icontroller();
         }
         else if(user_input == 2) {
-            ProductController.Pcontroller();
+            WarehouseController.Wcontroller();
         }
     }
 }
