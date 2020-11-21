@@ -3,7 +3,7 @@ import Products.Product;
 
 import java.util.ArrayList;
 
-public class DataBaseView {
+public class DatabaseBoundary {
 
     public static void Save_product(ArrayList<Product> list){
         //Product 1         price

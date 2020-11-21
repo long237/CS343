@@ -13,11 +13,11 @@ public class InvoiceController {
         // while not -1 keep running
 
 
-        InvoiceView invoiceView = new InvoiceView();
+        InvoiceUI invoiceUI = new InvoiceUI();
 
-        invoiceView.Menu();
+        invoiceUI.Menu();
 
-        invoiceView.customerName();
+        invoiceUI.customerName();
     }
 
     public static void createInvoice() {

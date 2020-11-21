@@ -2,7 +2,7 @@ package Invoices;
 
 import java.util.ArrayList;
 
-public class InvoiceView {
+public class InvoiceUI {
 
     public void InvoicebyStatus (int n, ArrayList<Invoice> list){
         System.out.println("Invoices.Invoice Id              customer name   ....");

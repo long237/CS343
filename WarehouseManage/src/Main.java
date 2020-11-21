@@ -1,5 +1,5 @@
 import Invoices.InvoiceController;
-import Products.ProductController;
+import Warehouses.ProductController;
 
 public class Main {
 

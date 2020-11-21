@@ -1,8 +1,10 @@
-package Products;
+package Warehouses;
+
+import Products.Product;
 
 import java.util.ArrayList;
 
-public class ProductView {
+public class WarehouseUI {
 
     public void printWarehouse(int n, ArrayList<Product> list){
         System.out.println();

@@ -1,8 +1,8 @@
-package Products;
+package Warehouses;
 
 import java.util.ArrayList;
 
-public class ProductController {
+public class WarehouseController {
 
     public static void Pcontroller() {
         //ArrayList<Product> pDatabase = read_data();
