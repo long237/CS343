@@ -1,0 +1,26 @@
+Read/save Product       Tuesday Nov 24th
+Read/save Invoice       Sunday Nov 22nd
+Read/Save Warhouse      Brian/Keira
+REad/save saleperson    Long/Erik
+Read/Save customer      Long / Erik
+Product Controller      Brian
+Product View/ Input      Keira
+Invoice Controller      Long         Nov 26th
+Invoice View/input       Erik
+Warehouse Controller      Keira
+Warehouse View/Input      brian
+Saleperson Controller     Long
+Salerperson View/Input    Erik
+
+//Tables in view is not a priority
+
+//warehouse1.txt
+Hat
+shoes
+
+//warehouse2.txt
+hat 10
+shoes 15
+
+
+//Important Main: starting Friday 27th --> Sunday 29th    the whole team

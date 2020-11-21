@@ -34,6 +34,16 @@ public class Product {
         this.mTotalSales = 0.0;
     }
 
+    public Product(String name, int quanitity, double cost){
+        this.mName = name;
+        this.mQuantityInStock = 0;
+        this.mCost = cost;
+        this.mTotalCost = 0.0;
+        this.mRetailPrice = 0.0;
+        this.mQuantitySold = quanitity;
+        this.mTotalSales = 0.0;
+    }
+
     public Product(String mName, int mQuantityInStock, double mCost, double mRetailPrice) {
         this.mName = mName;
         this.mQuantityInStock = mQuantityInStock;
