@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public class DatabaseBoundary {
 
-    public static void save_product(ArrayList<Product> products){
+    public static void update_products(ArrayList<Product> products){
         //Product 1         price
         //Prduct 2          price       ...
     }
 
-    public static ArrayList<Product> read_product(int warehouseNumber) throws FileNotFoundException {
+    public static ArrayList<Product> retrieve_products(int warehouseNumber) throws FileNotFoundException {
         ArrayList<Product> products = new ArrayList<Product>();
 
         File file = new File("Warehouse" + warehouseNumber + ".txt");
@@ -44,13 +44,13 @@ public class DatabaseBoundary {
         return products;
     }
 
-    public static void save_invoice(ArrayList<Invoice> list) {
+    public static void update_invoices(ArrayList<Invoice> list) {
         // invoice 1 ...
         // incoice 2....
 
     }
 
-    public static ArrayList<Invoice> read_invoice() {
+    public static ArrayList<Invoice> retrieve_invoices() {
         ArrayList<Invoice> invoices = new ArrayList<Invoice>();
         // invoice 1  index 0
         // invoice 2   index 1
@@ -65,7 +65,7 @@ public class DatabaseBoundary {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        ArrayList<Product> products = read_product(1);
+        ArrayList<Product> products = retrieve_products(1);
         for (Product product : products) {
             System.out.println(product);
         }

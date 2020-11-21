@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class WarehouseController {
 
     public static void Wcontroller() {
-        //ArrayList<Product> pDatabase = read_data();
+        //ArrayList<Product> pDatabase = retrieve_products();
 
         //add product 1
         //add product 2
         //after addition or modification, removal
-        //call save_product
+        //call update_products
 
         //while not -1 keep running
         // display menu
