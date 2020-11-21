@@ -1,9 +1,9 @@
+package Invoices;
 
 import Products.Product;
 
 import java.io.*;
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class Invoice {
 
@@ -100,7 +100,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" +
+        return "Invoices.Invoice{" +
                 "mInvoiceId=" + mInvoiceId +
                 ", mCustomerName='" + mCustomerName + '\'' +
                 ", mInvoiceStatus=" + mInvoiceStatus +
@@ -131,7 +131,7 @@ public class Invoice {
             printWriter.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("Invoice Data base does not exist.");
+            System.out.println("Invoices.Invoice Data base does not exist.");
         }
         catch (IOException e) {
             System.out.println("IO exception !!!!");
@@ -142,10 +142,10 @@ public class Invoice {
     public static void main(String[] args) {
         Invoice invoice1 = new Invoice();
         System.out.println("This is invoice testing. ");
-        System.out.println("Invoice: " + invoice1);
+        System.out.println("Invoices.Invoice: " + invoice1);
 
         Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st");
-        System.out.println("Invoice 2: " + invoice2);
+        System.out.println("Invoices.Invoice 2: " + invoice2);
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
         invoice2.setmDeliveryStatus(false);
@@ -186,7 +186,7 @@ public class Invoice {
 //            printWriter.close();
 //        }
 //        catch (FileNotFoundException e) {
-//            System.out.println("Invoice Data base does not exist.");
+//            System.out.println("Invoices.Invoice Data base does not exist.");
 //        }
 //        catch (IOException e) {
 //            System.out.println("IO exception !!!!");

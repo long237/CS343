@@ -1,12 +1,12 @@
 Read/save Product       Tuesday Nov 24th
-Read/save Invoice       Sunday Nov 22nd
+Read/save Invoices.Invoice       Sunday Nov 22nd
 Read/Save Warhouse      Brian/Keira
 REad/save saleperson    Long/Erik
 Read/Save customer      Long / Erik
 Product Controller      Brian
 Product View/ Input      Keira
-Invoice Controller      Long         Nov 26th
-Invoice View/input       Erik
+Invoices.Invoice Controller      Long         Nov 26th
+Invoices.Invoice View/input       Erik
 Warehouse Controller      Keira
 Warehouse View/Input      brian
 Saleperson Controller     Long

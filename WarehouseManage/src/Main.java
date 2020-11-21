@@ -1,3 +1,4 @@
+import Invoices.InvoiceController;
 import Products.ProductController;
 
 public class Main {
@@ -6,7 +7,7 @@ public class Main {
 
         // Add invoice    1
         // Add product      2
-        // Edit Invoice     3
+        // Edit Invoices.Invoice     3
         InvoiceController.Icontroller();
 
         int user_input = 0;

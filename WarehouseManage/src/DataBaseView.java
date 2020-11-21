@@ -1,6 +1,6 @@
+import Invoices.Invoice;
 import Products.Product;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DataBaseView {

@@ -1,9 +1,11 @@
+package Invoices;
+
 import java.util.ArrayList;
 
 public class InvoiceView {
 
     public void InvoicebyStatus (int n, ArrayList<Invoice> list){
-        System.out.println("Invoice Id              customer name   ....");
+        System.out.println("Invoices.Invoice Id              customer name   ....");
         //print all invoice
     }
 
