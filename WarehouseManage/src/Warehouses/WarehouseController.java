@@ -3,15 +3,13 @@ package Warehouses;
 import Products.Product;
 import java.util.ArrayList;
 
-// REVIEW: (Is "extends" really the proper way to connect the Controller & Database Boundary Object?
-//  cannot access retrieve_products() / update_products() without this.)
+// REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
 public class WarehouseController extends WarehouseDB {
 
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Product> getProducts(int warehouseNumber) {
         return retrieve_products(warehouseNumber);
     }
-
     // TODO: Given a warehouseNumber & productName, returns TRUE if a Product w/ the given productName exists in the Warehouse.
     public boolean productExists(int warehouseNumber, String productName) {
         return getProducts(warehouseNumber).contains(productName);

@@ -1,9 +1,8 @@
 package Invoices;
 import java.util.ArrayList;
 
-// REVIEW: (Is "extends" really the proper way to connect the Controller & Database Boundary Object?
-//  cannot access retrieve_products() / update_products() without this.)
-public class InvoiceController extends InvoiceDB {
+// REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
+public class InvoiceController {
 
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Invoice> getInvoices() {
