@@ -1,11 +1,9 @@
+package Invoices;
 
 import Products.Product;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
 
 public class Invoice {
 
@@ -15,7 +13,7 @@ public class Invoice {
     private double mTaxRate;
     private boolean mDeliveryStatus;
     private String mAddress;
-    private HashMap<Product, Integer> mProductsPurchased;
+    private HashSet<Product> mProductsPurchased;
     private double totalCost = 0;
 
 
@@ -26,7 +24,7 @@ public class Invoice {
         this.mTaxRate = 0.0;
         this.mDeliveryStatus = false;
         this.mAddress = "1234 address";
-        this.mProductsPurchased = new HashMap<Product, Integer>();
+        this.mProductsPurchased = new HashSet<Product>();
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
@@ -37,7 +35,7 @@ public class Invoice {
         this.mTaxRate = mTaxRate;
         this.mDeliveryStatus = mDeliveryStatus;
         this.mAddress = mAddress;
-        this.mProductsPurchased = new HashMap<Product, Integer>();
+        this.mProductsPurchased = new HashSet<Product>();
     }
 
     public int getInvoiceId() {
@@ -64,20 +62,12 @@ public class Invoice {
         return mAddress;
     }
 
-    public HashMap<Product, Integer> getProductsPurchased() {
+    public HashSet<Product> getProductsPurchased() {
         return mProductsPurchased;
     }
 
-    public void addProductsPurchased(Product newProduct) {
-
-        if (mProductsPurchased.containsKey(newProduct)) {
-            mProductsPurchased.replace(newProduct, mProductsPurchased.get(newProduct),
-                    mProductsPurchased.get(newProduct) + 1);
-        }
-        else {
-            mProductsPurchased.put(newProduct, 1);
-        }
-
+    public void addProductsPurchased(Product newProducts) {
+        mProductsPurchased.add(newProducts);
     }
 
     public void removePurchasedProduct(Product product) {
@@ -110,7 +100,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" +
+        return "Invoices.Invoice{" +
                 "mInvoiceId=" + mInvoiceId +
                 ", mCustomerName='" + mCustomerName + '\'' +
                 ", mInvoiceStatus=" + mInvoiceStatus +
@@ -122,17 +112,9 @@ public class Invoice {
     }
 
     public void calCost() {
-        for (Product product : mProductsPurchased.keySet()){
+        for (Product product : mProductsPurchased){
             this.totalCost += product.getCost();
         }
-    }
-
-    public HashMap<Product, Integer> getProductQuantity() {
-        HashMap<Product, Integer> productQuantities = new HashMap<>();
-
-
-
-        return productQuantities;
     }
 
     public void Save_Database (){
@@ -142,14 +124,14 @@ public class Invoice {
             printWriter.print (this.getInvoiceId() + ";" + this.getCustomerName() + ";" + this.getInvoiceStatus() + ";"
                     + this.getTaxRate() + ";" + this.getDeliveryStatus() + ";"
                     + this.getAddress() + ";" + this.totalCost + ";Product;");
-            for (Product temp : mProductsPurchased.keySet()) {
+            for (Product temp : mProductsPurchased) {
                 printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
             }
             printWriter.println("");
             printWriter.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("Invoice Data base does not exist.");
+            System.out.println("Invoices.Invoice Data base does not exist.");
         }
         catch (IOException e) {
             System.out.println("IO exception !!!!");
@@ -158,18 +140,17 @@ public class Invoice {
 
     //Code for testing
     public static void main(String[] args) {
-
         Invoice invoice1 = new Invoice();
-       // System.out.println("This is invoice testing. ");
-     //   System.out.println("Invoice: " + invoice1);
+        System.out.println("This is invoice testing. ");
+        System.out.println("Invoices.Invoice: " + invoice1);
 
         Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st");
-     //   System.out.println("Invoice 2: " + invoice2);
+        System.out.println("Invoices.Invoice 2: " + invoice2);
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
         invoice2.setmDeliveryStatus(false);
         invoice2.setmTaxRate(15);
-      //  System.out.println("After: " + invoice2);
+        System.out.println("After: " + invoice2);
 
         Product product1 = new Product();
         Product product2 = new Product();
@@ -197,23 +178,6 @@ public class Invoice {
         invoice1.Save_Database();
         invoice2.Save_Database();
 
-
-        //testing getProductQuantities
-        System.out.println("testing product quantities");
-        invoice1.addProductsPurchased(product1);
-        invoice1.addProductsPurchased(product1);
-        invoice1.addProductsPurchased(product1);
-
-
-        HashMap<Product, Integer> invoice1Products = invoice1.getProductsPurchased();
-        for (Map.Entry<Product, Integer> entry : invoice1Products.entrySet()) {
-            System.out.println("Product: " + entry.getKey() +
-                                " , " + "Quantity: " + entry.getValue());
-        }
-
-
-
-
 //        try {
 //            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
 //            PrintWriter printWriter = new PrintWriter(outfile);
@@ -222,7 +186,7 @@ public class Invoice {
 //            printWriter.close();
 //        }
 //        catch (FileNotFoundException e) {
-//            System.out.println("Invoice Data base does not exist.");
+//            System.out.println("Invoices.Invoice Data base does not exist.");
 //        }
 //        catch (IOException e) {
 //            System.out.println("IO exception !!!!");
