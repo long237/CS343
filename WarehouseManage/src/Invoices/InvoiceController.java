@@ -1,7 +1,27 @@
 package Invoices;
+import java.util.ArrayList;
 
-public class InvoiceController {
+// REVIEW: (Is "extends" really the proper way to connect the Controller & Database Boundary Object?
+//  cannot access retrieve_products() / update_products() without this.)
+public class InvoiceController extends InvoiceDB{
 
+    // keira: (Control Methods) ----------------------------------------------------------------------------------------
+    public ArrayList<Invoice> getInvoices() {
+        return retrieve_invoices();
+    }
+    public void addInvoice(Invoice invoiceToAdd) {
+        ArrayList<Invoice> invoices = getInvoices();
+        invoices.add(invoiceToAdd);
+        update_invoices(invoices);
+    }
+    public void removeInvoice(Invoice invoiceToRemove) {
+        ArrayList<Invoice> invoices = getInvoices();
+        invoices.remove(invoiceToRemove);
+        update_invoices(invoices);
+    }
+    // keira: (END of Control Methods) ---------------------------------------------------------------------------------
+
+    // REVIEW: (What is the purpose of this method? When will it be called by the UI Boundary Object?)
     public static void Icontroller () {
         //ArrayList<Invoices.Invoice> i_data = retrieve_invoices();
         //[..., ...., , ...]
@@ -12,11 +32,10 @@ public class InvoiceController {
 
         // while not -1 keep running
 
-
+        // REVIEW: (Controller "controls" the data, UI Boundary Object should be the only thing that the user accesses/interacts with
+        //  Shouldn't UI & Controller be separate from each other to minimize coupling.)
         InvoiceUI invoiceUI = new InvoiceUI();
-
         invoiceUI.Menu();
-
         invoiceUI.customerName();
     }
 

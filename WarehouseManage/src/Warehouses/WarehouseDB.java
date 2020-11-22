@@ -3,18 +3,35 @@ package Warehouses;
 import Invoices.Invoice;
 import Products.Product;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WarehouseDB {
 
-    public void update_products(ArrayList<Product> products){
-        //Product 1         price
-        //Prduct 2          price       ...
+    // TODO: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
+    public void update_products(int warehouseNumber, ArrayList<Product> warehouseProducts){
+        try {
+            String filename = "Warehouse" + warehouseNumber + ".txt";
+            FileWriter outfile = new FileWriter(filename, false);
+            PrintWriter printWriter = new PrintWriter(outfile);
+            for (Product p : warehouseProducts) {
+                printWriter.print(p.getName() + ";" + p.getQuantityInStock() + ";" + p.getCost() + ";" + p.getRetailPrice() + ";"
+                        + p.getQuantitySold() + ";" + p.getTotalSales() + ";" + p.getTotalCost() + ";"
+                        + p.getTotalProfit() + ";" + p.getTotalProfitPercent());
+                printWriter.println();
+            }
+            printWriter.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Warehouse Database does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
     }
 
+    // TODO: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
     public ArrayList<Product> retrieve_products(int warehouseNumber) {
         ArrayList<Product> products = new ArrayList<Product>();
 
@@ -41,11 +58,4 @@ public class WarehouseDB {
         return products;
     }
 
-    // kkkkk: FOR TESTING PURPOSES ONLY ...
-    public void main(String[] args) throws FileNotFoundException {
-        ArrayList<Product> products = retrieve_products(1);
-        for (Product product : products) {
-            System.out.println(product);
-        }
-    }
 }

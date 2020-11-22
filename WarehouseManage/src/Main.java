@@ -15,7 +15,7 @@ public class Main {
             InvoiceController.Icontroller();
         }
         else if(user_input == 2) {
-            WarehouseController.Wcontroller();
+            WarehouseController.warehouseController();
         }
     }
 }
