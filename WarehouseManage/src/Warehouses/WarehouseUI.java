@@ -3,6 +3,8 @@ import Products.Product;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// REVIEW: (Is "extends" really the proper way to connect the Controller & Database Boundary Object?
+//  cannot access getProducts() / addProduct() without this.)
 public class WarehouseUI extends WarehouseController{
 
     private int mWarehouseNumber;
