@@ -1,11 +1,10 @@
 package Invoices;
 import java.util.ArrayList;
 
-// REVIEW: (Is "extends" really the proper way to connect the Controller & Database Boundary Object?
-//  cannot access retrieve_products() / update_products() without this.)
-public class InvoiceController extends InvoiceDB {
+public class InvoiceController { // extends InvoiceDB
 
-    // keira: (Control Methods) ----------------------------------------------------------------------------------------
+    /*
+    // keira: (11/22 Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Invoice> getInvoices() {
         return retrieve_invoices();
     }
@@ -23,6 +22,7 @@ public class InvoiceController extends InvoiceDB {
         update_invoices(invoices);
     }
     // keira: (END of Control Methods) ---------------------------------------------------------------------------------
+    */
 
     // REVIEW: (What is the purpose of this method? When will it be called by the UI Boundary Object?)
     public static void Icontroller () {
