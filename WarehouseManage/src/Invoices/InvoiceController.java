@@ -2,8 +2,9 @@ package Invoices;
 import java.util.ArrayList;
 
 // REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
-public class InvoiceController {
+public class InvoiceController { // extends InvoiceDB
 
+    /*
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Invoice> getInvoices() {
         return retrieve_invoices();
@@ -22,6 +23,7 @@ public class InvoiceController {
         update_invoices(invoices);
     }
     // keira: (END of Control Methods) ---------------------------------------------------------------------------------
+    */
 
     // REVIEW: (What is the purpose of this method? When will it be called by the UI Boundary Object?)
     public static void Icontroller () {

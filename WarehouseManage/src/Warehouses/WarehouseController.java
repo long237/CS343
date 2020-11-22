@@ -3,14 +3,14 @@ package Warehouses;
 import Products.Product;
 import java.util.ArrayList;
 
-// REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
+// REVIEW: (Not really sure that "extends" is the proper way to connect these 2 classes but can't retrieve_products() / update_products() w/o this)
 public class WarehouseController extends WarehouseDB {
 
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Product> getProducts(int warehouseNumber) {
         return retrieve_products(warehouseNumber);
     }
-    // TODO: Given a warehouseNumber & productName, returns TRUE if a Product w/ the given productName exists in the Warehouse.
+    // TODO: fix this so that it returns true if Product w/ productName exists in getProducts()
     public boolean productExists(int warehouseNumber, String productName) {
         return getProducts(warehouseNumber).contains(productName);
     }
