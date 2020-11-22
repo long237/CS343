@@ -1,11 +1,25 @@
+import Invoices.InvoiceController;
+import Warehouses.WarehouseController;
 import Warehouses.WarehouseUI;
 import java.util.Scanner;
 
-// REVIEW: (can only "extend" 1 class BUT can "implement" 1+ classes
-//  Need to make interfaces?)
-public class Main extends WarehouseUI {
+public class Main {
 
     public static void main(String[] args) {
+        // Add invoice    1
+        // Add product      2
+        // Edit Invoices.Invoice     3
+        InvoiceController.Icontroller();
+
+        int user_input = 0;
+        if (user_input == 1) {
+            InvoiceController.Icontroller();
+        }
+        else if(user_input == 2) {
+            WarehouseController.warehouseController();
+        }
+
+        // keira: (11/22) ----------------------------------------------------------------------------------------------
         Scanner in = new Scanner(System.in);
         System.out.println("MAIN MENU: \n" +
                            "\t 1. Manage Account \n" +
@@ -19,6 +33,7 @@ public class Main extends WarehouseUI {
             // REVIEW: (cannot call WarehouseUI methods)
             selectWarehouseNumber();
         }
+        // keira: (END of 11/22) ---------------------------------------------------------------------------------------
 
     }
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 // REVIEW: (Is "extends" really the proper way to connect the Controller & Database Boundary Object?
 //  cannot access retrieve_products() / update_products() without this.)
-public class InvoiceController extends InvoiceDB{
+public class InvoiceController extends InvoiceDB {
 
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Invoice> getInvoices() {
@@ -13,6 +13,9 @@ public class InvoiceController extends InvoiceDB{
         ArrayList<Invoice> invoices = getInvoices();
         invoices.add(invoiceToAdd);
         update_invoices(invoices);
+    }
+    public boolean invoiceExists(Invoice invoiceToFind) {
+        return getInvoices().contains(invoiceToFind);
     }
     public void removeInvoice(Invoice invoiceToRemove) {
         ArrayList<Invoice> invoices = getInvoices();

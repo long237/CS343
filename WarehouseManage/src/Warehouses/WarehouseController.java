@@ -13,9 +13,8 @@ public class WarehouseController extends WarehouseDB {
     }
 
     // TODO: Given a warehouseNumber & productName, returns TRUE if a Product w/ the given productName exists in the Warehouse.
-    public boolean findProduct(int warehouseNumber, String productName) {
-        boolean found = false;
-        return found;
+    public boolean productExists(int warehouseNumber, String productName) {
+        return getProducts(warehouseNumber).contains(productName);
     }
     public void addProduct(int warehouseNumber, String productName, int quantityInStock, double cost, double retailPrice) {
         ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
