@@ -1,8 +1,13 @@
 package Warehouses;
 
+import Products.Product;
 import java.util.ArrayList;
 
-public class WarehouseController {
+public class WarehouseController extends WarehouseDB {
+
+    public ArrayList<Product> getProducts() {
+        return retrieve_products(1);
+    }
 
     public static void Wcontroller() {
         //ArrayList<Product> pDatabase = retrieve_products();
@@ -16,6 +21,5 @@ public class WarehouseController {
         // display menu
         // 1. add product
         // 2. Remove Product
-
     }
 }
