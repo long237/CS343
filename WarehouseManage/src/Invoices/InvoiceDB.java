@@ -1,11 +1,37 @@
 package Invoices;
+import Products.Product;
+
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class InvoiceDB {
 
-    public static void update_invoices(ArrayList<Invoice> invoices) {
-        // invoice 1 ...
-        // incoice 2....
+    public static void update_invoices(ArrayList<Invoice> invoice_list) {
+        try {
+            FileWriter outfile = new FileWriter("InvoiceData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+            for (Invoice invoice : invoice_list) {
+                printWriter.print(invoice.getInvoiceId() + ";" + invoice.getCustomerName() + ";" + invoice.getInvoiceStatus() + ";"
+                        + invoice.getTaxRate() + ";" + invoice.getDeliveryStatus() + ";"
+                        + invoice.getAddress() + ";" + invoice.getTotalCost() + ";Product;");
+                HashSet<Product> Product_list = invoice.getProductsPurchased();
+                for (Product temp : Product_list) {
+                    printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
+                }
+                printWriter.println("");
+            }
+            printWriter.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Invoices.Invoice Data base does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
     }
 
     public static ArrayList<Invoice> retrieve_invoices() {

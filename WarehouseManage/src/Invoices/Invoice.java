@@ -66,6 +66,10 @@ public class Invoice {
         return mProductsPurchased;
     }
 
+    public double getTotalCost() {
+        return totalCost;
+    }
+
     public void addProductsPurchased(Product newProducts) {
         mProductsPurchased.add(newProducts);
     }
