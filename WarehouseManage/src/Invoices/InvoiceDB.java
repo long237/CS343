@@ -5,10 +5,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class InvoiceDB {
 
@@ -42,7 +39,7 @@ public class InvoiceDB {
             // recreates invoices
            Invoice tempInvoice = new Invoice(Integer.parseInt(invoiceData[0]), invoiceData[1],
                    Boolean.parseBoolean(invoiceData[2]), Double.parseDouble(invoiceData[3]),
-                   Boolean.parseBoolean(invoiceData[4]), invoiceData[5]);
+                   Boolean.parseBoolean(invoiceData[4]), invoiceData[5], new Date());
             // recreates products
             for (int j = 8; j < invoiceData.length; j += 3) {
                 Product tempProduct = new Product(invoiceData[j], Double.parseDouble(invoiceData[j + 1]),
@@ -67,6 +64,9 @@ public class InvoiceDB {
        for (int i = 0; i < invoices.size(); i++) {
            System.out.println(invoices.get(i));
        }
+
+       Date d1 = new Date(2000, 0, 1);
+        System.out.println(d1);
     }
 
 }
