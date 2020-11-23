@@ -31,7 +31,7 @@ public class Main {
 
         if (menuOption == 3) {
             // REVIEW: (cannot call WarehouseUI methods)
-            selectWarehouseNumber();
+            //selectWarehouseNumber();
         }
         // keira: (END of 11/22) ---------------------------------------------------------------------------------------
 
