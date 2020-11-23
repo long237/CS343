@@ -65,8 +65,8 @@ public class InvoiceDB {
            System.out.println(invoices.get(i));
        }
 
-       Date d1 = new Date(2000, 0, 1);
-        System.out.println(d1);
+       //Date d1 = new Date(2000, 0, 1);
+        //System.out.println(d1);
     }
 
 }
