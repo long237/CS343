@@ -3,6 +3,7 @@ package Invoices;
 import Products.Product;
 
 import java.io.*;
+import java.util.Date;
 import java.util.HashSet;
 
 public class Invoice {
@@ -15,6 +16,7 @@ public class Invoice {
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
     private double totalCost = 0;
+    private Date mDateOpened;
 
 
     public Invoice() {
@@ -25,10 +27,11 @@ public class Invoice {
         this.mDeliveryStatus = false;
         this.mAddress = "1234 address";
         this.mProductsPurchased = new HashSet<Product>();
+        this.mDateOpened = new Date();
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress) {
+                   boolean mDeliveryStatus, String mAddress, Date dateOpened) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = mInvoiceStatus;
@@ -36,6 +39,7 @@ public class Invoice {
         this.mDeliveryStatus = mDeliveryStatus;
         this.mAddress = mAddress;
         this.mProductsPurchased = new HashSet<Product>();
+        this.mDateOpened = dateOpened;
     }
 
     public int getInvoiceId() {
@@ -61,6 +65,10 @@ public class Invoice {
     public String getAddress() {
         return mAddress;
     }
+
+    public Date getDateOpened() { return mDateOpened; }
+
+    public double getTotalCost() { return  totalCost; }
 
     public HashSet<Product> getProductsPurchased() {
         return mProductsPurchased;
@@ -102,6 +110,10 @@ public class Invoice {
         this.mAddress = mAddress;
     }
 
+    public void setmDateOpened(Date newDate) { this.mDateOpened = newDate; }
+
+
+
     @Override
     public String toString() {
         return "Invoices.Invoice{" +
@@ -112,6 +124,7 @@ public class Invoice {
                 ", mDeliveryStatus=" + mDeliveryStatus +
                 ", mAddress='" + mAddress + '\'' +
                 ", mProductsPurchased=" + mProductsPurchased +
+                ", mDateOpened= " + mDateOpened +
                 '}';
     }
 
@@ -148,7 +161,7 @@ public class Invoice {
         System.out.println("This is invoice testing. ");
         System.out.println("Invoices.Invoice: " + invoice1);
 
-        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st");
+        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", new Date(2010, 12, 20));
         System.out.println("Invoices.Invoice 2: " + invoice2);
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
