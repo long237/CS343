@@ -69,6 +69,7 @@ public class Salesperson {
                 '}';
     }
 
+    //fixme: main for testing saving person to database
     public static void main(String[] args) {
         Salesperson s1 = new Salesperson("Alex Smith", 5);
         Salesperson s2 = new Salesperson("John Brown", 7);

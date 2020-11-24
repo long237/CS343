@@ -134,7 +134,8 @@ public class Database {
         return products;
     }
 
-    /** Add an arrayList of customers object into the databse to save the value**/
+    /** Add an arrayList of customers object into the databse to save the value
+     *  overwrite existing value, NOT APPEND**/
     // Database format: name;taxrate
     public void update_customer(ArrayList<Customer> customerList){
         try {
@@ -153,6 +154,8 @@ public class Database {
         }
     }
 
+    /** Add saleperson info to data and overwrite previous value in database, NOT APPEND**/
+    //format database: name;ID;commision;totalsales
     public void update_Saleperson(ArrayList<Salesperson> employeeList) {
         try{
             FileWriter outfile = new FileWriter("SalepersonData.txt");
