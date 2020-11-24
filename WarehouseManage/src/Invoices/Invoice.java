@@ -3,6 +3,8 @@ package Invoices;
 import Products.Product;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -72,10 +74,6 @@ public class Invoice {
 
     public HashSet<Product> getProductsPurchased() {
         return mProductsPurchased;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
     }
 
     public void addProductsPurchased(Product newProducts) {
@@ -192,8 +190,19 @@ public class Invoice {
         invoice2.addProductsPurchased(product3);
         invoice2.calCost();
 
-        invoice1.Save_Database();
-        invoice2.Save_Database();
+        Date d1  = new Date(120, Calendar.NOVEMBER, 12);
+        Date d2 = new Date();
+        LocalDate ld1 = LocalDate.of(2000, 5, 20);
+        String date = "2000 5 20";
+
+        System.out.println("Local Date: " + ld1);
+        System.out.println("Local Date year: " + ld1.getYear());
+        System.out.println("Date: " + d1);
+        System.out.println("D1 Year: " + d1.getYear());
+        System.out.println("Date 2: " + d2);
+
+//        invoice1.Save_Database();
+//        invoice2.Save_Database();
 
 //        try {
 //            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
