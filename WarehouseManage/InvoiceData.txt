@@ -1,2 +1,3 @@
-1234;john doe Alex;false;0.0;false;1234 address;100.0;Product;RX 6800;20.0;2;
-4567;Alatreon;true;15.0;false;123 Second st;date;100.0;Product;RX 6800;20.0;2;
+1234;john doe;false;0.0;false;1234 address;2020-02-22;100.0;Product;RTX 3070;30.0;3;RX 6800;20.0;2;R7 5700;50.0;5;
+4567;Alatreon;true;15.0;false;123 Second st;2010-12-20;100.0;Product;RTX 3070;30.0;3;RX 6800;20.0;2;R7 5700;50.0;5;
+1234;john doe;false;0.0;false;1234 address;2020-11-24;0.0;Product;RX 6800;20.0;2;

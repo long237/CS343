@@ -4,6 +4,7 @@ import Products.Product;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class Invoice {
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
     private double totalCost = 0;
-    private Date mDateOpened;
+    private LocalDate mDateOpened;
 
 
     public Invoice() {
@@ -29,11 +30,11 @@ public class Invoice {
         this.mDeliveryStatus = false;
         this.mAddress = "1234 address";
         this.mProductsPurchased = new HashSet<Product>();
-        this.mDateOpened = new Date();
+        this.mDateOpened = LocalDate.of(2020,2,22);
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress, Date dateOpened) {
+                   boolean mDeliveryStatus, String mAddress, LocalDate dateOpened) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = mInvoiceStatus;
@@ -68,7 +69,7 @@ public class Invoice {
         return mAddress;
     }
 
-    public Date getDateOpened() { return mDateOpened; }
+    public LocalDate getDateOpened() { return mDateOpened; }
 
     public double getTotalCost() { return  totalCost; }
 
@@ -108,7 +109,7 @@ public class Invoice {
         this.mAddress = mAddress;
     }
 
-    public void setmDateOpened(Date newDate) { this.mDateOpened = newDate; }
+    public void setmDateOpened(LocalDate newDate) { this.mDateOpened = newDate; }
 
 
 
@@ -159,13 +160,16 @@ public class Invoice {
         System.out.println("This is invoice testing. ");
         System.out.println("Invoices.Invoice: " + invoice1);
 
-        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", new Date(2010, 12, 20));
+        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 20));
         System.out.println("Invoices.Invoice 2: " + invoice2);
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
         invoice2.setmDeliveryStatus(false);
         invoice2.setmTaxRate(15);
         System.out.println("After: " + invoice2);
+
+        Invoice invoice3 = new Invoice();
+        invoice3.setmDateOpened(LocalDate.of(2020, 11, 24));
 
         Product product1 = new Product();
         Product product2 = new Product();
@@ -190,32 +194,18 @@ public class Invoice {
         invoice2.addProductsPurchased(product3);
         invoice2.calCost();
 
-        Date d1  = new Date(120, Calendar.NOVEMBER, 12);
-        Date d2 = new Date();
-        LocalDate ld1 = LocalDate.of(2000, 5, 20);
-        String date = "2000 5 20";
+        invoice3.addProductsPurchased(product2);
 
-        System.out.println("Local Date: " + ld1);
-        System.out.println("Local Date year: " + ld1.getYear());
-        System.out.println("Date: " + d1);
-        System.out.println("D1 Year: " + d1.getYear());
-        System.out.println("Date 2: " + d2);
+        System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
 
+        ArrayList<Invoice> invoicesList = new ArrayList<Invoice>();
+        invoicesList.add(invoice1);
+        invoicesList.add(invoice2);
+        invoicesList.add(invoice3);
+        InvoiceDB idata = new InvoiceDB();
+        idata.update_invoices(invoicesList);
 //        invoice1.Save_Database();
 //        invoice2.Save_Database();
 
-//        try {
-//            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
-//            PrintWriter printWriter = new PrintWriter(outfile);
-//            printWriter.println(invoice1.getInvoiceId() + " " + invoice1.getCustomerName() + " " + invoice1.getTaxRate());
-//            printWriter.println(invoice2.getInvoiceId() + " " + invoice2.getCustomerName() + " " + invoice2.getTaxRate());
-//            printWriter.close();
-//        }
-//        catch (FileNotFoundException e) {
-//            System.out.println("Invoices.Invoice Data base does not exist.");
-//        }
-//        catch (IOException e) {
-//            System.out.println("IO exception !!!!");
-//        }
     }
 }
