@@ -1,4 +1,4 @@
-package Warehouses;
+package Database;
 
 import Invoices.Invoice;
 import Products.Product;
@@ -7,7 +7,27 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class WarehouseDB {
+public class Database {
+
+
+    public static void update_invoices(ArrayList<Invoice> invoices) {
+        // invoice 1 ...
+        // incoice 2....
+    }
+
+    public static ArrayList<Invoice> retrieve_invoices() {
+        ArrayList<Invoice> invoices = new ArrayList<Invoice>();
+        // invoice 1  index 0
+        // invoice 2   index 1
+        // invoice 3  index 2
+
+        // recreates invoices
+        // recreates products
+        // add products objects to Hashset in each invoice
+        // add all invoices ot arraylist
+        // return arraylist
+        return invoices;
+    }
 
     // TODO: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
     public void update_products(int warehouseNumber, ArrayList<Product> warehouseProducts){
@@ -24,7 +44,7 @@ public class WarehouseDB {
             printWriter.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("Warehouse Database does not exist.");
+            System.out.println("Warehouse Database.Database does not exist.");
         }
         catch (IOException e) {
             System.out.println("IO exception !!!!");
@@ -57,5 +77,4 @@ public class WarehouseDB {
         }
         return products;
     }
-
 }

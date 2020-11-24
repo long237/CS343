@@ -2,13 +2,16 @@ package Warehouses;
 
 import Products.Product;
 import java.util.ArrayList;
+import Database.Database;
 
-// REVIEW: (Not really sure that "extends" is the proper way to connect these 2 classes but can't retrieve_products() / update_products() w/o this)
-public class WarehouseController extends WarehouseDB {
-
+public class WarehouseController {
+    Database database = new Database();
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
+//    public ArrayList<Product> getProducts(int warehouseNumber) {
+//        return retrieve_products(warehouseNumber);
+//    }
     public ArrayList<Product> getProducts(int warehouseNumber) {
-        return retrieve_products(warehouseNumber);
+        return database.retrieve_products(warehouseNumber);
     }
     // TODO: fix this so that it returns true if Product w/ productName exists in getProducts()
     public boolean productExists(int warehouseNumber, String productName) {
