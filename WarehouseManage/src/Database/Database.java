@@ -1,17 +1,18 @@
-package Invoices;
+package Database;
+
+import Invoices.Invoice;
 import Products.Product;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
-public class InvoiceDB {
+public class Database {
 
+    /** Overwrite the database and replace with info from the new Arraylist of invoice, NOT APPEND **/
+    //Data base format: InvoiceID;CustomerName;Status;Taxrate;
+    // DeliveryStat;Address;Date;TotalCost;Date;Productname;Productcost;Quantity
     public void update_invoices(ArrayList<Invoice> invoice_list) {
         try {
             FileWriter outfile = new FileWriter("InvoiceData.txt");
@@ -36,6 +37,7 @@ public class InvoiceDB {
         }
     }
 
+    //fixme: fix the Date of object into Local Date.
 //    public static ArrayList<Invoice> retrieve_invoices() {
 //        ArrayList<Invoice> invoices = new ArrayList<Invoice>();
 //        ArrayList<String> invoiceString = new ArrayList<>();
@@ -79,16 +81,52 @@ public class InvoiceDB {
 //        return invoices;
 //    }
 
-    //public Invoice createInvoice()
-    public static void main(String[] args) {
-        //test retrieve invoice
-//       ArrayList<Invoice> invoices =  retrieve_invoices();
-//       for (int i = 0; i < invoices.size(); i++) {
-//           System.out.println(invoices.get(i));
-//       }
-
-       //Date d1 = new Date(2000, 0, 1);
-        //System.out.println(d1);
+    // TODO: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
+    public void update_products(int warehouseNumber, ArrayList<Product> warehouseProducts){
+        try {
+            String filename = "Warehouse" + warehouseNumber + ".txt";
+            FileWriter outfile = new FileWriter(filename, false);
+            PrintWriter printWriter = new PrintWriter(outfile);
+            for (Product p : warehouseProducts) {
+                printWriter.print(p.getName() + ";" + p.getQuantityInStock() + ";" + p.getCost() + ";" + p.getRetailPrice() + ";"
+                        + p.getQuantitySold() + ";" + p.getTotalSales() + ";" + p.getTotalCost() + ";"
+                        + p.getTotalProfit() + ";" + p.getTotalProfitPercent());
+                printWriter.println();
+            }
+            printWriter.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Warehouse Database.Database does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
     }
 
+    // TODO: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
+    public ArrayList<Product> retrieve_products(int warehouseNumber) {
+        ArrayList<Product> products = new ArrayList<Product>();
+
+        File file = new File("Warehouse" + warehouseNumber + ".txt");
+        Scanner input = null;
+        try { input = new Scanner(file); } catch (FileNotFoundException e) { e.printStackTrace(); }
+        while (true) {
+            assert input != null;
+            if (!input.hasNextLine()) break;
+
+            String[] productInfo = input.nextLine().split(";");
+
+            String productName = productInfo[0];
+            int quantityInStock = Integer.parseInt(productInfo[1]);
+            double cost = Double.parseDouble(productInfo[2]);
+            double retailPrice = Double.parseDouble(productInfo[3]);
+            int quantitySold = Integer.parseInt(productInfo[4]);
+            // the rest (totalSales, totalCost, totalProfit, totalProfitPercent)
+            // should be calculated automatically in toString() ...
+
+            Product product = new Product(productName, quantityInStock, cost, retailPrice, quantitySold);
+            products.add(product);
+        }
+        return products;
+    }
 }

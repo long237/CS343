@@ -11,13 +11,19 @@ public class Main {
         // Edit Invoices.Invoice     3
         InvoiceController.Icontroller();
 
-        int user_input = 0;
+        MainUI mainUI = new MainUI();
+        mainUI.PrintMainMenu();
+
+
+        int user_input = mainUI.getUserOption();
+        //while looop
         if (user_input == 1) {
             InvoiceController.Icontroller();
         }
         else if(user_input == 2) {
             WarehouseController.warehouseController();
         }
+
 
         // keira: (11/22) ----------------------------------------------------------------------------------------------
         Scanner in = new Scanner(System.in);

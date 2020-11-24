@@ -1,4 +1,4 @@
-Read/Save Product       Tuesday Nov 24th
+Read/Save Warehouse       Tuesday Nov 24th
 Read/Save Invoice       Sunday Nov 22nd
 Read/Save Saleperson    Long/Erik
 Read/Save Customer      Long/Erik
@@ -19,5 +19,6 @@ shoes
 hat 10
 shoes 15
 
+Invoice & Controllers should be done by Thursday 26th / 27th!
 
 //Important Main: starting Friday 27th --> Sunday 29th    the whole team

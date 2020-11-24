@@ -1,10 +1,19 @@
 package Invoices;
 import java.util.ArrayList;
 
+// REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
 public class InvoiceController { // extends InvoiceDB
 
+//    InvoiceUI invoiceUI = new InvoiceUI();
+//    invoiceUI.printSubMenu();
+//    int user = invoiceUI.getOPtion();
+//
+//    if  ( user == 1) {
+//        addINvoice()
+//    }
+
     /*
-    // keira: (11/22 Control Methods) ----------------------------------------------------------------------------------------
+    // keira: (Control Methods) ----------------------------------------------------------------------------------------
     public ArrayList<Invoice> getInvoices() {
         return retrieve_invoices();
     }

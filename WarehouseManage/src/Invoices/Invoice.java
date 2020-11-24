@@ -1,5 +1,6 @@
 package Invoices;
 
+import Database.Database;
 import Products.Product;
 
 import java.io.*;
@@ -160,7 +161,7 @@ public class Invoice {
         System.out.println("This is invoice testing. ");
         System.out.println("Invoices.Invoice: " + invoice1);
 
-        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 20));
+        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 21));
         System.out.println("Invoices.Invoice 2: " + invoice2);
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
@@ -202,8 +203,8 @@ public class Invoice {
         invoicesList.add(invoice1);
         invoicesList.add(invoice2);
         invoicesList.add(invoice3);
-        InvoiceDB idata = new InvoiceDB();
-        idata.update_invoices(invoicesList);
+        Database Idata= new Database();
+        Idata.update_invoices(invoicesList);
 //        invoice1.Save_Database();
 //        invoice2.Save_Database();
 

@@ -5,6 +5,8 @@ public class Salesperson {
     private double mSalespersonCommission;
     private int mSalespersonID;
     private int mTotalSales;
+
+
     public String getSalespersonName() {
         return mSalespersonName;
     }
