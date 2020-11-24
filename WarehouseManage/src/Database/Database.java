@@ -3,6 +3,7 @@ package Database;
 import Customers.Customer;
 import Invoices.Invoice;
 import Products.Product;
+import Salespeople.Salesperson;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class Database {
                 printWriter.println("");
             }
             printWriter.close();
+            outfile.close();
         }
         catch (FileNotFoundException e) {
             System.out.println("Invoices.Invoice Data base does not exist.");
@@ -143,10 +145,29 @@ public class Database {
                 printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
             }
             printWriter.close();
+            outfile.close();
 
         }
         catch (IOException e) {
-            System.out.println("File not found !!!!");
+            System.out.println("File not found for Customers!!!!");
+        }
+    }
+
+    public void update_Saleperson(ArrayList<Salesperson> employeeList) {
+        try{
+            FileWriter outfile = new FileWriter("SalepersonData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+
+            for (Salesperson person : employeeList){
+                printWriter.println(person.getSalespersonName() + ";" + person.getSalespersonID() + ";"
+                        + person.getSalespersonCommission() + ";" + person.getTotalSales());
+            }
+            printWriter.close();
+            outfile.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Saleperson");
         }
     }
 }
