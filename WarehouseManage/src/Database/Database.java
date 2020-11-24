@@ -1,10 +1,12 @@
 package Database;
 
+import Customers.Customer;
 import Invoices.Invoice;
 import Products.Product;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -128,5 +130,23 @@ public class Database {
             products.add(product);
         }
         return products;
+    }
+
+    /** Add an arrayList of customers object into the databse to save the value**/
+    // Database format: name;taxrate
+    public void update_customer(ArrayList<Customer> customerList){
+        try {
+            FileWriter outfile = new FileWriter("CustomerData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+
+            for (Customer customer : customerList) {
+                printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
+            }
+            printWriter.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found !!!!");
+        }
     }
 }
