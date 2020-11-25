@@ -78,10 +78,7 @@ public class InvoiceUI {
     }
 
     public void viewClosedInvoices (ArrayList<Invoice> invoices){
-        //update total costs for each invoice
-        for (Invoice inv: invoices) {
-            inv.calCost();
-        }
+
         //sort by decreasing order of total cost
         Collections.sort(invoices, new TotalCostComparator());
         System.out.println("Displaying Closed Invoices");
