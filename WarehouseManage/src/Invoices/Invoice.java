@@ -2,7 +2,6 @@ package Invoices;
 
 import Database.Database;
 import Products.Product;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -162,7 +161,7 @@ public class Invoice {
         System.out.println("Invoices.Invoice: " + invoice1);
 
         Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 21));
-        System.out.println("Invoices.Invoice 2: " + invoice2);
+
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
         invoice2.setmDeliveryStatus(false);
@@ -197,6 +196,7 @@ public class Invoice {
 
         invoice3.addProductsPurchased(product2);
 
+        System.out.println("Invoices.Invoice: " + invoice2);
         System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
 
         ArrayList<Invoice> invoicesList = new ArrayList<Invoice>();
@@ -205,6 +205,7 @@ public class Invoice {
         invoicesList.add(invoice3);
         Database Idata= new Database();
         Idata.update_invoices(invoicesList);
+        System.out.println("Print new line:");
 //        invoice1.Save_Database();
 //        invoice2.Save_Database();
 
