@@ -1,6 +1,5 @@
 package Invoices;
 import Database.Database;
-import com.sun.corba.se.impl.orb.DataCollectorBase;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -53,25 +52,38 @@ public class InvoiceController { // extends InvoiceDB
 
         InvoiceUI invoiceUI = new InvoiceUI();
         Database dataBase = new Database();
-        invoiceUI.Menu();
-        invoiceUI.customerName();
+//        invoiceUI.Menu();
+//        invoiceUI.customerName();
 
         ArrayList<Invoice> i_data = Database.retrieve_invoices();
         Scanner scanner = new Scanner(System.in);
 
         int menu_op = 0;
         while (menu_op != -1) {
-            int menu_option = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
+            menu_op = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
+            System.out.println("menu value: " + menu_op);
 
-//            if (menu_option == 1) {
-//                //edit invoices
-//                invoiceUI.viewAllInvoices(i_data);
-//                int in_option = invoiceUI.chooseInvoice(i_data);
-//                while (in_option < 1 || in_option > i_data.size()){
-//                    in_option = invoiceUI.chooseInvoice(i_data);
-//                }
-//            }
-//
+            if (menu_op == 1) {         //Edit invoice submenu
+                //edit invoices
+                int in_option = 0;      //Invoice nubmer to be edit
+                while (in_option < 1 || in_option > i_data.size()){
+                    in_option = invoiceUI.chooseInvoice(i_data);
+                }
+                System.out.println("Invoice to be edit: " + in_option);
+
+                int invoice_part = 0;
+                while(invoice_part < 1 || invoice_part > 7){
+                    invoice_part = invoiceUI.editInvoiceMenu();
+                }
+
+                if(invoice_part == 1) {
+                    String c_name = invoiceUI.customerName();
+                    Invoice in_edit = i_data.get(in_option - 1);
+                    in_edit.setmCustomerName(c_name);
+                    dataBase.update_invoices(i_data);
+                }
+            }
+
 //            else if (menu_op == 2) {
 //                invoiceUI.editInvoiceMenu();
 //            }

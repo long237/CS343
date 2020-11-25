@@ -15,6 +15,7 @@ public class InvoiceUI {
         System.out.println("Option 1 - Edit Invoice: ");
         System.out.println("Option 2 - View Invoices: ");
         System.out.println("Enter -1 to exit");
+        System.out.println("");
         try {
             int choice = in.nextInt();
             in.nextLine();
