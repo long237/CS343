@@ -1,54 +1,166 @@
 package Invoices;
 
+import Products.Product;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
 public class InvoiceUI {
 
-    public void editInvoice(Invoice invoice, ArrayList<Invoice> invoices) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("What is the ID of the invoice you would like to edit?");
-        int invoiceID = scanner.nextInt();
-        //confirm ID exists in existing invoices
-        boolean invoiceIsReal = false;
-        while (invoiceIsReal == false) {
-            for (Invoice inv : invoices) {
-                if (inv.getInvoiceId() == invoiceID) {
-                    invoiceIsReal = true;
-                }
-            }
-            if (invoiceIsReal == false) {
-                System.out.println("Invoice does not exist. Please enter a new ID");
-                invoiceID = scanner.nextInt();
-            }
+    public int invoiceMenu() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Invoice Menu: ");
+        System.out.println("Option 1 - Edit Invoice: ");
+        System.out.println("Option 2 - View Invoices: ");
+        System.out.println("Enter -1 to exit");
+        try {
+            int choice = in.nextInt();
+            in.nextLine();
+            return choice;
+        } catch (Exception e) {
+            System.out.println("Invalid input: Enter the number 1 or 2");
+            return -2;
         }
-        //ask for customer name
-        System.out.println("What is the customer's name?");
-        String custName = scanner.nextLine();
-        invoice.setmCustomerName(custName);
+    }
 
-        //ask for product purchased
-        //damn...
+    public int chooseInvoice(ArrayList<Invoice> invoiceList){
+        Scanner in = new Scanner(System.in);
 
-        //ask for task rate
-        System.out.println("What is the new tax rate");
-        double newTaxRate = scanner.nextDouble();
-        invoice.setmTaxRate(newTaxRate);
+        System.out.println("Which Invoice would you like to edit");
+        viewAllInvoices(invoiceList);
+        try {
+            int choice = in.nextInt();
+            in.nextLine();
+            return choice;
+        } catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value");
+            return -2;
+        }
 
-        //ask for new Delivery status
+    }
+    //which on to edit: 2
+
+    public int editInvoiceMenu() {
+        Scanner in = new Scanner(System.in);
+        //display menu
+        System.out.println("What in the invoice would you like to edit?");
+        System.out.println("Option 1 - Edit Customer Name: ");
+        System.out.println("Option 2 - Edit Tax Rate: ");
+        System.out.println("Option 3 - Edit Delivery Status: ");
+        System.out.println("Option 4 - Edit Delivery Address: ");
+        System.out.println("Option 5 - Edit Date Opened: ");
+        System.out.println("Option 6 - Add Product Purchased: ");
+        System.out.println("Option 7 - Remove Product: ");
+
+        //get input
+        try {
+            int choice = in.nextInt();
+            in.nextLine();
+            return choice;
+        } catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value between 1 and 7");
+            return -2;
+        }
+
+    }
+
+    public void editCustomerName(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new name of the customer? ");
+        String newName = in.nextLine();
+        invoice.setmCustomerName(newName);
+    }
+
+    public void editTaxRate(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new tax rate of the customer? ");
+        double newRate = in.nextDouble();
+        invoice.setmTaxRate(newRate);
+
+    }
+
+    public void editDeliveryStatus(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
         System.out.println("What is the new delivery status: type OPEN or CLOSED");
-        String newDeliveryStatus = scanner.nextLine();
+        String newDeliveryStatus = in.nextLine();
+
         if (newDeliveryStatus == "OPEN") {
             invoice.setmDeliveryStatus(true);
         } else {
             invoice.setmDeliveryStatus(false);
         }
 
-        //ask for delivery address
+    }
+
+    public void editDeliveryAddress(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
         System.out.println("What is the new delivery address?");
-        String newDeliveryAddr = scanner.nextLine();
+        String newDeliveryAddr = in.nextLine();
         invoice.setmAddress(newDeliveryAddr);
+    }
+
+    public void changeDateOpened(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the year of the invoice: - Please enter in form(YYYY) ");
+        int year = in.nextInt();
+
+        System.out.println("What is the month of the invoice: - Please enter in form(MM)");
+        int month = in.nextInt();
+
+        System.out.println("What is the Day of the invoice: - Please enter in form(DD)");
+        int day = in.nextInt();
+
+        invoice.setmDateOpened(LocalDate.of(year, month, day));
+    }
+
+    public void addProductPurchased (Invoice invoice) {
+
+    }
+
+    public void viewProductsPurchased(Invoice invoice) {
+        System.out.println("Displaying all products in Invoice number: " + invoice.getInvoiceId());
+        for (Product product : invoice.getProductsPurchased()) {
+            System.out.println(product);
+        }
+    }
+    public void removeProductPurchased(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the name of the Product you want to remove?: ");
+        viewProductsPurchased(invoice);
+
+        String choice = in.nextLine();
+        boolean containsProduct = false;
+
+        while (containsProduct == false) {
+
+            for (Product product : invoice.getProductsPurchased()) {
+                if (product.getName() == choice) {
+                    containsProduct = true;
+                }
+            }
+            if (containsProduct == false) {
+                System.out.println("Enter a valid product name: ");
+                choice = in.nextLine();
+            }
+
+        }
+       // while (choice)
+        System.out.println("Here is the current quantity for this Product: ");
+
+
+    }
+    public void editInvoice(Invoice invoice, ArrayList<Invoice> invoices) {
+
+
+
+        //ask for product purchased
+        //damn...
+
+
+
+
 
         //change date opened
         //add later
@@ -60,8 +172,8 @@ public class InvoiceUI {
     public void viewAllInvoices(ArrayList<Invoice> invoices) {
         //add formating later
         System.out.println("Displaying all invoices");
-        for (Invoice invoice : invoices) {
-            System.out.println(invoice);
+        for (int i = 1; i < invoices.size(); ++i) {
+            System.out.println(i + " " + invoices.get(i - 1));
         }
         
     }
@@ -100,6 +212,4 @@ public class InvoiceUI {
         System.out.println("1. Add invoice");
         System.out.println("2. Edit invoice");
     }
-
-
 }

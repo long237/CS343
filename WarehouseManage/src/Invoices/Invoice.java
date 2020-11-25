@@ -125,12 +125,13 @@ public class Invoice {
                 ", mAddress='" + mAddress + '\'' +
                 ", mProductsPurchased=" + mProductsPurchased +
                 ", mDateOpened= " + mDateOpened +
+                ", mTotalCost = " + totalCost +
                 '}';
     }
 
     public void calCost() {
         for (Product product : mProductsPurchased){
-            this.totalCost += product.getCost();
+            this.totalCost += product.getCost() * product.getQuantitySold();
         }
     }
 
@@ -216,6 +217,7 @@ public class Invoice {
         invUI.viewClosedInvoices(retriveInvoices);
         System.out.println("\n Open Invoices");
         invUI.viewOpenInvoices(retriveInvoices);
+        System.out.println("Hello Wold");
 
     }
 }
