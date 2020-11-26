@@ -161,6 +161,31 @@ public class Database {
         }
     }
 
+    public ArrayList<Customer> retrieve_Customer() {
+        ArrayList<Customer> customers = new ArrayList<>();
+        ArrayList<String> customerData = new ArrayList<>();
+
+        try {
+            File customerTxt = new File("CustomerData.txt");
+            Scanner scanner = new Scanner(customerTxt);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                customerData.add(data);
+            }
+
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File not found for CustomerData.txt");
+        }
+
+        for (int i = 0; i < customerData.size(); i++) {
+            String[] singleCustomer = customerData.get(i).split(";");
+            customers.add(new Customer(singleCustomer[0], Double.parseDouble(singleCustomer[1])));
+
+        }
+        return customers;
+
+    }
+
     /** Add saleperson info to data and overwrite previous value in database, NOT APPEND**/
     //format database: name;ID;commision;totalsales
     public void update_Saleperson(ArrayList<Salesperson> employeeList) {
@@ -181,5 +206,28 @@ public class Database {
         }
     }
 
+    public ArrayList<Salesperson> retrieve_salesPerson() {
+        ArrayList<Salesperson> salespeople = new ArrayList<>();
+        ArrayList<String> salesPeopleData = new ArrayList<>();
+
+        try {
+            File salesPersonTxt = new File("SalepersonData.txt");
+            Scanner scanner = new Scanner(salesPersonTxt);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                salesPeopleData.add(data);
+            }
+
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File not found for SalespersonData.txt");
+        }
+
+        for (int i = 0; i < salesPeopleData.size(); i++) {
+            String[] singleSalesPerson = salesPeopleData.get(i).split(";");
+            salespeople.add(new Salesperson(singleSalesPerson[0], Integer.parseInt(singleSalesPerson[1]),
+                    Double.parseDouble(singleSalesPerson[2]), Integer.parseInt(singleSalesPerson[3])));
+        }
+        return salespeople;
+    }
 
 }

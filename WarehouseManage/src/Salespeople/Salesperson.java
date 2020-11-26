@@ -13,7 +13,7 @@ public class Salesperson {
     public Salesperson(){
         this.mSalespersonName = "John Doe";
         this.mSalespersonID = 12345;
-        this.mSalespersonCommission = 10;
+        this.mSalespersonCommission = 10.0;
         this.mTotalSales = 10;
     }
 
@@ -22,10 +22,10 @@ public class Salesperson {
         this.mSalespersonCommission = mSalespersonCommission;
     }
 
-    public Salesperson(String mSalespersonName, double mSalespersonCommission, int mSalespersonID, int mTotalSales) {
+    public Salesperson(String mSalespersonName, int mSalespersonID, double mSalespersonCommission, int mTotalSales) {
         this.mSalespersonName = mSalespersonName;
-        this.mSalespersonCommission = mSalespersonCommission;
         this.mSalespersonID = mSalespersonID;
+        this.mSalespersonCommission = mSalespersonCommission;
         this.mTotalSales = mTotalSales;
     }
 
@@ -82,5 +82,11 @@ public class Salesperson {
 
         Database sData = new Database();
         sData.update_Saleperson(personList);
+
+        //test retriving salespeople
+        ArrayList<Salesperson> salesTeam = sData.retrieve_salesPerson();
+        for (Salesperson s : salesTeam) {
+            System.out.println(s);
+        }
     }
 }
