@@ -46,7 +46,6 @@ public class WarehouseController {
         return addedProduct;
     }
 
-    // TODO: (removeProduct currently fails to remove Product)
     // kkkkk: (returns TRUE if productToRemove was successfully removed from database)
     public boolean removeProduct(int warehouseNumber, String productToRemove) {
         boolean removedProduct = false;
