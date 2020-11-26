@@ -77,7 +77,7 @@ public class InvoiceController { // extends InvoiceDB
                 }
 
                 if(invoice_part == 1) {
-                    String c_name = invoiceUI.customerName();
+                    String c_name = invoiceUI.editCustomerName(i_data[in_option - 1]);
                     Invoice in_edit = i_data.get(in_option - 1);
                     in_edit.setmCustomerName(c_name);
                     dataBase.update_invoices(i_data);
