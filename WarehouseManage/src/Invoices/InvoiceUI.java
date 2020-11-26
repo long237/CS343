@@ -67,31 +67,43 @@ public class InvoiceUI {
 
     }
 
-    public void editCustomerName(Invoice invoice) {
+    public String editCustomerName() {
         Scanner in = new Scanner(System.in);
+        String newName = "";
         System.out.println("What is the new name of the customer? ");
-        String newName = in.nextLine();
-        invoice.setmCustomerName(newName);
+        try{
+            newName = in.nextLine();
+            return (newName);
+        } catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
+            return "-2";
+        }
     }
 
-    public void editTaxRate(Invoice invoice) {
+    public double editTaxRate() {
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new tax rate of the customer? ");
-        double newRate = in.nextDouble();
-        invoice.setmTaxRate(newRate);
-
+        try {
+            double newRate = in.nextDouble();
+            return newRate;
+        }
+        catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
+            return -2;
+        }
     }
 
-    public void editDeliveryStatus(Invoice invoice) {
+    public String editDeliveryStatus() {
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new delivery status: type OPEN or CLOSED");
         String newDeliveryStatus = in.nextLine();
 
-        if (newDeliveryStatus == "OPEN") {
-            invoice.setmDeliveryStatus(true);
-        } else {
-            invoice.setmDeliveryStatus(false);
-        }
+//        if (newDeliveryStatus == "OPEN") {
+//            invoice.setmDeliveryStatus(true);
+//        } else {
+//            invoice.setmDeliveryStatus(false);
+//        }
+        return newDeliveryStatus;
 
     }
 
@@ -170,8 +182,9 @@ public class InvoiceUI {
     public void viewAllInvoices(ArrayList<Invoice> invoices) {
         //add formating later
         System.out.println("Displaying all invoices");
-        for (int i = 1; i < invoices.size(); ++i) {
-            System.out.println(i + " " + invoices.get(i - 1));
+        for (int i = 0; i < invoices.size(); i++) {
+            int num = i + 1;
+            System.out.println(num + " " + invoices.get(i));
         }
         
     }

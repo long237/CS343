@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import Customers.Customer;
 import java.util.HashSet;
 
 public class Invoice {
@@ -24,7 +25,7 @@ public class Invoice {
 
 
     public Invoice() {
-        this.mInvoiceId = 1234;
+        this.mInvoiceId = -1234;
         this.mCustomerName = "john doe";
         this.mInvoiceStatus = false;
         this.mTaxRate = 0.0;
@@ -172,6 +173,7 @@ public class Invoice {
 
         Invoice invoice3 = new Invoice();
         invoice3.setmDateOpened(LocalDate.of(2020, 11, 24));
+        invoice3.setmCustomerName("Lunastra");
 
         Product product1 = new Product();
         Product product2 = new Product();
@@ -197,6 +199,7 @@ public class Invoice {
         invoice2.calCost();
 
         invoice3.addProductsPurchased(product2);
+        invoice3.addProductsPurchased(product3);
 
         System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
 
@@ -208,6 +211,7 @@ public class Invoice {
         Idata.update_invoices(invoicesList);
 //        invoice1.Save_Database();
 //        invoice2.Save_Database();
+//        invoice3.
         ArrayList<Invoice> retriveInvoices = Idata.retrieve_invoices();
 
         InvoiceUI invUI = new InvoiceUI();
