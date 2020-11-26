@@ -1,22 +1,23 @@
 import java.util.Scanner;
 
-public class MainUI {
+public class WarehouseManageUI {
 
     public void PrintMainMenu() {
-        System.out.println("MAIN MENU: \n" +
+        System.out.print("MAIN MENU: \n" +
                 "\t 1. Manage Account \n" +
                 "\t 2. Manage Salespersons \n" +
                 "\t 3. Manage Warehouses \n" +
-                "\t 4. Manage Invoices \n" +
-                "\t 5. Exit");
+                "\t 4. Manage Invoices \n");
     }
 
     public int getUserOption(){
-        int user = -1;
+        int user = 0;
         Scanner scanner = new Scanner(System.in);
         while(user != -1){
-            System.out.println("Input an option: ");
+            System.out.print("Select a menu option (Enter (-1) to quit): ");
             user = scanner.nextInt();
+            scanner.nextLine();
+            return user;
         }
         return user;
     }

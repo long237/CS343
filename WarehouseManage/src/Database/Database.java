@@ -1,6 +1,5 @@
 package Database;
 
-import Customers.Customer;
 import Invoices.Invoice;
 import Products.Product;
 import Salespeople.Salesperson;
@@ -230,4 +229,17 @@ public class Database {
         return salespeople;
     }
 
+
+    public int maxWarehouses() {
+        int warehouseCount = 1;
+        while (true) {
+            File tempFile = new File("Warehouse" + Integer.toString(warehouseCount) + ".txt");
+            boolean exists = tempFile.exists();
+            if (!exists) {
+                break;
+            }
+            warehouseCount++;
+        }
+        return warehouseCount-1;
+    }
 }
