@@ -3,12 +3,35 @@ import Products.Product;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
 
 public class WarehouseUI {
     Scanner in = new Scanner(System.in);
+
+    public void printWarehouseProducts(int warehouseNumber, ArrayList<Product> products) {
+        System.out.println("\n WAREHOUSE " + warehouseNumber + ": ");
+        System.out.println(getProductsTable(products));
+    }
+
+    public String getProductsTableHeader() {
+        return " " + String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
+                "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD", "TOTAL-SALES",
+                "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
+    }
+    public String getProductsTable(ArrayList<Product> products) {
+        StringBuilder productsTable = new StringBuilder();
+        String header = getProductsTableHeader();
+        productsTable.append(header);
+        productsTable.append("\n");
+        for (Product product : products) {
+            productsTable.append(product.toString());
+            productsTable.append("\n");
+        }
+        return productsTable.toString();
+    }
 
     public int selectWarehouseNumber(int flag, int maxNumOfWarehouses) { // TODO max num warehouses
         if (flag == 1) {
@@ -29,37 +52,15 @@ public class WarehouseUI {
         }
     }
 
-    public void printWarehouseProducts(int warehouseNumber, ArrayList<Product> products) {
-        System.out.println("\n WAREHOUSE " + warehouseNumber + ": ");
-        System.out.println(getProductsTable(products));
-    }
-
-    public static String getProductsTableHeader() {
-        return " " + String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
-                "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD", "TOTAL-SALES",
-                "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
-    }
-    public static String getProductsTable(ArrayList<Product> products) {
-        StringBuilder productsTable = new StringBuilder();
-        String header = getProductsTableHeader();
-        productsTable.append(header);
-        productsTable.append("\n");
-        for (Product product : products) {
-            productsTable.append(product.toString());
-            productsTable.append("\n");
-        }
-        return productsTable.toString();
-    }
-
     public int selectMenuOption(int warehouseNumber) {
         int input;
         System.out.println("MANAGE WAREHOUSE 1: \n" +
                 "\t 1. Add Products. \n" +
                 "\t 2. Remove Products. \n" +
-                "\t 2. Add Product Quantity. \n" +
-                "\t 3. Display Products by Decreasing Profit Percent. \n" +
-                "\t 4. Display Low-In-Stock Products. \n" +
-                "\t 5. Display Quantity-In-Stock for each Product by Warehouse.\n" +
+                "\t 3. Add Product Quantity. \n" +
+                "\t 4. View Products by Decreasing Profit Percent. \n" +
+                "\t 5. View Low-In-Stock Products. \n" +
+                "\t 6. View Quantity-In-Stock for each Product by Warehouse.\n" + // TODO: Display BOTH Warehouses.
                 "Select a menu option (Enter (-1) to exit): ");
         try {
             input = in.nextInt();
@@ -146,23 +147,25 @@ public class WarehouseUI {
         return in.nextLine();
     }
 
-
-    /*
-     *addQuantityMenu takes in a string for all the products in the database to print it out (avoids coupling with database),
-     *this returns an ArrayList of integers so that we can return multiple inputs and add quantities in one method, can possibly
-     */
-    public ArrayList<Integer> addQuantityMenu(String s) {
-        ArrayList<Integer> temp = new ArrayList<Integer>();
+    public HashMap<String, Integer> addQuantityMenu() {
+        HashMap<String, Integer> temp = new HashMap<>();
         boolean flag = true;
+        System.out.println("ADD PRODUCT QUANTITY: ");
         while(flag) {
             try {
-                String output = "Add quantity to which product? " + s;
-                temp.add(in.nextInt());
+                System.out.println("Enter a product to add a quantity to: ");
+                String productName = in.nextLine();
+                System.out.println("Enter a quantity to add: ");
+                int quantityToAdd = in.nextInt();
                 in.nextLine();
-                System.out.println("Add how much quantity?: ");
-                temp.add(in.nextInt());
-                in.nextLine();
-                flag = false;
+                temp.put(productName, quantityToAdd);
+
+                // Continue?
+                System.out.print("CONTINUE? (Y/N): ");
+                String enterProducts = in.nextLine();
+                if (enterProducts.equals("n") || enterProducts.equals("N")){
+                    flag = false;
+                }
             } catch (Exception e) {
                 System.out.println("Invalid input, please try again.");
             }
@@ -178,29 +181,8 @@ public class WarehouseUI {
     // keira: (VALIDATION methods) -------------------------------------------------------------------------------------
 
     // TODO: finish validation methods
-    public String inputString(String userPrompt, int maxNumOfChars) {
-        String input = "none";
-        System.out.println(userPrompt);
-        // while (not string || non-alphabetical-letters || >maxNumOfChars) keep going
-        return input;
+    public void exitValidation() {
+        System.out.print("Press ENTER to return to MAIN MENU: ");
+        String input = in.nextLine();
     }
-    public int inputInteger(String userPrompt) {
-        int input = 0;
-        System.out.println(userPrompt);
-        // while (not int || non-negative) keep going
-        return input;
-    }
-    public int inputInteger(String userPrompt, int maxInt) {
-        int input = 0;
-        System.out.println(userPrompt);
-        // while (not int || non-negative || >maxInt) keep going
-        return input;
-    }
-    public double inputDouble(String userPrompt, double maxDouble) {
-        double input = 0.0;
-        System.out.println(userPrompt);
-        // while (not int || non-negative || >maxDouble) ke
-        return input;
-    }
-
 }
