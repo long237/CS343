@@ -107,25 +107,42 @@ public class InvoiceUI {
 
     }
 
-    public void editDeliveryAddress(Invoice invoice) {
+    public String editDeliveryAddress() {
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new delivery address?");
         String newDeliveryAddr = in.nextLine();
-        invoice.setmAddress(newDeliveryAddr);
+        return newDeliveryAddr;
     }
 
-    public void changeDateOpened(Invoice invoice) {
+    public int[] changeDateOpened() {
         Scanner in = new Scanner(System.in);
-        System.out.println("What is the year of the invoice: - Please enter in form(YYYY) ");
-        int year = in.nextInt();
+        try {
+            int[] input = new int[3];
+            System.out.println("What is the year of the invoice: - Please enter in form(YYYY) ");
+            input[0] = in.nextInt();
+            if (input[0] < 0) {
+                throw new Exception();
+            }
 
-        System.out.println("What is the month of the invoice: - Please enter in form(MM)");
-        int month = in.nextInt();
+            System.out.println("What is the month of the invoice: - Please enter in form(MM)");
+            input[1] = in.nextInt();
+            if (input[1] < 0 || input[1] > 13){
+                throw new Exception();
+            }
 
-        System.out.println("What is the Day of the invoice: - Please enter in form(DD)");
-        int day = in.nextInt();
-
-        invoice.setmDateOpened(LocalDate.of(year, month, day));
+            System.out.println("What is the Day of the invoice: - Please enter in form(DD)");
+            input[2] = in.nextInt();
+            if (input[2] < 0 || input[2] > 31) {
+                throw new Exception();
+            }
+            return input;
+        }
+        catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
+            int[] error = new int[3];
+            error[0] = -2;
+            return error;
+        }
     }
 
     public void addProductPurchased (Invoice invoice) {
@@ -210,6 +227,51 @@ public class InvoiceUI {
                 System.out.println(inv);
             }
         }
+    }
+
+    public ArrayList<String> addInvoiceMenu() {
+        Scanner in = new Scanner(System.in);
+        ArrayList<String> outputList = new ArrayList<>();
+        outputList.add("Customer Name: ");
+        outputList.add("Products Purchased: ");
+        outputList.add("Tax Rate: ");
+        outputList.add("Total: ");
+        outputList.add("Delivery: ");
+        outputList.add("Delivery Address: ");
+        ArrayList<String> temp = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            if (i < 6) {
+                System.out.println("\tEnter the invoice's " + outputList.get(i));
+                System.out.println("\t(Enter (-1) to ABORT)");
+            }
+            else {
+                System.out.println("CONTINUE ADDING INVOICES? (Enter (-1) to EXIT): ");
+            }
+            System.out.print("\t");
+            String input = in.nextLine();
+            if (input.equals("-1") && i != 6) {
+                temp.clear();
+                temp.add("-1");
+                return temp;
+            }
+            if (i == 1) {
+                try {
+                    Integer.parseInt(input);
+                }
+                catch(Exception e) {
+                    System.out.println("Invalid input, please try again: ");
+                }
+            }
+            if (i > 1 && i != 6) {
+                try {
+                    Double.parseDouble(input);
+                } catch (Exception e) {
+                    System.out.println("Invalid input, please try again: ");
+                }
+            }
+            temp.add(input);
+        }
+        return temp;
     }
 
 

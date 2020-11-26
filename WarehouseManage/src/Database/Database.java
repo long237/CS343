@@ -230,7 +230,6 @@ public class Database {
         return salespeople;
     }
 
-
     public int maxWarehouses() {
         int warehouseCount = 1;
         while (true) {

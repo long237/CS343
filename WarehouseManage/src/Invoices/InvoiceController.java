@@ -2,80 +2,81 @@ package Invoices;
 import Database.Database;
 import Products.Product;
 import Warehouses.WarehouseUI;
+import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InvoiceController {
 
-//    private Database db = new Database();
-//    private InvoiceUIKEIRA ui = new InvoiceUIKEIRA();
-//
-//    public ArrayList<Invoice> getInvoices() { return db.retrieve_invoices(); }
-//    public int getMaxNumOfWarehouses() { return db.maxWarehouses(); }
-//
-//    public Invoice getInvoice(int invoiceID) {
-//        Invoice invoiceToReturn = new Invoice(); // invoiceToReturn.getInvoiceId() => -1234
-//        for (Invoice invoice : getInvoices()) {
-//            if (invoice.getInvoiceId() == invoiceID) {
-//                invoiceToReturn = invoice;
-//            }
-//        }
-//        return invoiceToReturn;
-//    }
-//
-//    // kkkkk: returns TRUE if Invoice w/ given invoiceID exists in getInvoices()
-//    public boolean findInvoice(int invoiceID) {
-//        boolean invoiceExists = false;
-//        if (!getInvoice(invoiceID).getInvoiceId() = -1234) {
-//            invoiceExists = true;
-//        }
-//        return invoiceExists;
-//    }
-//
-//    // kkkkk: returns TRUE if Invoice w/ given invoiceInfo was successfully added to database
-//    public boolean addInvoice(String invoiceID, String customerName, String invoiceStatus, double taxRate,
-//                              boolean deliveryStatus, String address) {
-//        boolean addedProduct = false;
-//        Invoice invoiceToAdd = new Invoice(invoiceID, customerName, InvoiceStatus, TaxRate,
-//                   deliveryStatus, address, dateOpened);
-//        if (!findProduct(warehouseNumber, productToAdd.getName())) {
-//            ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
-//            warehouseProducts.add(productToAdd);
-//            db.update_products(warehouseNumber, warehouseProducts);
-//            addedProduct = true;
-//        }
-//        return addedProduct;
-//    }
-//
-//    // kkkkk: (returns TRUE if productToRemove was successfully removed from database)
-//    public boolean removeProduct(int warehouseNumber, String productToRemove) {
-//        boolean removedProduct = false;
-//        if (findProduct(warehouseNumber, productToRemove)) {
-//            ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
-//            //System.out.println("REMOVING: " + getProduct(warehouseNumber, productToRemove).getName());
-//            warehouseProducts.remove(getProduct(warehouseNumber, productToRemove));
-//            //System.out.println("WAREHOUSE AFTER REMOVING: " + warehouseProducts);
-//            db.update_products(warehouseNumber, warehouseProducts);
-//            removedProduct = true;
-//        }
-//        return removedProduct;
-//    }
-//
-//    public boolean addProductQuantity(int warehouseNumber, String productName, int quantityToAdd) {
-//        boolean addedQuantity = false;
-//        ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
-//        for (Product product : warehouseProducts) {
-//            if (product.getName().equals(productName)) {
-//                //System.out.println("ADDING " + quantityToAdd + " " + productName.toUpperCase() + "'s...");
-//                product.addQuantityInStock(quantityToAdd);
-//                //System.out.println(product);
-//                db.update_products(warehouseNumber, warehouseProducts);
-//                addedQuantity = true;
-//            }
-//        }
-//        return addedQuantity;
-//    }
+    private Database db = new Database();
+    private InvoiceUIKEIRA ui = new InvoiceUIKEIRA();
+
+    public ArrayList<Invoice> getInvoices() { return db.retrieve_invoices(); }
+    public int getMaxNumOfInvoices() { return getInvoices().size(); }
+
+    public Invoice getInvoice(int invoiceID) {
+        Invoice invoiceToReturn = new Invoice(); // invoiceToReturn.getInvoiceId() => -1234
+        for (Invoice invoice : getInvoices()) {
+            if (invoice.getInvoiceId() == invoiceID) {
+                invoiceToReturn = invoice;
+            }
+        }
+        return invoiceToReturn;
+    }
+
+    // kkkkk: returns TRUE if Invoice w/ given invoiceID exists in getInvoices()
+    public boolean findInvoice(int invoiceID) {
+        boolean invoiceExists = false;
+        if (getInvoice(invoiceID).getInvoiceId() != -1234) {
+            invoiceExists = true;
+        }
+        return invoiceExists;
+    }
+
+    // kkkkk: returns TRUE if Invoice w/ given invoiceInfo was successfully added to database
+    public boolean addInvoiceK(int invoiceID, String customerName, boolean invoiceStatus, double taxRate,
+                              boolean deliveryStatus, String address, LocalDate dateOpened) {
+        boolean addedInvoice = false;
+        Invoice invoiceToAdd = new Invoice(invoiceID, customerName, invoiceStatus, taxRate,
+                   deliveryStatus, address, dateOpened);
+        if (!findInvoice(invoiceToAdd.getInvoiceId())) {
+            ArrayList<Invoice> invoices = getInvoices();
+            invoices.add(invoiceToAdd);
+            db.update_invoices(invoices);
+            addedInvoice = true;
+        }
+        return addedInvoice;
+    }
+
+    // kkkkk: (returns TRUE if invoiceToRemove was successfully removed from database)
+    public boolean removedInvoice(int invoiceToRemove) {
+        boolean removedInvoice = false;
+        if (findInvoice(invoiceToRemove)) {
+            ArrayList<Invoice> invoices = getInvoices();
+            //System.out.println("REMOVING: " + getProduct(warehouseNumber, productToRemove).getName());
+            invoices.remove(getInvoice(invoiceToRemove)); // TODO: must override equals() for this to work
+            //System.out.println("WAREHOUSE AFTER REMOVING: " + warehouseProducts);
+            db.update_invoices(invoices);
+            removedInvoice = true;
+        }
+        return removedInvoice;
+    }
+
+    public boolean addProductPurchased(int invoiceID, Product newProduct) {
+        boolean addedQuantity = false;
+        ArrayList<Invoice> invoices = getInvoices();
+        for (Invoice invoice : invoices) {
+            if (invoice.getInvoiceId() == invoiceID) {
+                //System.out.println("ADDING newProduct.getName().toUpperCase() + "'s...");
+                invoice.addProductsPurchased(newProduct);
+                //System.out.println(product);
+                db.update_invoices(invoices);
+                addedQuantity = true;
+            }
+        }
+        return addedQuantity;
+    }
 
     public void Icontroller () {
         //ArrayList<Invoices.Invoice> i_data = retrieve_invoices();
@@ -119,17 +120,36 @@ public class InvoiceController {
                 }
 
                 if(invoice_part == 1) {         //1.Change the customername
-                    this.editcName(invoiceUI, in_edit);
+                    String c_name = this.getcName(invoiceUI);
+                    in_edit.setmCustomerName(c_name);
                     dataBase.update_invoices(i_data);
                 }
 
                 else if(invoice_part == 2){     //2.Edit the tax rate
-                    this.editTax(invoiceUI, in_edit);
+                    double tax_input = this.getTax(invoiceUI);
+                    in_edit.setmTaxRate(tax_input);
                     dataBase.update_invoices(i_data);
                 }
                 else if (invoice_part == 3){    //3.Delivery status
-                    this.editDelivery(invoiceUI, in_edit);
+                    Boolean status = this.getDeliveryStat(invoiceUI);
+                    in_edit.setmDeliveryStatus(status);
                     dataBase.update_invoices(i_data);
+                }
+                else if (invoice_part == 4) {   //4.Delivery Address
+                    String address = this.getAddress(invoiceUI);
+                    in_edit.setmAddress(address);
+                    dataBase.update_invoices(i_data);
+                }
+                else if (invoice_part == 5) {   //5.Change date
+                    int[] date_input = this.getDate(invoiceUI);
+                    in_edit.setmDateOpened(LocalDate.of(date_input[0], date_input[1], date_input[2]));
+                    dataBase.update_invoices(i_data);
+                }
+                else if (invoice_part == 6) {
+                    System.out.println("Add product to be continue on Nov 27th");
+                }
+                else if (invoice_part == 7) {
+                    System.out.println("Remove product to be continue on Nov 27th");
                 }
             }
 
@@ -137,7 +157,8 @@ public class InvoiceController {
                 invoiceUI.editInvoiceMenu();
             }
 
-            else if (menu_op == 3){
+            else if (menu_op == 3){             //3.Add invoice.
+                ArrayList<String> user_input = invoiceUI.addInvoiceMenu();
 
             }
 
@@ -145,29 +166,52 @@ public class InvoiceController {
             //view in
         }
     }
-    public void editcName(InvoiceUI invoiceUI, Invoice in_edit){
+    public String getcName(InvoiceUI invoiceUI){
         String c_name = invoiceUI.editCustomerName();
         while(c_name.equals("-2")){
             c_name = invoiceUI.editCustomerName();
         }
-        in_edit.setmCustomerName(c_name);
-        //dataBase.update_invoices(i_data);
+        return c_name;
+        //in_edit.setmCustomerName(c_name);
     }
 
-    public void editTax(InvoiceUI invoiceUI, Invoice in_edit){
+    public double getTax(InvoiceUI invoiceUI){
         double tax_input = -2;
         while (tax_input == -2 || tax_input < 0){
             tax_input = invoiceUI.editTaxRate();
         }
-        in_edit.setmTaxRate(tax_input);
+        return tax_input;
+        //in_edit.setmTaxRate(tax_input);
     }
 
-    public void editDelivery(InvoiceUI invoiceUI, Invoice in_edit){
+    public Boolean getDeliveryStat(InvoiceUI invoiceUI){
         String status = invoiceUI.editDeliveryStatus();
         while ( !status.equals("OPEN") && !status.equals("CLOSE")){
             status = invoiceUI.editDeliveryStatus();
+            System.out.println("Invalid input, please try again.");
         }
-        in_edit.setmDeliveryStatus(status.equals("OPEN"));
+        return status.equals("OPEN");
+        //in_edit.setmDeliveryStatus(status.equals("OPEN"));
+    }
+
+    public String getAddress(InvoiceUI invoiceUI){
+        String address = invoiceUI.editDeliveryAddress();
+        return address;
+        //in_edit.setmAddress(address);
+    }
+
+    public int[] getDate(InvoiceUI invoiceUI) {
+        int[] date_input = new int[3];
+        date_input[0] = -1;
+        while (date_input[0] < 0 || date_input[1] < 0 || date_input[1] > 13 || date_input[2] < 0 || date_input[2] > 31){
+            date_input = invoiceUI.changeDateOpened();
+        }
+        return date_input;
+        //in_edit.setmDateOpened(LocalDate.of(date_input[0], date_input[1], date_input[2]));
+    }
+
+    public void addInvoice(Invoice UI){
+
     }
 
     public static void main(String[] args) {
