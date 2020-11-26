@@ -1,8 +1,13 @@
 package Invoices;
 
+import Database.Database;
 import Products.Product;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 public class Invoice {
@@ -15,6 +20,7 @@ public class Invoice {
     private String mAddress;
     private HashSet<Product> mProductsPurchased;
     private double totalCost = 0;
+    private LocalDate mDateOpened;
 
 
     public Invoice() {
@@ -25,10 +31,11 @@ public class Invoice {
         this.mDeliveryStatus = false;
         this.mAddress = "1234 address";
         this.mProductsPurchased = new HashSet<Product>();
+        this.mDateOpened = LocalDate.of(2020,2,22);
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress) {
+                   boolean mDeliveryStatus, String mAddress, LocalDate dateOpened) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = mInvoiceStatus;
@@ -36,6 +43,7 @@ public class Invoice {
         this.mDeliveryStatus = mDeliveryStatus;
         this.mAddress = mAddress;
         this.mProductsPurchased = new HashSet<Product>();
+        this.mDateOpened = dateOpened;
     }
 
     public int getInvoiceId() {
@@ -62,12 +70,12 @@ public class Invoice {
         return mAddress;
     }
 
+    public LocalDate getDateOpened() { return mDateOpened; }
+
+    public double getTotalCost() { return  totalCost; }
+
     public HashSet<Product> getProductsPurchased() {
         return mProductsPurchased;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
     }
 
     public void addProductsPurchased(Product newProducts) {
@@ -102,6 +110,10 @@ public class Invoice {
         this.mAddress = mAddress;
     }
 
+    public void setmDateOpened(LocalDate newDate) { this.mDateOpened = newDate; }
+
+
+
     @Override
     public String toString() {
         return "Invoices.Invoice{" +
@@ -112,12 +124,14 @@ public class Invoice {
                 ", mDeliveryStatus=" + mDeliveryStatus +
                 ", mAddress='" + mAddress + '\'' +
                 ", mProductsPurchased=" + mProductsPurchased +
+                ", mDateOpened= " + mDateOpened +
+                ", mTotalCost = " + totalCost +
                 '}';
     }
 
     public void calCost() {
         for (Product product : mProductsPurchased){
-            this.totalCost += product.getCost();
+            this.totalCost += product.getCost() * product.getQuantitySold();
         }
     }
 
@@ -148,13 +162,16 @@ public class Invoice {
         System.out.println("This is invoice testing. ");
         System.out.println("Invoices.Invoice: " + invoice1);
 
-        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st");
+        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 21));
         System.out.println("Invoices.Invoice 2: " + invoice2);
         invoice2.setmAddress("123 Second st");
         invoice2.setmCustomerName("Alatreon");
         invoice2.setmDeliveryStatus(false);
         invoice2.setmTaxRate(15);
         System.out.println("After: " + invoice2);
+
+        Invoice invoice3 = new Invoice();
+        invoice3.setmDateOpened(LocalDate.of(2020, 11, 24));
 
         Product product1 = new Product();
         Product product2 = new Product();
@@ -179,21 +196,28 @@ public class Invoice {
         invoice2.addProductsPurchased(product3);
         invoice2.calCost();
 
-        invoice1.Save_Database();
-        invoice2.Save_Database();
+        invoice3.addProductsPurchased(product2);
 
-//        try {
-//            FileWriter outfile = new FileWriter("InvoiceData.txt", true);
-//            PrintWriter printWriter = new PrintWriter(outfile);
-//            printWriter.println(invoice1.getInvoiceId() + " " + invoice1.getCustomerName() + " " + invoice1.getTaxRate());
-//            printWriter.println(invoice2.getInvoiceId() + " " + invoice2.getCustomerName() + " " + invoice2.getTaxRate());
-//            printWriter.close();
-//        }
-//        catch (FileNotFoundException e) {
-//            System.out.println("Invoices.Invoice Data base does not exist.");
-//        }
-//        catch (IOException e) {
-//            System.out.println("IO exception !!!!");
-//        }
+        System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
+
+        ArrayList<Invoice> invoicesList = new ArrayList<Invoice>();
+        invoicesList.add(invoice1);
+        invoicesList.add(invoice2);
+        invoicesList.add(invoice3);
+        Database Idata= new Database();
+        Idata.update_invoices(invoicesList);
+//        invoice1.Save_Database();
+//        invoice2.Save_Database();
+        ArrayList<Invoice> retriveInvoices = Idata.retrieve_invoices();
+
+        InvoiceUI invUI = new InvoiceUI();
+        System.out.println("All Invoices : ");
+        invUI.viewAllInvoices(retriveInvoices);
+        System.out.println("\n closed invoices: ");
+        invUI.viewClosedInvoices(retriveInvoices);
+        System.out.println("\n Open Invoices");
+        invUI.viewOpenInvoices(retriveInvoices);
+        System.out.println("Hello Wold");
+
     }
 }

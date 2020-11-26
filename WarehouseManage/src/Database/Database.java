@@ -1,30 +1,93 @@
 package Database;
 
+import Customers.Customer;
 import Invoices.Invoice;
 import Products.Product;
+import Salespeople.Salesperson;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Database {
 
-
-    public static void update_invoices(ArrayList<Invoice> invoices) {
-        // invoice 1 ...
-        // incoice 2....
+    /** Overwrite the database and replace with info from the new Arraylist of invoice, NOT APPEND **/
+    //Data base format: InvoiceID;CustomerName;Status;Taxrate;
+    // DeliveryStat;Address;Date;TotalCost;Date;Product;Productname;Productcost;Quantity
+    public void update_invoices(ArrayList<Invoice> invoice_list) {
+        try {
+            FileWriter outfile = new FileWriter("InvoiceData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+            for (Invoice invoice : invoice_list) {
+                printWriter.print(invoice.getInvoiceId() + ";" + invoice.getCustomerName() + ";" + invoice.getInvoiceStatus() + ";"
+                        + invoice.getTaxRate() + ";" + invoice.getDeliveryStatus() + ";"
+                        + invoice.getAddress() + ";" + invoice.getDateOpened() + ";" + invoice.getTotalCost() + ";Product;");
+                HashSet<Product> Product_list = invoice.getProductsPurchased();
+                for (Product temp : Product_list) {
+                    printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
+                }
+                printWriter.println("");
+            }
+            printWriter.close();
+            outfile.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Invoices.Invoice Data base does not exist.");
+        }
+        catch (IOException e) {
+            System.out.println("IO exception !!!!");
+        }
     }
 
+    //fixme: fix the Date of object into Local Date.
     public static ArrayList<Invoice> retrieve_invoices() {
         ArrayList<Invoice> invoices = new ArrayList<Invoice>();
-        // invoice 1  index 0
-        // invoice 2   index 1
-        // invoice 3  index 2
+        ArrayList<String> invoiceString = new ArrayList<>();
+        int numOfInvoices = 0;
+        try {
+            File invoiceTxt = new File("InvoiceData.txt");
+            Scanner scanner = new Scanner(invoiceTxt);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                invoiceString.add(data);
+                numOfInvoices++;
+            }
 
-        // recreates invoices
-        // recreates products
-        // add products objects to Hashset in each invoice
-        // add all invoices ot arraylist
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < numOfInvoices; i++) {
+           String[] invoiceData = invoiceString.get(i).split(";");
+           HashSet<Product> tempProducts = new HashSet<>();
+
+           //recreate local date object
+            int year = Integer.parseInt(invoiceData[6].substring(0, 4));
+            int month = Integer.parseInt(invoiceData[6].substring(5, 7));
+            int day = Integer.parseInt(invoiceData[6].substring(8));
+            // recreates invoices
+           Invoice tempInvoice = new Invoice(Integer.parseInt(invoiceData[0]), invoiceData[1],
+                   Boolean.parseBoolean(invoiceData[2]), Double.parseDouble(invoiceData[3]),
+                   Boolean.parseBoolean(invoiceData[4]), invoiceData[5], LocalDate.of(year,month,day));
+            // recreates products
+            for (int j = 9; j < invoiceData.length; j += 3) {
+                Product tempProduct = new Product(invoiceData[j], Double.parseDouble(invoiceData[j + 1]),
+                        Integer.parseInt(invoiceData[j + 2]));
+                tempProducts.add(tempProduct);
+            }
+            // add products objects to Hashset in each invoice
+            for (Product p : tempProducts) {
+                tempInvoice.addProductsPurchased(p);
+            }
+            //re-caluclate total cost for invoice
+            tempInvoice.calCost();
+            // add all invoices ot arraylist
+            invoices.add(tempInvoice);
+        }
         // return arraylist
         return invoices;
     }
@@ -90,4 +153,94 @@ public class Database {
         }
         return warehouseCount-1;
     }
+
+    /** Add an arrayList of customers object into the databse to save the value
+     *  overwrite existing value, NOT APPEND**/
+    // Database format: name;taxrate
+    public void update_customer(ArrayList<Customer> customerList){
+        try {
+            FileWriter outfile = new FileWriter("CustomerData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+
+            for (Customer customer : customerList) {
+                printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
+            }
+            printWriter.close();
+            outfile.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Customers!!!!");
+        }
+    }
+
+    public ArrayList<Customer> retrieve_Customer() {
+        ArrayList<Customer> customers = new ArrayList<>();
+        ArrayList<String> customerData = new ArrayList<>();
+
+        try {
+            File customerTxt = new File("CustomerData.txt");
+            Scanner scanner = new Scanner(customerTxt);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                customerData.add(data);
+            }
+
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File not found for CustomerData.txt");
+        }
+
+        for (int i = 0; i < customerData.size(); i++) {
+            String[] singleCustomer = customerData.get(i).split(";");
+            customers.add(new Customer(singleCustomer[0], Double.parseDouble(singleCustomer[1])));
+
+        }
+        return customers;
+
+    }
+
+    /** Add saleperson info to data and overwrite previous value in database, NOT APPEND**/
+    //format database: name;ID;commision;totalsales
+    public void update_Saleperson(ArrayList<Salesperson> employeeList) {
+        try{
+            FileWriter outfile = new FileWriter("SalepersonData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+
+            for (Salesperson person : employeeList){
+                printWriter.println(person.getSalespersonName() + ";" + person.getSalespersonID() + ";"
+                        + person.getSalespersonCommission() + ";" + person.getTotalSales());
+            }
+            printWriter.close();
+            outfile.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Saleperson");
+        }
+    }
+
+    public ArrayList<Salesperson> retrieve_salesPerson() {
+        ArrayList<Salesperson> salespeople = new ArrayList<>();
+        ArrayList<String> salesPeopleData = new ArrayList<>();
+
+        try {
+            File salesPersonTxt = new File("SalepersonData.txt");
+            Scanner scanner = new Scanner(salesPersonTxt);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                salesPeopleData.add(data);
+            }
+
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File not found for SalespersonData.txt");
+        }
+
+        for (int i = 0; i < salesPeopleData.size(); i++) {
+            String[] singleSalesPerson = salesPeopleData.get(i).split(";");
+            salespeople.add(new Salesperson(singleSalesPerson[0], Integer.parseInt(singleSalesPerson[1]),
+                    Double.parseDouble(singleSalesPerson[2]), Integer.parseInt(singleSalesPerson[3])));
+        }
+        return salespeople;
+    }
+
 }

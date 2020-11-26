@@ -35,7 +35,7 @@ public class Product {
     }
 
     // REVIEW: should this constructor be allowed ...
-    public Product(String name, int quantitySold, double cost){
+    public Product(String name, double cost, int quantitySold ){
         this.mName = name;
         this.mQuantityInStock = 0;
         this.mCost = cost;
