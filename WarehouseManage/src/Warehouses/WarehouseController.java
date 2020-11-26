@@ -1,8 +1,14 @@
 package Warehouses;
 
 import Products.Product;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import Database.Database;
+import java.util.Collections;
+import java.util.Comparator;
+import Products.ProfitPercentComparator;
+import Products.QuantityInStockComparator;
 
 public class WarehouseController {
 
@@ -84,13 +90,21 @@ public class WarehouseController {
                 warehouseNumber = ui.selectWarehouseNumber(1, getMaxNumOfWarehouses());
             }
 
+            // Initialize productsToDisplay (will be set to diff. productsToDisplay in 3, 4, & 5)
+            ArrayList<Product> productsToDisplay = getProducts(warehouseNumber);
+
             // kkkkk: "WAREHOUSE 1: "
             while (menuOption != -1) { // User enters "-1" to exit / go back to "Manage Warehouse: " Window.
-                ui.printWarehouseProducts(warehouseNumber, getProducts(warehouseNumber)); // TODO: (create sort methods & input the List of Products into this method)
+
+                // Products Table
+                ui.printWarehouseProducts(warehouseNumber, productsToDisplay);
+
                 // kkkkk: "MANAGE WAREHOUSE 1: " Window
                 menuOption = ui.selectMenuOption(warehouseNumber);
-                // kkkkk: "ADDING PRODUCT(s) TO WAREHOUSE 1 ... " Window
+
+                // kkkkk: 1. Add Products.
                 if (menuOption == 1) {
+                    // KKKKK: "ADDING PRODUCT(s) TO WAREHOUSE 1 ... " Window
                     productsToAdd = ui.selectAddProduct(warehouseNumber);
                     for (ArrayList<String> productInfo : productsToAdd) {
                         if (Integer.parseInt(productInfo.get(1)) < 0) {
@@ -102,12 +116,18 @@ public class WarehouseController {
                         addProduct(warehouseNumber, productInfo.get(0), Integer.parseInt(productInfo.get(1)), Double.parseDouble(productInfo.get(2)), Double.parseDouble(productInfo.get(3)));
                     }
                 }
-                // kkkkk: "REMOVING PRODUCT(s) FROM WAREHOUSE 1 ..." Window
+
+                // kkkkk: 2. Remove Products.
                 else if (menuOption == 2) {
+                    // KKKKK: "REMOVING PRODUCT(s) FROM WAREHOUSE 1 ..." Window
                     String productToRemove = ui.removeProductMenu();
                     removeProduct(warehouseNumber, productToRemove); // TODO: let the user know if was unable to add productToRemove
                 }
-                // kkkkk: "ADD PRODUCT QUANTITY: " Window
+                // KKKKK: "ADD PRODUCT QUANTITY: " Window
+                // kkkkk: 3. View Products By Decreasing Profit Percent
+                else if (menuOption == 3) {
+                    Collections.sort(productsToDisplay, new ProfitPercentComparator());
+                }
                 //add product 1
                 //add product 2
                 //after addition or modification, removal
