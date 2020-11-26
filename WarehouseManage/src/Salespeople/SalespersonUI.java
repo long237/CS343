@@ -10,6 +10,7 @@ public class SalespersonUI {
         System.out.println("SalesPerson Menu: ");
         System.out.println("Option 1 - Edit salesperson: ");
         System.out.println("Option 2 - View sales people: ");
+        System.out.println("(Enter -1 to exit)");
 
         try {
             Scanner in = new Scanner(System.in);
@@ -17,7 +18,7 @@ public class SalespersonUI {
             in.nextLine();
             return choice;
         } catch (Exception e) {
-            System.out.println("Invalid input: Enter the number 1 or 2");
+            System.out.println("Invalid input: Enter the number 1 or 2. (Enter -1 to exit.)");
             return -2;
         }
     }
@@ -43,6 +44,7 @@ public class SalespersonUI {
         System.out.println("Option 2 - Edit ID: ");
         System.out.println("Option 3 - Edit Commission Rate: ");
         System.out.println("Option 4 - Edit Total Sales: ");
+        System.out.println("(Enter -1 to exit)");
 
         Scanner in = new Scanner(System.in);
         try {
@@ -63,30 +65,50 @@ public class SalespersonUI {
         salesperson.setSalespersonName(newName);
     }
 
-    public void editSalespersonID(Salesperson salesperson) {
-
+    public boolean editSalespersonID(Salesperson salesperson) {
+        int newID;
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new ID for the salesperson?: ");
-        int newID = in.nextInt();
+        try {
+            newID = in.nextInt();
+            in.nextLine();
+        } catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value");
+            return false;
+        }
         salesperson.setSalespersonID(newID);
+        return true;
     }
 
-    public void editCommissionRate(Salesperson salesperson) {
-
+    public boolean editCommissionRate(Salesperson salesperson) {
+        double newCommission;
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new commission rate for the salesperson?: ");
-        double newCommission = in.nextDouble();
+        try {
+            newCommission = in.nextDouble();
+            in.nextLine();
+        } catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value");
+            return false;
+        }
         salesperson.setSalespersonCommission(newCommission);
+        return true;
 
     }
 
-    public void editTotalSales(Salesperson salesperson) {
-
+    public boolean editTotalSales(Salesperson salesperson) {
+        int newTotalSales;
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new number of total sales for the salesperson?: ");
-        int newTotalSales = in.nextInt();
+        try {
+            newTotalSales = in.nextInt();
+            in.nextLine();
+        } catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value");
+            return false;
+        }
         salesperson.setTotalSales(newTotalSales);
-
+        return true;
     }
 
     public void viewSalesperson(ArrayList<Salesperson> salesTeam) {
@@ -94,5 +116,11 @@ public class SalespersonUI {
         for (int i = 0; i < salesTeam.size(); i++) {
             System.out.println((i+ 1) + " " + salesTeam.get(i));
         }
+    }
+
+    public void exitValidation() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Press ENTER to return to MAIN MENU: ");
+        sc.nextLine();
     }
 }

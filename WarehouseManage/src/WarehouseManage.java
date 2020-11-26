@@ -1,12 +1,13 @@
 import Invoices.InvoiceController;
 import Warehouses.WarehouseController;
-
+import Salespeople.SalespersonController;
 import java.util.Scanner;
 
 public class WarehouseManage {
 
     public static void main(String[] args) {
         WarehouseController warehouseController = new WarehouseController();
+        SalespersonController sp = new SalespersonController();
         //InvoiceController invoiceController = new InvoiceController();
 
         // Add invoice    1
@@ -23,6 +24,11 @@ public class WarehouseManage {
 //        if (user_input == 1) {
 //            invoiceController.Icontroller();
 //        }
+
+        if (user_input == 2) {
+            sp.salespersonController();
+        }
+
         if(user_input == 3) {
             warehouseController.warehouseController();
         }
