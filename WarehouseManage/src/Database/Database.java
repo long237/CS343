@@ -77,4 +77,17 @@ public class Database {
         }
         return products;
     }
+
+    public int maxWarehouses() {
+        int warehouseCount = 1;
+        while (true) {
+            File tempFile = new File("Warehouse" + Integer.toString(warehouseCount) + ".txt");
+            boolean exists = tempFile.exists();
+            if (!exists) {
+                break;
+            }
+            warehouseCount++;
+        }
+        return warehouseCount-1;
+    }
 }

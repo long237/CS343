@@ -4,13 +4,13 @@ import java.util.ArrayList;
 // REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
 public class InvoiceController { // extends InvoiceDB
 
-    InvoiceUI invoiceUI = new InvoiceUI();
-    invoiceUI.printSubMenu();
-    int user = invoiceUI.getOPtion();
-
-    if  ( user == 1) {
-        addINvoice()
-    }
+//    InvoiceUI invoiceUI = new InvoiceUI();
+//    invoiceUI.printSubMenu();
+//    int user = invoiceUI.getOPtion();
+//
+//    if  ( user == 1) {
+//        addINvoice();
+//    }
 
     /*
     // keira: (Control Methods) ----------------------------------------------------------------------------------------
