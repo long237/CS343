@@ -116,7 +116,7 @@ public class InvoiceUI {
     }
 
     public void addProductPurchased (Invoice invoice) {
-
+        //maybe put some code from ProductUI in here
     }
 
     public void viewProductsPurchased(Invoice invoice) {
@@ -126,46 +126,43 @@ public class InvoiceUI {
         }
     }
     public void removeProductPurchased(Invoice invoice) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter the name of the Product you want to remove?: ");
-        viewProductsPurchased(invoice);
+        if (!invoice.getProductsPurchased().isEmpty()) {
 
-        String choice = in.nextLine();
-        boolean containsProduct = false;
+            Scanner in = new Scanner(System.in);
+            System.out.println("Enter the name of the Product you want to remove?: ");
+            Product currProduct = null;
+            viewProductsPurchased(invoice);
 
-        while (containsProduct == false) {
+            String choice = in.nextLine();
+            boolean containsProduct = false;
 
-            for (Product product : invoice.getProductsPurchased()) {
-                if (product.getName() == choice) {
-                    containsProduct = true;
+            while (containsProduct == false) {
+
+                for (Product product : invoice.getProductsPurchased()) {
+                    if (product.getName() == choice) {
+                        currProduct = product;
+                        containsProduct = true;
+                    }
                 }
+                if (containsProduct == false) {
+                    System.out.println("Enter a valid product name: ");
+                    choice = in.nextLine();
+                }
+
             }
-            if (containsProduct == false) {
-                System.out.println("Enter a valid product name: ");
-                choice = in.nextLine();
+            // while (choice)
+            System.out.println("Here is the current quantity for this Product: ");
+            System.out.println("The Product: " + currProduct.getName() + " quantity is " + currProduct.getQuantitySold());
+            System.out.println("What is the new quantity of " + currProduct.getName());
+            int newQuantity = in.nextInt();
+            currProduct.setQuantityInStock(newQuantity);
+
+            if (newQuantity <= 0) {
+                invoice.removePurchasedProduct(currProduct);
             }
 
         }
-       // while (choice)
-        System.out.println("Here is the current quantity for this Product: ");
-
-
-    }
-    public void editInvoice(Invoice invoice, ArrayList<Invoice> invoices) {
-
-
-
-        //ask for product purchased
-        //damn...
-
-
-
-
-
-        //change date opened
-        //add later
-        ///perhaps should break this all up
-
+        System.out.println("There are no products to be removed.");
 
     }
 
