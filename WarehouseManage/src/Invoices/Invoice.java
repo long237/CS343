@@ -35,6 +35,18 @@ public class Invoice {
         this.mDateOpened = LocalDate.of(2020,2,22);
     }
 
+    /**Temporary constructor for adding invoice without the product list **/
+    public Invoice(String mCustomerName, double mTaxRate,
+                   boolean mDeliveryStatus, String mAddress, LocalDate mDateOpened) {
+        this.mCustomerName = mCustomerName;
+        this.mInvoiceStatus = true;
+        this.mTaxRate = mTaxRate;
+        this.mDeliveryStatus = mDeliveryStatus;
+        this.mAddress = mAddress;
+        this.mProductsPurchased = new HashSet<Product>();
+        this.mDateOpened = mDateOpened;
+    }
+
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
                    boolean mDeliveryStatus, String mAddress, LocalDate dateOpened) {
         this.mInvoiceId = mInvoiceId;

@@ -34,7 +34,7 @@ public class Product {
         this.mTotalSales = 0.0;
     }
 
-    // REVIEW: should this constructor be allowed ...
+    /**This constructor is for recreating Product obj when retrive from invoice database **/
     public Product(String name, double cost, int quantitySold ){
         this.mName = name;
         this.mQuantityInStock = 0;
@@ -117,19 +117,28 @@ public class Product {
         return o.mName.equals(this.mName);
     }
 
+//    @Override
+//    public String toString() {
+//
+//        // FOR FUTURE REFERENCE...
+//        // "%":      1 for each variable listed.
+//        // "-":      left-align (w/o -> right-align)
+//        // "[int]":  # of spaces designated for each variable
+//        // "s":      string
+//        // "f":      float (".2f": formats floats as "0.00")
+//
+//        return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
+//                             mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
+//                             mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
+//    }
+
+
     @Override
     public String toString() {
-
-        // FOR FUTURE REFERENCE...
-        // "%":      1 for each variable listed.
-        // "-":      left-align (w/o -> right-align)
-        // "[int]":  # of spaces designated for each variable
-        // "s":      string
-        // "f":      float (".2f": formats floats as "0.00")
-
-        return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
-                             mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
-                             mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
+        return "Product{" +
+                "mName='" + mName + '\'' +
+                ", mCost=" + mCost +
+                ", mQuantitySold=" + mQuantitySold +
+                '}';
     }
-
 }

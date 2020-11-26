@@ -161,6 +161,21 @@ public class Database {
         }
     }
 
+    /**Append a new customer to the database, DOES NOT OVERWRITE existing info **/
+    public void add_customer(Customer customer){
+        try {
+            FileWriter outfile = new FileWriter("CustomerData.txt",true);
+            PrintWriter printWriter = new PrintWriter(outfile);
+            printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
+            printWriter.close();
+            outfile.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Customers!!!!");
+        }
+    }
+
     public ArrayList<Customer> retrieve_Customer() {
         ArrayList<Customer> customers = new ArrayList<>();
         ArrayList<String> customerData = new ArrayList<>();
