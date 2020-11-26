@@ -29,7 +29,7 @@ public class Database {
         return invoices;
     }
 
-    // TODO: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
+    // kkkkk: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
     public void update_products(int warehouseNumber, ArrayList<Product> warehouseProducts){
         try {
             String filename = "Warehouse" + warehouseNumber + ".txt";
@@ -51,7 +51,7 @@ public class Database {
         }
     }
 
-    // TODO: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
+    // kkkkk: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
     public ArrayList<Product> retrieve_products(int warehouseNumber) {
         ArrayList<Product> products = new ArrayList<Product>();
 

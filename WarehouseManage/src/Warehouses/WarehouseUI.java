@@ -33,7 +33,7 @@ public class WarehouseUI {
         return productsTable.toString();
     }
 
-    public int selectWarehouseNumber(int flag, int maxNumOfWarehouses) { // TODO max num warehouses
+    public int selectWarehouseNumber(int flag, int maxNumOfWarehouses) {
         if (flag == 1) {
             System.out.println("That warehouse does not exist, please try again: ");
         }
@@ -60,7 +60,7 @@ public class WarehouseUI {
                 "\t 3. Add Product Quantity. \n" +
                 "\t 4. View Products by Decreasing Profit Percent. \n" +
                 "\t 5. View Low-In-Stock Products. \n" +
-                "\t 6. View Quantity-In-Stock for each Product by Warehouse.\n" + // TODO: Display BOTH Warehouses.
+                "\t 6. View Quantity-In-Stock for each Product by Warehouse.\n" + // TODO: (Display BOTH Warehouses)
                 "Select a menu option (Enter (-1) to exit): ");
         try {
             input = in.nextInt();
@@ -121,7 +121,7 @@ public class WarehouseUI {
         boolean contLoop = true;
 
         ArrayList<ArrayList<String>> productsInfo = new ArrayList<ArrayList<String>>();
-        System.out.println("ADDING PRODUCT(s) to WAREHOUSE " + warehouseNumber + " ... "); // XXXXX: Replace "1" w/ getWarehouseNum() from Controller
+        System.out.println("ADDING PRODUCT(s) to WAREHOUSE " + warehouseNumber + " ... ");
         while (contLoop) {
 
             ArrayList<String> productMenuOption = addProductMenu();
@@ -142,15 +142,33 @@ public class WarehouseUI {
         return productsInfo;
     }
 
-    public String removeProductMenu() {
-        System.out.println("Which product would you like to remove?");
-        return in.nextLine();
+    public ArrayList<String> removeProductMenu() {
+        ArrayList<String> productsToRemove = new ArrayList<>();
+        boolean flag = true;
+        System.out.println("REMOVING PRODUCT(s) ... ");
+        while(flag) {
+            try {
+                System.out.println("\tWhich product would you like to remove? ");
+                System.out.print("\t");
+                productsToRemove.add(in.nextLine());
+
+                // Continue?
+                System.out.print("CONTINUE REMOVING PRODUCT(s)? (Enter (-1) to EXIT): ");
+                String enterProducts = in.nextLine();
+                if (enterProducts.equals("-1") || enterProducts.equals("N")){
+                    flag = false;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input, please try again.");
+            }
+        }
+        return productsToRemove;
     }
 
     public HashMap<String, Integer> addQuantityMenu() {
         HashMap<String, Integer> temp = new HashMap<>();
         boolean flag = true;
-        System.out.println("ADD PRODUCT QUANTITY: ");
+        System.out.println("ADDING QUANTITY to PRODUCT(s) ... ");
         while(flag) {
             try {
                 System.out.println("Enter a product to add a quantity to: ");
@@ -161,9 +179,9 @@ public class WarehouseUI {
                 temp.put(productName, quantityToAdd);
 
                 // Continue?
-                System.out.print("CONTINUE? (Y/N): ");
+                System.out.print("CONTINUE ADDING QUANTITY to PRODUCT(s)? (Enter (-1) to EXIT): ");
                 String enterProducts = in.nextLine();
-                if (enterProducts.equals("n") || enterProducts.equals("N")){
+                if (enterProducts.equals("-1") || enterProducts.equals("N")){
                     flag = false;
                 }
             } catch (Exception e) {
@@ -178,9 +196,6 @@ public class WarehouseUI {
     public void selectLowInStock() {}
     public void selectQuantityInStock() {}
 
-    // keira: (VALIDATION methods) -------------------------------------------------------------------------------------
-
-    // TODO: finish validation methods
     public void exitValidation() {
         System.out.print("Press ENTER to return to MAIN MENU: ");
         String input = in.nextLine();

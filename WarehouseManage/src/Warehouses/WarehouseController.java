@@ -51,13 +51,28 @@ public class WarehouseController {
         boolean removedProduct = false;
         if (findProduct(warehouseNumber, productToRemove)) {
             ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
-            System.out.println("REMOVING: " + getProduct(warehouseNumber, productToRemove).getName());
+            //System.out.println("REMOVING: " + getProduct(warehouseNumber, productToRemove).getName());
             warehouseProducts.remove(getProduct(warehouseNumber, productToRemove));
-            System.out.println("WAREHOUSE AFTER REMOVING: " + warehouseProducts);
+            //System.out.println("WAREHOUSE AFTER REMOVING: " + warehouseProducts);
             db.update_products(warehouseNumber, warehouseProducts);
             removedProduct = true;
         }
         return removedProduct;
+    }
+
+    public boolean addProductQuantity(int warehouseNumber, String productName, int quantityToAdd) {
+        boolean addedQuantity = false;
+        ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
+        for (Product product : warehouseProducts) {
+            if (product.getName().equals(productName)) {
+                //System.out.println("ADDING " + quantityToAdd + " " + productName.toUpperCase() + "'s...");
+                product.addQuantityInStock(quantityToAdd);
+                //System.out.println(product);
+                db.update_products(warehouseNumber, warehouseProducts);
+                addedQuantity = true;
+            }
+        }
+        return addedQuantity;
     }
 
     public void warehouseController() {
@@ -93,24 +108,26 @@ public class WarehouseController {
                         if (Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0) {
                             break;
                         }
-                        // TODO: let the user know if was unable to add productInfo[0] (productToAdd's name)
+                        // TODO: let the user know if was unable to add productInfo[0] (productToAdd's name) & remprompt user for input.
                         addProduct(warehouseNumber, productInfo.get(0), Integer.parseInt(productInfo.get(1)), Double.parseDouble(productInfo.get(2)), Double.parseDouble(productInfo.get(3)));
                     }
                 }
                 // kkkkk: (2. Remove Products.)
                 else if (menuOption == 2) {
                     // KKKKK: ("REMOVING PRODUCT(s) FROM WAREHOUSE 1 ..." Window)
-                    String productToRemove = ui.removeProductMenu();
-                    // TODO: (removeProduct currently fails to remove Product)
-                    // TODO: let the user know if was unable to remove productToRemove
-                    removeProduct(warehouseNumber, productToRemove);
+                    ArrayList<String> productsToRemove = ui.removeProductMenu();
+                    // TODO: let the user know if was unable to remove productToRemove & remprompt user for input.
+                    for (String productToRemove : productsToRemove) {
+                        removeProduct(warehouseNumber, productToRemove);
+                    }
                 }
                 // kkkkk: 3. Add Product Quantity.
                 else if (menuOption == 3) {
                     // KKKKK: "ADD PRODUCT QUANTITY: " Window
                     HashMap<String, Integer> productsToAddQuantityTo = ui.addQuantityMenu();
                     for (Map.Entry<String, Integer> product : productsToAddQuantityTo.entrySet()) {
-                        // TODO: edit product in database
+                        // TODO: let user know if productName or productQuantity is invalid / unable to add productQuantity & remprompt user for input.
+                        addProductQuantity(warehouseNumber, product.getKey(), product.getValue());
                     }
                 }
                 // kkkkk: (4. View Products By Decreasing Profit Percent.)
