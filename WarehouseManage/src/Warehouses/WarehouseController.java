@@ -60,7 +60,6 @@ public class WarehouseController {
         }
         return removedProduct;
     }
-    // keira: (END of Control Methods) ---------------------------------------------------------------------------------
 
     public void warehouseController() {
         int menuOption = 0;
@@ -75,12 +74,11 @@ public class WarehouseController {
             while (warehouseNumber > db.maxWarehouses() || (warehouseNumber < 1 && warehouseNumber != -1)) {
                 warehouseNumber = ui.selectWarehouseNumber(1, getMaxNumOfWarehouses());
             }
-
             // kkkkk: ("WAREHOUSE 1: ")
             while (menuOption != -1) { // User enters "-1" to exit / go back to "Manage Warehouse: " Window.
 
                 ArrayList<Product> productsToDisplay = getProducts(warehouseNumber);
-                ui.printWarehouseProducts(warehouseNumber, productsToDisplay); // had to change productsToDisplay to getProducts() bc data is dynamic
+                ui.printWarehouseProducts(warehouseNumber, productsToDisplay);
 
                 // kkkkk: ("MANAGE WAREHOUSE 1: " Window)
                 menuOption = ui.selectMenuOption(warehouseNumber);
