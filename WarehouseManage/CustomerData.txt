@@ -2,3 +2,4 @@ Alex Smith;5.5
 Elizabeth ;10.0
 John Brown;7.3
 Val Hazak;5.0
+Zinogre;7.5

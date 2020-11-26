@@ -22,7 +22,28 @@ public class InvoiceUI {
             in.nextLine();
             return choice;
         } catch (Exception e) {
-            System.out.println("Invalid input: Enter the number 1 or 2");
+            System.out.println("Invalid input: Enter the number 1 or 2 or 3");
+            return -2;
+        }
+    }
+
+    public int viewInvMenu(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("View Invoice Menu: ");
+        System.out.println("1. View all Invoices");
+        System.out.println("2. View open Invoices");
+        System.out.println("3. View close Invoices");
+        System.out.println("Enter -1 to exit");
+        try{
+            int choice = in.nextInt();
+            if (choice < -1 || choice > 3) {
+                throw new Exception();
+            }
+            in.nextLine();
+            return choice;
+        }
+        catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value");
             return -2;
         }
     }
@@ -98,12 +119,6 @@ public class InvoiceUI {
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new delivery status: type OPEN or CLOSED");
         String newDeliveryStatus = in.nextLine();
-
-//        if (newDeliveryStatus == "OPEN") {
-//            invoice.setmDeliveryStatus(true);
-//        } else {
-//            invoice.setmDeliveryStatus(false);
-//        }
         return newDeliveryStatus;
 
     }
@@ -228,51 +243,6 @@ public class InvoiceUI {
                 System.out.println(inv);
             }
         }
-    }
-
-    public ArrayList<String> addInvoiceMenu() {
-        Scanner in = new Scanner(System.in);
-        ArrayList<String> outputList = new ArrayList<>();
-        outputList.add("Customer Name: ");
-        outputList.add("Products Purchased: ");
-        outputList.add("Tax Rate: ");
-        outputList.add("Total: ");
-        outputList.add("Delivery: ");
-        outputList.add("Delivery Address: ");
-        ArrayList<String> temp = new ArrayList<>();
-        for (int i = 0; i < 7; i++){
-            if (i < 6) {
-                System.out.println("\tEnter the invoice's " + outputList.get(i));
-                System.out.println("\t(Enter (-1) to ABORT)");
-            }
-            else {
-                System.out.println("CONTINUE ADDING INVOICES? (Enter (-1) to EXIT): ");
-            }
-            System.out.print("\t");
-            String input = in.nextLine();
-            if (input.equals("-1") && i != 6) {
-                temp.clear();
-                temp.add("-1");
-                return temp;
-            }
-            if (i == 1) {
-                try {
-                    Integer.parseInt(input);
-                }
-                catch(Exception e) {
-                    System.out.println("Invalid input, please try again: ");
-                }
-            }
-            if (i > 1 && i != 6) {
-                try {
-                    Double.parseDouble(input);
-                } catch (Exception e) {
-                    System.out.println("Invalid input, please try again: ");
-                }
-            }
-            temp.add(input);
-        }
-        return temp;
     }
 
 

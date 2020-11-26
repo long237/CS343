@@ -152,8 +152,21 @@ public class InvoiceController {
             }
 
             else if (menu_op == 2) {            //2. View Invoice
-                invoiceUI.editInvoiceMenu();
+                int user_op = 0;
+                while (user_op != -1) {
+                    user_op = getViewInv(invoiceUI);
+                    if (user_op == 1){
+                        invoiceUI.viewAllInvoices(invoiceList);
+                    }
+                    else if(user_op == 2) {
+                        invoiceUI.viewOpenInvoices(invoiceList);
+                    }
+                    else if (user_op == 3) {
+                        invoiceUI.viewClosedInvoices(invoiceList);
+                    }
+                }
             }
+
 
             else if (menu_op == 3){             //3.Add invoice.
                 System.out.println("Add Invoice submenu: ");
@@ -165,6 +178,15 @@ public class InvoiceController {
 
             //view in
         }
+    }
+
+    //All invalid value are return -2, use -1 to exit
+    public int getViewInv(InvoiceUI invoiceUI) {
+        int user_op = -2;
+        while (user_op == -2) {
+            user_op = invoiceUI.viewInvMenu();
+        }
+        return user_op;
     }
     public String getcName(InvoiceUI invoiceUI){
         String c_name = invoiceUI.editCustomerName();
@@ -182,11 +204,12 @@ public class InvoiceController {
         return tax_input;
     }
 
+    // TODO: add an error message when the user enter the wrong value
     public Boolean getDeliveryStat(InvoiceUI invoiceUI){
         String status = invoiceUI.editDeliveryStatus();
         while ( !status.equals("OPEN") && !status.equals("CLOSE")){
             status = invoiceUI.editDeliveryStatus();
-            System.out.println("Invalid input, please try again.");
+            //System.out.println("Invalid input, please try again.");
         }
         return status.equals("OPEN");
     }
