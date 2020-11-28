@@ -39,7 +39,6 @@ public class WarehouseManage {
 //        int menuOption = in.nextInt();
 //
 //        if (menuOption == 3) {
-//            // REVIEW: (cannot call WarehouseUI methods)
 //            selectWarehouseNumber();
 //        }
 //        // keira: (END of 11/22) ---------------------------------------------------------------------------------------
