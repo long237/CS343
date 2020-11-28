@@ -63,10 +63,8 @@ public class Salesperson {
 
     @Override
     public String toString() {
-        return "Salesperson{" +
-                "mSalespersonName='" + mSalespersonName + '\'' +
-                ", mSalespersonCommission=" + mSalespersonCommission +
-                '}';
+        return ("Name: " + mSalespersonName + ", Commission Rate: " +
+                mSalespersonCommission + ", ID: " + mSalespersonID + ", Total Sales: " + mTotalSales);
     }
 
     //fixme: main for testing saving person to database
@@ -75,7 +73,7 @@ public class Salesperson {
         Salesperson s2 = new Salesperson("John Brown", 7);
         Salesperson s3 = new Salesperson();
 
-        ArrayList<Salesperson> personList= new ArrayList<Salesperson>();
+        ArrayList<Salesperson> personList= new ArrayList<>();
         personList.add(s1);
         personList.add(s2);
         personList.add(s3);

@@ -1,5 +1,6 @@
 package Database;
 
+import Customers.Customer;
 import Invoices.Invoice;
 import Products.Product;
 import Salespeople.Salesperson;
@@ -161,21 +162,6 @@ public class Database {
         }
     }
 
-    /**Append a new customer to the database, DOES NOT OVERWRITE existing info **/
-    public void add_customer(Customer customer){
-        try {
-            FileWriter outfile = new FileWriter("CustomerData.txt",true);
-            PrintWriter printWriter = new PrintWriter(outfile);
-            printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
-            printWriter.close();
-            outfile.close();
-
-        }
-        catch (IOException e) {
-            System.out.println("File not found for Customers!!!!");
-        }
-    }
-
     public ArrayList<Customer> retrieve_Customer() {
         ArrayList<Customer> customers = new ArrayList<>();
         ArrayList<String> customerData = new ArrayList<>();
@@ -199,6 +185,77 @@ public class Database {
         }
         return customers;
 
+    }
+
+    public void addCustomer(Customer c, ArrayList<Customer> customerList) {
+        int customerNameCount = 0;
+        try {
+            FileWriter outfile = new FileWriter("CustomerData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+
+            for (Customer customer : customerList) {
+                printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
+                if (c.getmName().equals(customer.getmName()) || (c.getmName() + customerNameCount).equals(customer.getmName())) {
+                    customerNameCount++;
+                }
+            }
+
+            if (customerNameCount > 0) {
+                c.setmName(c.getmName() + customerNameCount);
+            }
+
+            printWriter.println(c.getmName() + ";" + c.getmTaxrate());
+
+            printWriter.close();
+            outfile.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Customers!!!!");
+        }
+    }
+
+    public void add_Salesperson(Salesperson sp, ArrayList<Salesperson> employeeList){
+        try{
+            FileWriter outfile = new FileWriter("SalepersonData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+            //adds the original list
+            for (Salesperson person : employeeList){
+                printWriter.println(person.getSalespersonName() + ";" + person.getSalespersonID() + ";"
+                        + person.getSalespersonCommission() + ";" + person.getTotalSales());
+            }
+            //adds the new person
+            printWriter.println(sp.getSalespersonName() + ";" + sp.getSalespersonID() + ";"
+                    + sp.getSalespersonCommission() + ";" + sp.getTotalSales());
+
+            printWriter.close();
+            outfile.close();
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Saleperson");
+        }
+    }
+
+    public boolean check_ID_Exists(Salesperson sp) {
+        ArrayList<String> salesPeopleData = new ArrayList<>();
+        try {
+            File salesPersonTxt = new File("SalepersonData.txt");
+            Scanner scanner = new Scanner(salesPersonTxt);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                salesPeopleData.add(data);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("File not found for SalespersonData.txt");
+        }
+        for (int i = 0; i < salesPeopleData.size(); i++) {
+            String[] singleSalesPerson = salesPeopleData.get(i).split(";");
+            if (sp.getSalespersonID() == Integer.parseInt(singleSalesPerson[1])) {
+                return true;
+            }
+        }
+       return false;
     }
 
     /** Add saleperson info to data and overwrite previous value in database, NOT APPEND**/

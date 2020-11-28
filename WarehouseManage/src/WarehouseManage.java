@@ -1,13 +1,16 @@
+import Customers.Customer;
 import Invoices.InvoiceController;
 import Warehouses.WarehouseController;
-
-import java.io.IOException;
+import Salespeople.SalespersonController;
+import Customers.CustomerController;
 import java.util.Scanner;
 
 public class WarehouseManage {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         WarehouseController warehouseController = new WarehouseController();
+        SalespersonController sp = new SalespersonController();
+        CustomerController cc = new CustomerController();
         //InvoiceController invoiceController = new InvoiceController();
 
         // Add invoice    1
@@ -24,8 +27,17 @@ public class WarehouseManage {
 //        if (user_input == 1) {
 //            invoiceController.Icontroller();
 //        }
+
+        if (user_input == 2) {
+            sp.salespersonController();
+        }
+
         if(user_input == 3) {
             warehouseController.warehouseController();
+        }
+
+        if(user_input == 5) {
+            cc.customerController();
         }
 
 
@@ -40,7 +52,6 @@ public class WarehouseManage {
 //        int menuOption = in.nextInt();
 //
 //        if (menuOption == 3) {
-//            // REVIEW: (cannot call WarehouseUI methods)
 //            selectWarehouseNumber();
 //        }
 //        // keira: (END of 11/22) ---------------------------------------------------------------------------------------

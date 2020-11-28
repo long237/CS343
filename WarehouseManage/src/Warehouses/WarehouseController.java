@@ -1,7 +1,5 @@
 package Warehouses;
 import Products.Product;
-
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
 import Database.Database;
@@ -14,10 +12,17 @@ public class WarehouseController {
     private WarehouseUI ui = new WarehouseUI();
 
     public ArrayList<Product> getProducts(int warehouseNumber) { return db.retrieve_products(warehouseNumber); }
-    public int getMaxNumOfWarehouses() throws IOException { return db.maxWarehouses(); }
+    public ArrayList<ArrayList<Product>> getAllProducts() {
+        ArrayList<ArrayList<Product>> allProducts = new ArrayList<>();
+        for (int i = 1; i <= db.maxWarehouses(); i++) {
+            allProducts.add(getProducts(i));
+        }
+        return allProducts;
+    }
+    public int getMaxNumOfWarehouses() { return db.maxWarehouses(); }
 
     public Product getProduct(int warehouseNumber, String productName) {
-        Product productToReturn = new Product(); // productToReturn.getName() => "none"
+        Product productToReturn = null; // productToReturn = null if not there
         for (Product product : getProducts(warehouseNumber)) {
             if (product.getName().equals(productName)) {
                 productToReturn = product;
@@ -28,11 +33,12 @@ public class WarehouseController {
 
     // kkkkk: returns TRUE if Product w/ given productName exists in getProducts()
     public boolean findProduct(int warehouseNumber, String productName) {
-        boolean productExists = false;
-        if (!getProduct(warehouseNumber, productName).getName().equals("none")) {
-            productExists = true;
+        for (Product product : getProducts(warehouseNumber)) {
+            if (product.getName().toLowerCase().equals(productName.toLowerCase())) {
+                return true;
+            }
         }
-        return productExists;
+        return false;
     }
 
     // kkkkk: returns TRUE if Product w/ given productInfo was successfully added to database
@@ -66,6 +72,9 @@ public class WarehouseController {
         boolean addedQuantity = false;
         ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
         for (Product product : warehouseProducts) {
+            if (quantityToAdd < 0 ) { // if quantityToAdd is negative -> return FALSE
+                break;
+            }
             if (product.getName().equals(productName)) {
                 //System.out.println("ADDING " + quantityToAdd + " " + productName.toUpperCase() + "'s...");
                 product.addQuantityInStock(quantityToAdd);
@@ -77,10 +86,12 @@ public class WarehouseController {
         return addedQuantity;
     }
 
-    public void warehouseController() throws IOException {
+    public void warehouseController() {
         int menuOption = 0;
         int warehouseNumber = 0;
-        ArrayList<ArrayList<String>> productsToAdd = new ArrayList<>();
+        ArrayList<String> productToAdd = new ArrayList<>();
+
+        //System.out.println(getProduct(1, "none")); --> null
 
         // kkkkk: ("MANAGE WAREHOUSES: " Window)
         while (warehouseNumber != -1) { // User enters "-1" to exit / go back to Main Menu Window.
@@ -102,34 +113,75 @@ public class WarehouseController {
                 // kkkkk: (1. Add Products.)
                 if (menuOption == 1) {
                     // KKKKK: ("ADDING PRODUCT(s) TO WAREHOUSE 1 ... " Window)
-                    productsToAdd = ui.selectAddProduct(warehouseNumber);
-                    for (ArrayList<String> productInfo : productsToAdd) {
+                    boolean cont = true;
+                    while(cont) {
+                        boolean dontPrint = false;
+                        boolean addFlag = true;
+                        ArrayList<String> productInfo = ui.addProductMenu();
+                        if (productInfo.get(0).equals("-1")) { // User wants to abort.
+                            break;
+                        }
+                        if (findProduct(warehouseNumber, productInfo.get(0))) {
+                            ui.productExists(true); // "ERROR: product w/ entered product name already exists"
+                            dontPrint = true;
+                        }
                         if (Integer.parseInt(productInfo.get(1)) < 0) {
-                            break;
+                            ui.badNumber(0);
+                            addFlag = false;
+                            dontPrint = true;
                         }
-                        if (Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0) {
-                            break;
+
+                        if (productInfo.get(2).length() <= 4 && (Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0)) {
+                            ui.badNumber(1);
+                            addFlag = false;
+                            dontPrint = true;
                         }
-                        // TODO: let the user know if was unable to add productInfo[0] (productToAdd's name) & remprompt user for input.
-                        addProduct(warehouseNumber, productInfo.get(0), Integer.parseInt(productInfo.get(1)), Double.parseDouble(productInfo.get(2)), Double.parseDouble(productInfo.get(3)));
+                        if (addFlag) {
+                            addProduct(warehouseNumber, productInfo.get(0), Integer.parseInt(productInfo.get(1)), Double.parseDouble(productInfo.get(2)), Double.parseDouble(productInfo.get(3)));
+                        }
+                        if (!dontPrint) {
+                            cont = ui.continueThingProducts(menuOption);
+                        }
                     }
                 }
                 // kkkkk: (2. Remove Products.)
                 else if (menuOption == 2) {
-                    // KKKKK: ("REMOVING PRODUCT(s) FROM WAREHOUSE 1 ..." Window)
-                    ArrayList<String> productsToRemove = ui.removeProductMenu();
-                    // TODO: let the user know if was unable to remove productToRemove & remprompt user for input.
-                    for (String productToRemove : productsToRemove) {
+                    boolean cont = true;
+                    while(cont) {
+                        boolean dontPrint = false;
+                        String productToRemove = ui.removeProductMenu();
+                        if (!findProduct(warehouseNumber, productToRemove)) {
+                            ui.productExists(false); // "ERROR: product w/ entered product name does not exist"
+                            dontPrint = true;
+                        }
                         removeProduct(warehouseNumber, productToRemove);
+                        if (!dontPrint) {
+                            cont = ui.continueThingProducts(menuOption);
+                        }
                     }
                 }
                 // kkkkk: 3. Add Product Quantity.
                 else if (menuOption == 3) {
                     // KKKKK: "ADD PRODUCT QUANTITY: " Window
-                    HashMap<String, Integer> productsToAddQuantityTo = ui.addQuantityMenu();
-                    for (Map.Entry<String, Integer> product : productsToAddQuantityTo.entrySet()) {
-                        // TODO: let user know if productName or productQuantity is invalid / unable to add productQuantity & remprompt user for input.
-                        addProductQuantity(warehouseNumber, product.getKey(), product.getValue());
+                    boolean cont = true;
+                    while(cont) {
+                        boolean dontPrint = false;
+                        HashMap<String, Integer> productToAddQuantityTo = ui.addQuantityMenu();
+                        for (Map.Entry<String, Integer> product : productToAddQuantityTo.entrySet()) {
+                            if (!findProduct(warehouseNumber, product.getKey())) {
+                                ui.productExists(false);
+                                dontPrint = true;
+                            }
+                            if (product.getValue() < 0) {
+                                System.out.println("\t(PRODUCT QUANTITY MUST BE POSITIVE; Please Try Again.)");
+                                ui.badNumber(0);
+                                dontPrint = true;
+                            }
+                            addProductQuantity(warehouseNumber, product.getKey(), product.getValue());
+                            if (!dontPrint) {
+                                cont = ui.continueThingProducts(menuOption);
+                            }
+                        }
                     }
                 }
                 // kkkkk: (4. View Products By Decreasing Profit Percent.)
@@ -152,21 +204,11 @@ public class WarehouseController {
                 // kkkkk: (6. View Products By Increasing Quantity-In-Stock.)
                 else if (menuOption == 6) {
                     Collections.sort(productsToDisplay, new QuantityInStockComparator());
-                    ui.printWarehouseProducts(warehouseNumber, productsToDisplay);
+                    //ui.printWarehouseProducts(warehouseNumber, productsToDisplay);
+                    ui.printWarehousesProducts(getMaxNumOfWarehouses(), getAllProducts());
                     ui.exitValidation();
                 }
             }
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
-        WarehouseController wc = new WarehouseController();
-        System.out.println(wc.getMaxNumOfWarehouses());
-        Database db = new Database();
-
-        ArrayList<Product> prodDB = db.retrieve_products(2);
-        for (Product p : prodDB) {
-            System.out.println(p);
         }
     }
 }
