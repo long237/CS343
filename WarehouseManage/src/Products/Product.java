@@ -35,12 +35,12 @@ public class Product {
     }
 
     /**This constructor is for recreating Product obj when retrive from invoice database **/
-    public Product(String name, double cost, int quantitySold ){
+    public Product(String name, double retail, int quantitySold ){
         this.mName = name;
         this.mQuantityInStock = 0;
-        this.mCost = cost;
+        this.mCost = 0;
         this.mTotalCost = 0.0;
-        this.mRetailPrice = 0.0;
+        this.mRetailPrice = retail;
         this.mQuantitySold = quantitySold;
         this.mTotalSales = 0.0;
     }
@@ -106,6 +106,9 @@ public class Product {
     public double getTotalProfitPercent() {
         double totalProfitPercent = (getTotalProfit() / mTotalCost) * 100;
         return totalProfitPercent;
+    }
+    public void setQuantitySold(int amount){
+        mQuantitySold = amount;
     }
 
     @Override

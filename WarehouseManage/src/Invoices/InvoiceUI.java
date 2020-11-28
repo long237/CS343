@@ -163,6 +163,28 @@ public class InvoiceUI {
 
     public void addProductPurchased (Invoice invoice) {
         //maybe put some code from ProductUI in here
+
+
+    }
+
+    public String getProductName() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the name of the Product you would like to add?: ");
+        String productName = in.nextLine();
+        return productName;
+    }
+
+    public int getProductquant(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quantity bought: ");
+        try{
+            int quan = scanner.nextInt();
+            return quan;
+        }
+        catch(Exception e) {
+            System.out.println("Please enter a numberic value");
+            return -2;
+        }
     }
 
     public void viewProductsPurchased(Invoice invoice) {
