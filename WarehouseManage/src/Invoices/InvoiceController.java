@@ -6,6 +6,7 @@ import Warehouses.WarehouseUI;
 import Customers.Customer;
 import com.sun.org.apache.bcel.internal.generic.DADD;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 
@@ -85,7 +86,7 @@ public class InvoiceController {
     InvoiceUI invoiceUI = new InvoiceUI();
     Database dataBase = new Database();
 
-    public void Icontroller () {
+    public void Icontroller () throws IOException {
         //ArrayList<Invoices.Invoice> i_data = retrieve_invoices();
         //[..., ...., , ...]
         //add invoice 1
@@ -148,11 +149,9 @@ public class InvoiceController {
                     in_edit.setmDateOpened(LocalDate.of(date_input[0], date_input[1], date_input[2]));
                     dataBase.update_invoices(invoiceList);
                 }
-                else if (invoice_part == 6) {
-                    System.out.println("Add product to be continue on Nov 27th");
-                }
-                else if (invoice_part == 7) {
-                    System.out.println("Remove product to be continue on Nov 27th");
+                else if (invoice_part == 6) {   //6. Add invoice
+                    addProductPurchased(in_edit);
+                    dataBase.update_invoices(invoiceList);
                 }
             }
 
@@ -232,7 +231,7 @@ public class InvoiceController {
         return date_input;
     }
 
-    public Invoice addInvoice() {
+    public Invoice addInvoice() throws IOException {
 
         ArrayList<Customer> customerList = dataBase.retrieve_Customer();
         String incName = getcName();
@@ -254,9 +253,13 @@ public class InvoiceController {
         int[] dateValue = getDate();
         LocalDate dateOpen = LocalDate.of(dateValue[0], dateValue[1], dateValue[2]);
         Invoice inputInvoice = new Invoice(incName, taxRate, deliStat, deliAddress, dateOpen);
-        // TODO: change this products place holder into asking the user for products
-        inputInvoice.addProductsPurchased(new Product("Hat", 10, 5));
-        inputInvoice.addProductsPurchased(new Product("Phone", 250, 1));
+        boolean doneAddingProducts = true;
+
+        while (doneAddingProducts) {
+            addProductPurchased(inputInvoice);
+            doneAddingProducts = invoiceUI.addMoreProducts();
+        }
+
         return inputInvoice;
     }
 
@@ -273,10 +276,10 @@ public class InvoiceController {
         return -1;
     }
 
-    public void addProductPurchased(Invoice invoice) {
-        // TODO: display product in warehouse
+    public void addProductPurchased(Invoice invoice) throws IOException {
         ArrayList<ArrayList<Product>> warehouseList = new ArrayList<ArrayList<Product>>();
         int numWarehouse = dataBase.maxWarehouses();
+
         int warehouseNumber = 0;
         for (int i = 1; i <= numWarehouse; i++) {
             warehouseList.add(getProducts(i));
@@ -288,11 +291,13 @@ public class InvoiceController {
         String productName = invoiceUI.getProductName();
         boolean productFound = false;
         while (!productFound) {
-            for (int i = 1; i <= numWarehouse && !productFound; ++i) {
+
+            for (int i = 1; i <= numWarehouse && productFound == false; ++i) {
                 productFound = findProduct(i, productName);
                 warehouseNumber = i;
             }
             if (!productFound) {
+                invoiceUI.noProduct();
                 productName = invoiceUI.getProductName();
             }
         }
@@ -302,7 +307,7 @@ public class InvoiceController {
         int user_want = user_quant;
 
         boolean isEnough = false;
-        double prod_retail = 0;
+        double prod_retail = 0.0;
         for (int i = 0; i < warehouseList.size() && isEnough == false; i++) {        //get the warehouse
             for (Product prod : warehouseList.get(i)) { //iterate the product inside the warehouse
                 if (prod.getName().equals(productName)) {
@@ -310,6 +315,7 @@ public class InvoiceController {
                     prod_retail = prod.getRetailPrice();
                     if (prod_stock >= user_quant) {
                         prod.setQuantityInStock(prod.getQuantityInStock() - user_quant);
+                        user_quant = 0;
                         isEnough = true;
                         break;
                     }
@@ -320,8 +326,11 @@ public class InvoiceController {
                 }
             }
         }
-        Product in_Product = new Product(productName, prod_retail, user_quant);
+        Product in_Product = new Product(productName, prod_retail, user_want - user_quant);
         invoice.addProductsPurchased(in_Product);
+        for (int i = 0; i < warehouseList.size(); i++) {
+            dataBase.update_products(i + 1, warehouseList.get(i));
+        }
     }
 
     public int getQuant() {
@@ -333,31 +342,30 @@ public class InvoiceController {
     }
 
     public boolean findProduct(int warehouseNumber, String productName) {
-        boolean productExists = false;
-        if (!getProduct(warehouseNumber, productName).getName().equals("none")) {
-            productExists = true;
-        }
-        return productExists;
-    }
-
-    /** Return null if not found **/
-    public Product getProduct(int warehouseNumber, String productName) {
-        Product productToReturn = null; // productToReturn.getName() => "none"
         for (Product product : getProducts(warehouseNumber)) {
-            if (product.getName().equals(productName)) {
-                productToReturn = product;
+            if (product.getName().toLowerCase().equals(productName.toLowerCase())) {
+               return true;
             }
         }
-        return productToReturn;
+        return false;
     }
+
 
     public ArrayList<Product> getProducts(int warehouseNumber) {
         return dataBase.retrieve_products(warehouseNumber);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         InvoiceController invoiceController = new InvoiceController();
         invoiceController.Icontroller();
+
+
+      // Invoice invoice1 = new Invoice();
+     //  invoiceController.addProductPurchased(invoice1);
+
+        //check product was added
+//        System.out.println(invoice1);
+
     }
 
 }

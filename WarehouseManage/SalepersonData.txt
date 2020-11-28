@@ -1,3 +1,0 @@
-Alex Smith;0;5.0;0
-John Brown;0;7.0;0
-John Doe;12345;10.0;10

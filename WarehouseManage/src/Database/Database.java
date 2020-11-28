@@ -27,7 +27,7 @@ public class Database {
                         + invoice.getAddress() + ";" + invoice.getDateOpened() + ";" + invoice.getTotalCost() + ";Product;");
                 HashSet<Product> Product_list = invoice.getProductsPurchased();
                 for (Product temp : Product_list) {
-                    printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
+                    printWriter.print(temp.getName() + ";" + temp.getRetailPrice() + ";" + temp.getQuantitySold() + ";");
                 }
                 printWriter.println("");
             }
@@ -245,16 +245,21 @@ public class Database {
         return salespeople;
     }
 
-    public int maxWarehouses() {
+    public int maxWarehouses() throws IOException {
         int warehouseCount = 1;
         while (true) {
+
             File tempFile = new File("Warehouse" + Integer.toString(warehouseCount) + ".txt");
             boolean exists = tempFile.exists();
+            System.out.println(exists);
             if (!exists) {
                 break;
             }
             warehouseCount++;
+
         }
-        return warehouseCount-1;
+        return warehouseCount - 1;
     }
+
+
 }

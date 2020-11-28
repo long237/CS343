@@ -141,6 +141,7 @@ public class Product {
         return "Product{" +
                 "mName='" + mName + '\'' +
                 ", mCost=" + mCost +
+                ", mRetailPrice" + mRetailPrice +
                 ", mQuantitySold=" + mQuantitySold +
                 '}';
     }

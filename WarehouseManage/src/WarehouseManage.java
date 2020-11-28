@@ -1,11 +1,12 @@
 import Invoices.InvoiceController;
 import Warehouses.WarehouseController;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class WarehouseManage {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         WarehouseController warehouseController = new WarehouseController();
         //InvoiceController invoiceController = new InvoiceController();
 

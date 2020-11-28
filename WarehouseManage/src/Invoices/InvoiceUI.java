@@ -161,12 +161,6 @@ public class InvoiceUI {
         }
     }
 
-    public void addProductPurchased (Invoice invoice) {
-        //maybe put some code from ProductUI in here
-
-
-    }
-
     public String getProductName() {
         Scanner in = new Scanner(System.in);
         System.out.println("What is the name of the Product you would like to add?: ");
@@ -234,6 +228,18 @@ public class InvoiceUI {
 
     }
 
+    public boolean addMoreProducts() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Would you like to add more Products? Type 'Y' for Yes and 'N' for No");
+        String response = in.nextLine();
+        if (response.equals("Y")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void viewAllInvoices(ArrayList<Invoice> invoices) {
         //add formating later
         System.out.println("Displaying all invoices");
@@ -277,5 +283,9 @@ public class InvoiceUI {
     public void Menu(){
         System.out.println("1. Add invoice");
         System.out.println("2. Edit invoice");
+    }
+
+    public void noProduct(){
+        System.out.print("Product does not exist");
     }
 }

@@ -3,3 +3,9 @@ Elizabeth ;10.0
 John Brown;7.3
 Val Hazak;5.0
 Zinogre;7.5
+erik;5.0
+long;50.0
+long ngu;200.0
+ertyui;3.0
+right one;4.0
+test;23.0

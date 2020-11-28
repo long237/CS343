@@ -1,5 +1,7 @@
 package Warehouses;
 import Products.Product;
+
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
 import Database.Database;
@@ -12,7 +14,7 @@ public class WarehouseController {
     private WarehouseUI ui = new WarehouseUI();
 
     public ArrayList<Product> getProducts(int warehouseNumber) { return db.retrieve_products(warehouseNumber); }
-    public int getMaxNumOfWarehouses() { return db.maxWarehouses(); }
+    public int getMaxNumOfWarehouses() throws IOException { return db.maxWarehouses(); }
 
     public Product getProduct(int warehouseNumber, String productName) {
         Product productToReturn = new Product(); // productToReturn.getName() => "none"
@@ -75,7 +77,7 @@ public class WarehouseController {
         return addedQuantity;
     }
 
-    public void warehouseController() {
+    public void warehouseController() throws IOException {
         int menuOption = 0;
         int warehouseNumber = 0;
         ArrayList<ArrayList<String>> productsToAdd = new ArrayList<>();
@@ -154,6 +156,17 @@ public class WarehouseController {
                     ui.exitValidation();
                 }
             }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        WarehouseController wc = new WarehouseController();
+        System.out.println(wc.getMaxNumOfWarehouses());
+        Database db = new Database();
+
+        ArrayList<Product> prodDB = db.retrieve_products(2);
+        for (Product p : prodDB) {
+            System.out.println(p);
         }
     }
 }
