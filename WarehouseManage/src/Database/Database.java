@@ -199,6 +199,34 @@ public class Database {
 
     }
 
+    public void addCustomer(Customer c, ArrayList<Customer> customerList) {
+        int customerNameCount = 0;
+        try {
+            FileWriter outfile = new FileWriter("CustomerData.txt");
+            PrintWriter printWriter = new PrintWriter(outfile);
+
+            for (Customer customer : customerList) {
+                printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
+                if (c.getmName().equals(customer.getmName()) || (c.getmName() + customerNameCount).equals(customer.getmName())) {
+                    customerNameCount++;
+                }
+            }
+
+            if (customerNameCount > 0) {
+                c.setmName(c.getmName() + customerNameCount);
+            }
+
+            printWriter.println(c.getmName() + ";" + c.getmTaxrate());
+
+            printWriter.close();
+            outfile.close();
+
+        }
+        catch (IOException e) {
+            System.out.println("File not found for Customers!!!!");
+        }
+    }
+
     public void add_Salesperson(Salesperson sp, ArrayList<Salesperson> employeeList){
         try{
             FileWriter outfile = new FileWriter("SalepersonData.txt");
@@ -221,7 +249,6 @@ public class Database {
     }
 
     public boolean check_ID_Exists(Salesperson sp) {
-        ArrayList<Salesperson> salespeople = new ArrayList<>();
         ArrayList<String> salesPeopleData = new ArrayList<>();
         try {
             File salesPersonTxt = new File("SalepersonData.txt");
@@ -286,5 +313,4 @@ public class Database {
         }
         return salespeople;
     }
-
 }

@@ -14,7 +14,7 @@ public class SalespersonUI {
 
         try {
             int choice = in.nextInt();
-            if ((choice < 0 && choice != -1)|| choice > 3) {
+            if ((choice <= 0 && choice != -1)|| choice > 3) {
                 throw new Exception();
             }
             in.nextLine();
@@ -33,7 +33,7 @@ public class SalespersonUI {
             try {
                 System.out.println("What salesperson would you like to edit? ");
                 int choice = in.nextInt();
-                if ((choice < 0 && choice != -1) || choice > teamSize) {
+                if ((choice <= 0 && choice != -1) || choice > teamSize) {
                     throw new Exception();
                 }
                 in.nextLine();
@@ -55,7 +55,7 @@ public class SalespersonUI {
         while (true) {
             try {
                 int choice = in.nextInt();
-                if ((choice < 0 && choice != -1) || choice > 4) {
+                if ((choice <= 0 && choice != -1) || choice > 4) {
                     throw new Exception();
                 }
                 in.nextLine();
@@ -161,7 +161,7 @@ public class SalespersonUI {
         while (true) {
             try {
                 rate = in.nextDouble();
-                if (rate < 0 || Double.toString(rate).length() > 4) {
+                if (rate < 0 || (Double.toString(rate).length() > 4 && rate < 100.00)) {
                     throw new Exception();
                 }
                 in.nextLine();
