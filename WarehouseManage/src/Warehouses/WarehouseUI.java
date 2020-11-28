@@ -86,7 +86,7 @@ public class WarehouseUI {
                 System.out.println("\t(Enter (-1) to ABORT)");
             }
             else {
-                System.out.println("CONTINUE ADDING PRODUCTS? (Enter (-1) to EXIT): ");
+                System.out.println("CONTINUE ADDING PRODUCTS? (ENTER to continue or -1 to exit): ");
             }
             System.out.print("\t");
             String input = in.nextLine();
@@ -200,5 +200,14 @@ public class WarehouseUI {
     public void exitValidation() {
         System.out.print("Press ENTER to return to MAIN MENU: ");
         String input = in.nextLine();
+    }
+
+    public void badNumber(int num) {
+        if (num == 0) {
+            System.out.println("Invalid ID, please try again");
+        }
+        else{
+            System.out.println("Invalid product cost or retail price, please try again");
+        }
     }
 }

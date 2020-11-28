@@ -10,13 +10,15 @@ public class SalespersonController {
             firstChoice = ui.salespersonMenu();
             if (firstChoice == 1) {
                 ArrayList<Salesperson> salespersonList = new ArrayList<>(db.retrieve_salesPerson());
-                int personNumber = ui.chooseSalesperson(salespersonList) - 1;
+                int personNumber = ui.chooseSalesperson(salespersonList);
                 int editChoice = ui.editSalespersonMenu();
+
                 //name
                 if (editChoice == 1) {
                     ui.editSalespersonName(salespersonList.get(personNumber));
                     db.update_Saleperson(salespersonList);
                 }
+
                 //ID
                 else if (editChoice == 2) {
                     boolean flag = false;
@@ -25,6 +27,7 @@ public class SalespersonController {
                         db.update_Saleperson(salespersonList);
                     }
                 }
+
                 //Commission Rate
                 else if (editChoice == 3) {
                     boolean flag = false;
@@ -33,6 +36,7 @@ public class SalespersonController {
                         db.update_Saleperson(salespersonList);
                     }
                 }
+
                 //Total Sales
                 else if (editChoice == 4) {
                     boolean flag = false;
@@ -47,8 +51,18 @@ public class SalespersonController {
                 ui.viewSalesperson(db.retrieve_salesPerson());
                 ui.exitValidation();
             }
-            else if (firstChoice != -1) {
-                System.out.println("Invalid input, please enter 1 or 2. (Enter -1 to exit)");
+            else if (firstChoice == 3) {
+                ArrayList<Salesperson> salespersonList = new ArrayList<>(db.retrieve_salesPerson());
+                ArrayList<String> inputsToAdd = ui.addSalesperson();
+                Salesperson sp = new Salesperson(inputsToAdd.get(0), Integer.parseInt(inputsToAdd.get(1)),
+                        Double.parseDouble(inputsToAdd.get(2)), Integer.parseInt(inputsToAdd.get(3)));
+                if (!db.check_ID_Exists(sp)) {
+                    db.add_Salesperson(sp, salespersonList);
+                    ui.salespersonAdded(true, sp);
+                }
+                else {
+                    ui.salespersonAdded(false, sp);
+                }
             }
         }
     }

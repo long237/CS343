@@ -100,16 +100,24 @@ public class WarehouseController {
                 // kkkkk: (1. Add Products.)
                 if (menuOption == 1) {
                     // KKKKK: ("ADDING PRODUCT(s) TO WAREHOUSE 1 ... " Window)
-                    productsToAdd = ui.selectAddProduct(warehouseNumber);
-                    for (ArrayList<String> productInfo : productsToAdd) {
-                        if (Integer.parseInt(productInfo.get(1)) < 0) {
+                    while(true) {
+                        boolean addFlag = true;
+                        ArrayList<String> productInfo = ui.addProductMenu();
+                        if (productInfo.get(4).equals("-1")){
                             break;
                         }
-                        if (Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0) {
-                            break;
+                        if (Integer.parseInt(productInfo.get(1)) < 0) {
+                            ui.badNumber(0);
+                            addFlag = false;
+                        }
+                        if (productInfo.get(2).length() <= 4 && (Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0)) {
+                            ui.badNumber(1);
+                            addFlag = false;
                         }
                         // TODO: let the user know if was unable to add productInfo[0] (productToAdd's name) & remprompt user for input.
-                        addProduct(warehouseNumber, productInfo.get(0), Integer.parseInt(productInfo.get(1)), Double.parseDouble(productInfo.get(2)), Double.parseDouble(productInfo.get(3)));
+                        if (addFlag) {
+                            addProduct(warehouseNumber, productInfo.get(0), Integer.parseInt(productInfo.get(1)), Double.parseDouble(productInfo.get(2)), Double.parseDouble(productInfo.get(3)));
+                        }
                     }
                 }
                 // kkkkk: (2. Remove Products.)
