@@ -50,7 +50,7 @@ public class WarehouseUI {
         int input;
         System.out.println("\nMANAGE WAREHOUSES:");
         for (int i = 1; i <= maxNumOfWarehouses; i++) {
-            System.out.println("\t " + i + ". Warehouse " + i);;
+            System.out.println("\t " + i + ". Warehouse " + i);
         }
         System.out.print("Select a warehouse (Enter (-1) to exit): ");
         try {
@@ -169,9 +169,13 @@ public class WarehouseUI {
     public void selectLowInStock() {}
     public void selectQuantityInStock() {}
 
+
+    // kkkkk: ERROR MESSAGES -------------------------------------------------------------------------------------------
+
+    //There isn't a reason to save a string here, why are we doing this?
     public void exitValidation() {
         System.out.print("Press ENTER to return to MAIN MENU: ");
-        String input = in.nextLine();
+        in.nextLine();
     }
 
     public void badNumber(int num) {
@@ -180,6 +184,15 @@ public class WarehouseUI {
         }
         else{
             System.out.println("\t(INVALID COST / RETAIL PRICE; Please try again.)");
+        }
+    }
+
+    public void productExists(boolean productExists) {
+        if (productExists) {
+            System.out.println("\t(PRODUCT ALREADY EXISTS; Please try again.)");
+        }
+        else {
+            System.out.println("\t(PRODUCT DOES NOT EXIST; Please Try Again.)");
         }
     }
 }

@@ -35,7 +35,7 @@ public class Product {
     }
 
     // REVIEW: should this constructor be allowed ...
-    public Product(String name, int quantitySold, double cost){
+    public Product(String name, double cost, int quantitySold ){
         this.mName = name;
         this.mQuantityInStock = 0;
         this.mCost = cost;
@@ -114,7 +114,7 @@ public class Product {
         if (obj == this) return true;
         if (!(obj instanceof Product)) return false;
         Product o = (Product) obj;
-        return o.mName.equals(this.mName);
+        return o.mName.toLowerCase().equals(this.mName.toLowerCase());
     }
 
     @Override
