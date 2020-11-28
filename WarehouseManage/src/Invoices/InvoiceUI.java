@@ -1,200 +1,212 @@
 package Invoices;
+
 import Products.Product;
 
-import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Scanner;
-import java.util.Set;
-
 
 public class InvoiceUI {
-    Scanner in = new Scanner(System.in);
 
-    public void printInvoices(ArrayList<Invoice> invoices) {
-        System.out.println("\n INVOICES: ");
-        System.out.println(getInvoicesTable(invoices));
-    }
-
-    public String getInvoicesTableHeader() { // TODO: EDIT INVOICE HEADER & Invoice's toString()
-        return " " + String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
-                "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD", "TOTAL-SALES",
-                "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
-    }
-    public String getInvoicesTable(ArrayList<Invoice> invoices) {
-        StringBuilder invoicesTable = new StringBuilder();
-        String header = getInvoicesTableHeader();
-        invoicesTable.append(header);
-        invoicesTable.append("\n");
-        for (Invoice invoice : invoices) {
-            invoicesTable.append(invoice.toString());
-            invoicesTable.append("\n");
-        }
-        return invoicesTable.toString();
-    }
-
-    public int selectInvoiceNumber(int flag, int maxNumOfInvoices) {
-        if (flag == 1) {
-            System.out.println("That invoice does not exist, please try again: ");
-        }
-        int input;
-        System.out.println("\nVIEW/EDIT INVOICES:");
-        for (int i = 1; i <= maxNumOfInvoices; i++) {
-            System.out.println("\t " + i + ". Invoice " + i); // TODO: PRINT INVOICE DATA HERE
-        }
-        System.out.print("Enter an Invoice # (Enter (-1) to exit): ");
+    public int invoiceMenu() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Invoice Menu: ");
+        System.out.println("Option 1 - Edit Invoice: ");
+        System.out.println("Option 2 - View Invoices: ");
+        System.out.println("Enter -1 to exit");
         try {
-            input = in.nextInt();
+            int choice = in.nextInt();
             in.nextLine();
-            return (input);
+            return choice;
         } catch (Exception e) {
+            System.out.println("Invalid input: Enter the number 1 or 2");
             return -2;
         }
     }
 
-    public int selectMenuOption() {
-        int input;
-        System.out.println("MANAGE INVOICES: \n" +
-                "\t 1. Create Invoices. \n" +
-                "\t 2. View/Edit Invoices. \n");
+    public int chooseInvoice(ArrayList<Invoice> invoiceList){
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Which Invoice would you like to edit");
+        viewAllInvoices(invoiceList);
         try {
-            input = in.nextInt();
+            int choice = in.nextInt();
             in.nextLine();
-            return (input);
+            return choice;
         } catch (Exception e) {
-            System.out.println("Invalid input, please try again.");
+            System.out.println("Invalid Input: Enter a numeric value");
             return -2;
         }
-    }
 
-    //addProductMenu returns an ArrayList so that we can return more than one input at a time
-    public ArrayList<String> addInvoiceMenu() {
-        ArrayList<String> outputList = new ArrayList<>();
-        outputList.add("Customer Name: ");
-        outputList.add("Products Purchased: ");
-        outputList.add("Tax Rate: ");
-        outputList.add("Total: ");
-        outputList.add("Delivery: ");
-        outputList.add("Delivery Address: ");
-        ArrayList<String> temp = new ArrayList<>();
-        for (int i = 0; i < 7; i++){
-            if (i < 6) {
-                System.out.println("\tEnter the invoice's " + outputList.get(i));
-                System.out.println("\t(Enter (-1) to ABORT)");
-            }
-            else {
-                System.out.println("CONTINUE ADDING INVOICES? (Enter (-1) to EXIT): ");
-            }
-            System.out.print("\t");
-            String input = in.nextLine();
-            if (input.equals("-1") && i != 6) {
-                temp.clear();
-                temp.add("-1");
-                return temp;
-            }
-            if (i == 1) {
-                try {
-                    Integer.parseInt(input);
-                }
-                catch(Exception e) {
-                    System.out.println("Invalid input, please try again: ");
-                }
-            }
-            if (i > 1 && i != 6) {
-                try {
-                    Double.parseDouble(input);
-                } catch (Exception e) {
-                    System.out.println("Invalid input, please try again: ");
-                }
-            }
-            temp.add(input);
+    }
+    //which on to edit: 2
+
+    public int editInvoiceMenu() {
+        Scanner in = new Scanner(System.in);
+        //display menu
+        System.out.println("What in the invoice would you like to edit?");
+        System.out.println("Option 1 - Edit Customer Name: ");
+        System.out.println("Option 2 - Edit Tax Rate: ");
+        System.out.println("Option 3 - Edit Delivery Status: ");
+        System.out.println("Option 4 - Edit Delivery Address: ");
+        System.out.println("Option 5 - Edit Date Opened: ");
+        System.out.println("Option 6 - Add Product Purchased: ");
+        System.out.println("Option 7 - Remove Product: ");
+
+        //get input
+        try {
+            int choice = in.nextInt();
+            in.nextLine();
+            return choice;
+        } catch (Exception e) {
+            System.out.println("Invalid Input: Enter a numeric value between 1 and 7");
+            return -2;
         }
-        return temp;
+
     }
 
-    // returns an array list of an array list containing info for each product to add
-    public ArrayList<ArrayList<String>> selectAddInvoice() {
+    public void editCustomerName(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new name of the customer? ");
+        String newName = in.nextLine();
+        invoice.setmCustomerName(newName);
+    }
 
-        boolean contLoop = true;
+    public void editTaxRate(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new tax rate of the customer? ");
+        double newRate = in.nextDouble();
+        invoice.setmTaxRate(newRate);
 
-        ArrayList<ArrayList<String>> invoicesInfo = new ArrayList<ArrayList<String>>();
-        System.out.println("ADDING INVOICE(s) ... ");
-        while (contLoop) {
+    }
 
-            ArrayList<String> invoiceMenuOption = addInvoiceMenu();
-            boolean add = true;
-            for (int i = 0; i < invoiceMenuOption.size(); i++) {
-                if (invoiceMenuOption.get(i).equals("-1") && i != 6) {
-                    add = false;
+    public void editDeliveryStatus(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new delivery status: type OPEN or CLOSED");
+        String newDeliveryStatus = in.nextLine();
+
+        if (newDeliveryStatus == "OPEN") {
+            invoice.setmDeliveryStatus(true);
+        } else {
+            invoice.setmDeliveryStatus(false);
+        }
+
+    }
+
+    public void editDeliveryAddress(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new delivery address?");
+        String newDeliveryAddr = in.nextLine();
+        invoice.setmAddress(newDeliveryAddr);
+    }
+
+    public void changeDateOpened(Invoice invoice) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the year of the invoice: - Please enter in form(YYYY) ");
+        int year = in.nextInt();
+
+        System.out.println("What is the month of the invoice: - Please enter in form(MM)");
+        int month = in.nextInt();
+
+        System.out.println("What is the Day of the invoice: - Please enter in form(DD)");
+        int day = in.nextInt();
+
+        invoice.setmDateOpened(LocalDate.of(year, month, day));
+    }
+
+    public void addProductPurchased (Invoice invoice) {
+        //maybe put some code from ProductUI in here
+    }
+
+    public void viewProductsPurchased(Invoice invoice) {
+        System.out.println("Displaying all products in Invoice number: " + invoice.getInvoiceId());
+        for (Product product : invoice.getProductsPurchased()) {
+            System.out.println(product);
+        }
+    }
+    public void removeProductPurchased(Invoice invoice) {
+        if (!invoice.getProductsPurchased().isEmpty()) {
+
+            Scanner in = new Scanner(System.in);
+            System.out.println("Enter the name of the Product you want to remove?: ");
+            Product currProduct = null;
+            viewProductsPurchased(invoice);
+
+            String choice = in.nextLine();
+            boolean containsProduct = false;
+
+            while (containsProduct == false) {
+
+                for (Product product : invoice.getProductsPurchased()) {
+                    if (product.getName() == choice) {
+                        currProduct = product;
+                        containsProduct = true;
+                    }
                 }
-                if (invoiceMenuOption.get(i).equals("-1")){
-                    contLoop = false;
+                if (containsProduct == false) {
+                    System.out.println("Enter a valid product name: ");
+                    choice = in.nextLine();
                 }
+
             }
-            if (add) {
-                invoicesInfo.add(invoiceMenuOption);
+            // while (choice)
+            System.out.println("Here is the current quantity for this Product: ");
+            System.out.println("The Product: " + currProduct.getName() + " quantity is " + currProduct.getQuantitySold());
+            System.out.println("What is the new quantity of " + currProduct.getName());
+            int newQuantity = in.nextInt();
+            currProduct.setQuantityInStock(newQuantity);
+
+            if (newQuantity <= 0) {
+                invoice.removePurchasedProduct(currProduct);
             }
 
         }
-        return invoicesInfo;
+        System.out.println("There are no products to be removed.");
+
     }
 
-    public ArrayList<String> removeInvoiceMenu() {
-        ArrayList<String> invoicesToRemove = new ArrayList<>();
-        boolean flag = true;
-        System.out.println("REMOVING INVOICE(s) ... ");
-        while(flag) {
-            try {
-                System.out.println("\tEnter the Invoice # you would like to remove: ");
-                System.out.print("\t");
-                invoicesToRemove.add(in.nextLine());
+    public void viewAllInvoices(ArrayList<Invoice> invoices) {
+        //add formating later
+        System.out.println("Displaying all invoices");
+        for (int i = 1; i < invoices.size(); ++i) {
+            System.out.println(i + " " + invoices.get(i - 1));
+        }
+        
+    }
 
-                // Continue?
-                System.out.print("CONTINUE REMOVING INVOICE(s)? (Enter (-1) to EXIT): ");
-                String enterInvoices = in.nextLine();
-                if (enterInvoices.equals("-1") || enterInvoices.equals("N")){
-                    flag = false;
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid input, please try again.");
+    public void viewOpenInvoices (ArrayList<Invoice> invoices){
+        System.out.println("Displaying Open Invoices");
+        //sort by date opened
+        Collections.sort(invoices, new OrderDateComparator());
+        for (Invoice inv : invoices) {
+            if (inv.getInvoiceStatus() == true) {
+                System.out.println(inv);
             }
         }
-        return invoicesToRemove;
     }
 
-//    public HashMap<String, Integer> addQuantityMenu() {
-//        HashMap<String, Integer> temp = new HashMap<>();
-//        boolean flag = true;
-//        System.out.println("ADDING QUANTITY to PRODUCT(s) ... ");
-//        while(flag) {
-//            try {
-//                System.out.println("Enter a product to add a quantity to: ");
-//                String productName = in.nextLine();
-//                System.out.println("Enter a quantity to add: ");
-//                int quantityToAdd = in.nextInt();
-//                in.nextLine();
-//                temp.put(productName, quantityToAdd);
-//
-//                // Continue?
-//                System.out.print("CONTINUE ADDING QUANTITY to PRODUCT(s)? (Enter (-1) to EXIT): ");
-//                String enterProducts = in.nextLine();
-//                if (enterProducts.equals("-1") || enterProducts.equals("N")){
-//                    flag = false;
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Invalid input, please try again.");
-//            }
-//        }
-//        return temp;
-//    }
+    public void viewClosedInvoices (ArrayList<Invoice> invoices){
 
-//    public void selectAddQuantity() {}
-//    public void selectDecrProfitPercent() {}
-//    public void selectLowInStock() {}
-//    public void selectQuantityInStock() {}
+        //sort by decreasing order of total cost
+        Collections.sort(invoices, new TotalCostComparator());
+        System.out.println("Displaying Closed Invoices");
+        for (Invoice inv : invoices) {
+            if (inv.getInvoiceStatus() == false) {
+                System.out.println(inv);
+            }
+        }
+    }
 
-    public void exitValidation() {
-        System.out.print("Press ENTER to return to MAIN MENU: ");
-        String input = in.nextLine();
+
+    public String customerName(){
+        System.out.println("input customer name: ");
+        //keep looping while not string
+        return "hello";
+    }
+
+    public void Menu(){
+        System.out.println("1. Add invoice");
+        System.out.println("2. Edit invoice");
     }
 }

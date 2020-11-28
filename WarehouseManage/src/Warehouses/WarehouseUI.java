@@ -50,7 +50,7 @@ public class WarehouseUI {
         int input;
         System.out.println("\nMANAGE WAREHOUSES:");
         for (int i = 1; i <= maxNumOfWarehouses; i++) {
-            System.out.println("\t " + i + ". Warehouse " + i);;
+            System.out.println("\t " + i + ". Warehouse " + i);
         }
         System.out.print("Select a warehouse (Enter (-1) to exit): ");
         try {
@@ -169,6 +169,7 @@ public class WarehouseUI {
     public void selectLowInStock() {}
     public void selectQuantityInStock() {}
 
+    //There isn't a reason to save a string here, why are we doing this?
     public void exitValidation() {
         System.out.print("Press ENTER to return to MAIN MENU: ");
         String input = in.nextLine();

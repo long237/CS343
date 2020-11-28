@@ -7,7 +7,8 @@ public class WarehouseManageUI {
                 "\t 1. Manage Account \n" +
                 "\t 2. Manage Salespersons \n" +
                 "\t 3. Manage Warehouses \n" +
-                "\t 4. Manage Invoices \n");
+                "\t 4. Manage Invoices \n" +
+                "\t 5. Manage Customers \n");
     }
 
     public int getUserOption(){
