@@ -9,6 +9,15 @@ Invoice View/input       Erik
 Salesperson Controller     Long
 Salesperson View/Input    Erik
 
+New task 11/27/2020
+Add method for adding purchased product to Invoice
+Add method for checking date to add bonus or penalty
+Add delivery charge method
+Customer controller
+
+
+Program main
+
 //Tables in view is not a priority
 
 //warehouse1.txt
