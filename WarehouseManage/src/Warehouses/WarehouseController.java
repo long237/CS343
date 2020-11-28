@@ -33,11 +33,12 @@ public class WarehouseController {
 
     // kkkkk: returns TRUE if Product w/ given productName exists in getProducts()
     public boolean findProduct(int warehouseNumber, String productName) {
-        boolean productExists = false;
-        if (getProduct(warehouseNumber, productName) != null) {
-            productExists = true;
+        for (Product product : getProducts(warehouseNumber)) {
+            if (product.getName().toLowerCase().equals(productName.toLowerCase())) {
+                return true;
+            }
         }
-        return productExists;
+        return false;
     }
 
     // kkkkk: returns TRUE if Product w/ given productInfo was successfully added to database
