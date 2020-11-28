@@ -122,7 +122,7 @@ public class WarehouseController {
                             break;
                         }
                         if (findProduct(warehouseNumber, productInfo.get(0))) {
-                            System.out.println("\t(PRODUCT ALREADY EXISTS; Please try again.)");
+                            ui.productExists(true); // "ERROR: product w/ entered product name already exists"
                             dontPrint = true;
                         }
                         if (Integer.parseInt(productInfo.get(1)) < 0) {
@@ -151,7 +151,7 @@ public class WarehouseController {
                         boolean dontPrint = false;
                         String productToRemove = ui.removeProductMenu();
                         if (!findProduct(warehouseNumber, productToRemove)) {
-                            System.out.println("\t(PRODUCT DOES NOT EXIST; Please Try Again.)");
+                            ui.productExists(false); // "ERROR: product w/ entered product name does not exist"
                             dontPrint = true;
                         }
                         removeProduct(warehouseNumber, productToRemove);
@@ -169,11 +169,12 @@ public class WarehouseController {
                         HashMap<String, Integer> productToAddQuantityTo = ui.addQuantityMenu();
                         for (Map.Entry<String, Integer> product : productToAddQuantityTo.entrySet()) {
                             if (!findProduct(warehouseNumber, product.getKey())) {
-                                System.out.println("\t(PRODUCT DOES NOT EXIST; Please Try Again.)");
+                                ui.productExists(false);
                                 dontPrint = true;
                             }
                             if (product.getValue() < 0) {
                                 System.out.println("\t(PRODUCT QUANTITY MUST BE POSITIVE; Please Try Again.)");
+                                ui.badNumber(0);
                                 dontPrint = true;
                             }
                             addProductQuantity(warehouseNumber, product.getKey(), product.getValue());
