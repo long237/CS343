@@ -117,7 +117,7 @@ public class Product {
         if (obj == this) return true;
         if (!(obj instanceof Product)) return false;
         Product o = (Product) obj;
-        return o.mName.equals(this.mName);
+        return o.mName.toLowerCase().equals(this.mName.toLowerCase());
     }
 
 //    @Override
