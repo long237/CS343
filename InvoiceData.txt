@@ -1,3 +1,5 @@
-1234;john doe;false;0.0;false;1234 address;100.0;Product;R7 5700;50.0;5;RX 6800;20.0;2;RTX 3070;30.0;3;
-4567;Alatreon;true;15.0;false;123 Second st;100.0;Product;R7 5700;50.0;5;RX 6800;20.0;2;RTX 3070;30.0;3;0;john locke;false;3.0;true;1234 adddy;2000-05-05;400.0;Product;strawberries;10.0;40;
+-1234;john doe;false;0.0;false;1234 address;2020-02-22;0.0;Product;R7 5700;0.0;5;RX 6800;0.0;2;RTX 3070;0.0;3;
+4567;Alatreon;false;15.0;false;123 Second st;2010-12-21;50.0;Product;R7 5700;0.0;5;RTX 3070;0.0;3;RX 6800;0.0;2;strawberries;10.0;5;
+-1234;Lunastra;false;0.0;false;1234 address;2020-11-24;0.0;Product;RX 6800;0.0;2;R7 5700;0.0;5;
+0;john locke;false;3.0;true;1234 adddy;2000-05-05;400.0;Product;strawberries;10.0;40;
 0;duke;false;1.2;true;12234 toast;1999-01-05;25.872132609075926;Product;good burger;5.0;4;
