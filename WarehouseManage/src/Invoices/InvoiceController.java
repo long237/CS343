@@ -135,7 +135,7 @@ public class InvoiceController {
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 3){    //3.Delivery status
-                    Boolean status = this.getDeliveryStat();
+                    Boolean status = this.getStatus();
                     in_edit.setmDeliveryStatus(status);
                     dataBase.update_invoices(invoiceList);
                 }
@@ -145,12 +145,21 @@ public class InvoiceController {
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 5) {   //5.Change date
-                    int[] date_input = this.getDate();
-                    in_edit.setmDateOpened(LocalDate.of(date_input[0], date_input[1], date_input[2]));
+                    //int[] date_input = this.getDate();
+                    LocalDate date_input = this.getDate();
+                    in_edit.setmDateOpened(date_input);
+                    // in_edit.setmDateOpened(LocalDate.of(date_input[0], date_input[1], date_input[2]));
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 6) {   //6. Add invoice
                     addProductPurchased(in_edit);
+                    dataBase.update_invoices(invoiceList);
+                }
+                else if (invoice_part == 7) {
+                    Boolean status = this.getStatus();
+                    in_edit.setmInvoiceStatus(status);
+                    LocalDate closingDate = this.getDate();
+                    in_edit.addDiscount(closingDate);
                     dataBase.update_invoices(invoiceList);
                 }
             }
@@ -209,26 +218,36 @@ public class InvoiceController {
     }
 
     // TODO: add an error message when the user enter the wrong value
-    public Boolean getDeliveryStat(){
+    public Boolean getStatus(){
         String status = invoiceUI.editDeliveryStatus();
-        while ( !status.equals("OPEN") && !status.equals("CLOSE")){
+        while ( !status.equals("OPEN") && !status.equals("CLOSED")){
             status = invoiceUI.editDeliveryStatus();
             //System.out.println("Invalid input, please try again.");
         }
         return status.equals("OPEN");
     }
 
+//    public Boolean getInvoiceStat(){
+//        String status = invoiceUI.getInvoiceStatus();
+//        while ( !status.equals("OPEN") && !status.equals("CLOSE")){
+//            status = invoiceUI.editDeliveryStatus();
+//            //System.out.println("Invalid input, please try again.");
+//        }
+//        return status.equals("OPEN");
+//    }
+
     public String getAddress(){
         return invoiceUI.editDeliveryAddress();
     }
 
-    public int[] getDate() {
+    public LocalDate getDate() {
         int[] date_input = new int[3];
         date_input[0] = -1;
         while (date_input[0] < 0 || date_input[1] < 0 || date_input[1] > 13 || date_input[2] < 0 || date_input[2] > 31){
             date_input = invoiceUI.changeDateOpened();
         }
-        return date_input;
+        LocalDate date = LocalDate.of(date_input[0], date_input[1], date_input[2]);
+        return date;
     }
 
     public Invoice addInvoice() throws IOException {
@@ -246,12 +265,12 @@ public class InvoiceController {
         //Ask the user for a tax rate if the customer name is not in the Database, add the new customer into database
         else {
             taxRate = getTax();
-            dataBase.add_customer(new Customer(incName, taxRate));
+            dataBase.addCustomer(new Customer(incName, taxRate), dataBase.retrieve_Customer());
         }
-        boolean deliStat = getDeliveryStat();
+        boolean deliStat = getStatus();
         String deliAddress = getAddress();
-        int[] dateValue = getDate();
-        LocalDate dateOpen = LocalDate.of(dateValue[0], dateValue[1], dateValue[2]);
+        //int[] dateValue = getDate();
+        LocalDate dateOpen = getDate();
         Invoice inputInvoice = new Invoice(incName, taxRate, deliStat, deliAddress, dateOpen);
         boolean doneAddingProducts = true;
 
@@ -259,7 +278,7 @@ public class InvoiceController {
             addProductPurchased(inputInvoice);
             doneAddingProducts = invoiceUI.addMoreProducts();
         }
-
+        inputInvoice.calCost();
         return inputInvoice;
     }
 

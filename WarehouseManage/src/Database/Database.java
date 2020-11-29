@@ -308,7 +308,6 @@ public class Database {
 
             File tempFile = new File("Warehouse" + Integer.toString(warehouseCount) + ".txt");
             boolean exists = tempFile.exists();
-            System.out.println(exists);
             if (!exists) {
                 break;
             }

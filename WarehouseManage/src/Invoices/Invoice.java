@@ -144,7 +144,7 @@ public class Invoice {
 
     public void calCost() {
         for (Product product : mProductsPurchased){
-            this.totalCost += product.getCost() * product.getQuantitySold();
+            this.totalCost += product.getRetailPrice() * product.getQuantitySold();
         }
     }
 
@@ -169,8 +169,38 @@ public class Invoice {
         }
     }
 
+    public void addDiscount(LocalDate dateDelivered) {
+        //first we calculate distance in days
+        int year = dateDelivered.getYear() - mDateOpened.getYear();
+        int month = dateDelivered.getMonthValue() - mDateOpened.getMonthValue();
+        int day = dateDelivered.getDayOfMonth() - mDateOpened.getDayOfMonth();
+
+        int distanceInDays = (year * 365) + (month * 30) + day;
+
+        if (distanceInDays <= 10) {
+            totalCost = totalCost - (totalCost * .10);
+            System.out.println("Distance in days is less than 30: " + distanceInDays);
+        }
+        else if (distanceInDays > 30) {
+            int month_late = distanceInDays / 30;           //Multiplier or run time.
+            for (int i = 0; i < month_late; i++) {
+                this.totalCost = totalCost + (totalCost * 0.02);
+            }
+        }
+    }
+
     //Code for testing
     public static void main(String[] args) {
+        Invoice testDate = new Invoice();
+        Invoice testDate1 = new Invoice();
+        testDate.addProductsPurchased(new Product("prod", 50.0, 8));
+        testDate.calCost();
+        System.out.println("Cost before discount:  " + testDate.getTotalCost());
+        testDate.setmDateOpened(LocalDate.of(2000, 5, 5));
+        testDate.addDiscount(LocalDate.of(2000, 8, 20));
+        System.out.println("Cost after discount:  " + testDate.getTotalCost());
+
+
         Invoice invoice1 = new Invoice();
         System.out.println("This is invoice testing. ");
         System.out.println("Invoices.Invoice: " + invoice1);

@@ -75,7 +75,7 @@ public class InvoiceUI {
         System.out.println("Option 4 - Edit Delivery Address: ");
         System.out.println("Option 5 - Edit Date Opened: ");
         System.out.println("Option 6 - Add Product Purchased: ");
-        System.out.println("Option 7 - Remove Product: ");
+        System.out.println("Option 7 - Edit invoice status: ");
 
         //get input
         try {
@@ -117,7 +117,14 @@ public class InvoiceUI {
 
     public String editDeliveryStatus() {
         Scanner in = new Scanner(System.in);
-        System.out.println("What is the new delivery status: type OPEN or CLOSED");
+        System.out.println("What is the new status: type OPEN or CLOSED");
+        String newDeliveryStatus = in.nextLine();
+        return newDeliveryStatus;
+
+    }
+    public String getInvoiceStatus() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("What is the new invoice status: type OPEN or CLOSED");
         String newDeliveryStatus = in.nextLine();
         return newDeliveryStatus;
 

@@ -9,3 +9,4 @@ long ngu;200.0
 ertyui;3.0
 right one;4.0
 test;23.0
+john locke;3.0
