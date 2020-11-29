@@ -158,8 +158,12 @@ public class InvoiceController {
                 else if (invoice_part == 7) {
                     Boolean status = this.getStatus();
                     in_edit.setmInvoiceStatus(status);
-                    LocalDate closingDate = this.getDate();
-                    in_edit.addDiscount(closingDate);
+                    if (!status) {
+                        System.out.println("Ok enter a closing date for the invoice: ");
+                        int[] closingDate = invoiceUI.changeDateOpened();
+                        in_edit.addDiscount(LocalDate.of(closingDate[0], closingDate[2], closingDate[3]));
+                    }
+                    
                     dataBase.update_invoices(invoiceList);
                 }
             }
