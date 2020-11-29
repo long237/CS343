@@ -22,7 +22,9 @@ public class WarehouseManage {
         warehouseManageUI.PrintMainMenu();
         int user_input = warehouseManageUI.getUserOption();
 
-
+        if (user_input == 0) {
+            cc.customerController();
+        }
         //while loop
 //        if (user_input == 1) {
 //            invoiceController.Icontroller();
