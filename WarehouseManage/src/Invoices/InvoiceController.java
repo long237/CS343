@@ -106,6 +106,7 @@ public class InvoiceController {
         int menu_op = 0;
         while (menu_op != -1) {
             ArrayList<Invoice> invoiceList = Database.retrieve_invoices();
+            int largestID = invoiceList.get(invoiceList.size() - 1).getInvoiceId();
             menu_op = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
             System.out.println("menu value: " + menu_op);
 
@@ -158,12 +159,16 @@ public class InvoiceController {
                 else if (invoice_part == 7) {
                     Boolean status = this.getStatus();
                     in_edit.setmInvoiceStatus(status);
-                    if (!status) {
+
+                    if (!status) {          //Invoice status != delivery status
                         System.out.println("Ok enter a closing date for the invoice: ");
                         int[] closingDate = invoiceUI.changeDateOpened();
-                        in_edit.addDiscount(LocalDate.of(closingDate[0], closingDate[2], closingDate[3]));
+                        in_edit.addDiscount(LocalDate.of(closingDate[0], closingDate[1], closingDate[2]));
                     }
-                    
+                    /**Add delivery charge to the invoice if the user want delivery **/
+                    if (in_edit.getDeliveryStatus()) {
+                        in_edit.addDeliveryCharge();
+                    }
                     dataBase.update_invoices(invoiceList);
                 }
             }
@@ -187,7 +192,7 @@ public class InvoiceController {
 
             else if (menu_op == 3){             //3.Add invoice.
                 System.out.println("Add Invoice submenu: ");
-                Invoice inputInvoice = addInvoice();
+                Invoice inputInvoice = addInvoice(largestID);
                 invoiceList.add(inputInvoice);
                 dataBase.update_invoices(invoiceList);                  //update the database with new invoice
             }
@@ -254,9 +259,10 @@ public class InvoiceController {
         return date;
     }
 
-    public Invoice addInvoice() throws IOException {
+    public Invoice addInvoice(int largestID) throws IOException {
 
         ArrayList<Customer> customerList = dataBase.retrieve_Customer();
+
         String incName = getcName();
         double taxRate = -1;
         //Check to see if the customer name already exist in the database
@@ -275,7 +281,7 @@ public class InvoiceController {
         String deliAddress = getAddress();
         //int[] dateValue = getDate();
         LocalDate dateOpen = getDate();
-        Invoice inputInvoice = new Invoice(incName, taxRate, deliStat, deliAddress, dateOpen);
+        Invoice inputInvoice = new Invoice(largestID + 1, incName, taxRate, deliStat, deliAddress, dateOpen);
         boolean doneAddingProducts = true;
 
         while (doneAddingProducts) {
@@ -283,6 +289,7 @@ public class InvoiceController {
             doneAddingProducts = invoiceUI.addMoreProducts();
         }
         inputInvoice.calCost();
+
         return inputInvoice;
     }
 
@@ -310,6 +317,7 @@ public class InvoiceController {
 
         for (int i = 0; i < numWarehouse; i++) {
             //Display warehouse content
+            //Todo: Ask keira or Bryan for a function to print out products to choose from
         }
         String productName = invoiceUI.getProductName();
         boolean productFound = false;

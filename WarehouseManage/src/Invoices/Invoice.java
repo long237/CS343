@@ -12,6 +12,8 @@ import Customers.Customer;
 import java.util.HashSet;
 
 public class Invoice {
+    public static double DELIVERY_CHARGE = 3.99;
+
 
     private int mInvoiceId;
     private String mCustomerName;
@@ -36,8 +38,9 @@ public class Invoice {
     }
 
     /**Temporary constructor for adding invoice without the product list **/
-    public Invoice(String mCustomerName, double mTaxRate,
+    public Invoice(int mInvoiceId, String mCustomerName, double mTaxRate,
                    boolean mDeliveryStatus, String mAddress, LocalDate mDateOpened) {
+        this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = true;
         this.mTaxRate = mTaxRate;
@@ -167,6 +170,11 @@ public class Invoice {
         catch (IOException e) {
             System.out.println("IO exception !!!!");
         }
+    }
+
+    public void addDeliveryCharge() {
+
+        totalCost += DELIVERY_CHARGE;
     }
 
     public void addDiscount(LocalDate dateDelivered) {
