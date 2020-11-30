@@ -1,4 +1,5 @@
 import Customers.Customer;
+import Database.Database;
 import Invoices.InvoiceController;
 import Warehouses.WarehouseController;
 import Salespeople.SalespersonController;
@@ -10,36 +11,51 @@ import java.util.Scanner;
 public class WarehouseManage {
 
     public static void main(String[] args) throws IOException {
+        Scanner in = new Scanner(System.in);
+        Database dataBase = new Database();
         WarehouseController warehouseController = new WarehouseController();
         SalespersonController sp = new SalespersonController();
-        CustomerController cc = new CustomerController();
-        //InvoiceController invoiceController = new InvoiceController();
-
+        CustomerController customerController = new CustomerController();
+        InvoiceController invoiceController = new InvoiceController();
         // Add invoice    1
         // Add product      2
         // Edit Invoices.Invoice     3
         //InvoiceController.Icontroller();
 
         WarehouseManageUI warehouseManageUI = new WarehouseManageUI();
+
+        System.out.println("Enter your password: ");
+        String user_attempt = in.nextLine();
+        String user_pass = dataBase.retrievePass();
+        while (!user_attempt.equals(user_pass)) {
+            System.out.println("Incorrect Password: Please try again: ");
+            user_attempt = in.nextLine();
+        }
+        System.out.println("Success!");
+
         warehouseManageUI.PrintMainMenu();
         int user_input = warehouseManageUI.getUserOption();
+        while (user_input != -1) {
 
-
-        //while loop
-//        if (user_input == 1) {
-//            invoiceController.Icontroller();
-//        }
-
-        if (user_input == 2) {
-            sp.salespersonController();
-        }
-
-        if(user_input == 3) {
-            warehouseController.warehouseController();
-        }
-
-        if(user_input == 5) {
-            cc.customerController();
+            if (user_input == 1) {
+                String new_pass = warehouseManageUI.ChangePasswordUI();
+                dataBase.updatePass(new_pass);
+            }
+            else if (user_input == 2){
+                sp.salespersonController();
+            }
+            else if (user_input == 3)
+            {
+                warehouseController.warehouseController();
+            }
+            else if (user_input == 4) {
+                invoiceController.Icontroller();
+            }
+            else if (user_input == 5){
+                customerController.customerController();
+            }
+            warehouseManageUI.PrintMainMenu();
+            user_input = warehouseManageUI.getUserOption();
         }
 
 
@@ -59,4 +75,6 @@ public class WarehouseManage {
 //        // keira: (END of 11/22) ---------------------------------------------------------------------------------------
 
     }
+
+
 }

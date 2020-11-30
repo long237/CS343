@@ -302,6 +302,36 @@ public class Database {
         return salespeople;
     }
 
+    public void updatePass(String userInput) {
+        try{
+            FileWriter passFile = new FileWriter("PasswordData.txt");
+            PrintWriter printwriter = new PrintWriter(passFile);
+            printwriter.println(userInput);
+            printwriter.close();
+            passFile.close();
+
+        }
+         catch (IOException e) {
+            System.out.println("PasswordData.txt does not not exist");
+            e.printStackTrace();
+        }
+    }
+
+    public String retrievePass(){
+        String password = "";
+        try{
+            File passFile = new File("PasswordData.txt");
+            Scanner scanner = new Scanner(passFile);
+            if (scanner.hasNextLine()) {
+                password = scanner.nextLine();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("File passwordData.txt does not exist");
+        }
+        return password;
+    }
+
     public int maxWarehouses() throws IOException {
         int warehouseCount = 1;
         while (true) {
