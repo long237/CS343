@@ -136,13 +136,19 @@ public class Product {
 //    }
 
 
+//    @Override
+//    public String toString() {
+//        return "Product{" +
+//                "mName='" + mName + '\'' +
+//                ", mCost=" + mCost +
+//                ", mRetailPrice" + mRetailPrice +
+//                ", mQuantitySold=" + mQuantitySold +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
-        return "Product{" +
-                "mName='" + mName + '\'' +
-                ", mCost=" + mCost +
-                ", mRetailPrice" + mRetailPrice +
-                ", mQuantitySold=" + mQuantitySold +
-                '}';
+        return mName;
     }
 }

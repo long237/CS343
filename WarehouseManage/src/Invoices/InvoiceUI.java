@@ -254,7 +254,25 @@ public class InvoiceUI {
             int num = i + 1;
             System.out.println(num + " " + invoices.get(i));
         }
-        
+    }
+
+    public void viewAllInvoices2(ArrayList<Invoice> invoices){
+        System.out.println("Displaying all invoices");
+        System.out.println(getInvoiceTableHeader());
+        for (int i = 0; i < invoices.size(); i++){
+            Invoice tempInvoice = invoices.get(i);
+            int num = i + 1;
+            System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+                    num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
+                    tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
+                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased());
+        }
+    }
+
+    public String getInvoiceTableHeader() {
+        return String.format("%-5s %15s %15s %15s %10s %18s %18s %18s %25s",
+                "#", "INVOICE ID", "DATE OPEN", "STATUS", "#CUSTOMER", "AMOUNT", "TAX RATE", "DELIVERY",
+                "PRODUCT");
     }
 
     public void viewOpenInvoices (ArrayList<Invoice> invoices){
@@ -268,14 +286,35 @@ public class InvoiceUI {
         }
     }
 
+    public void viewOpenInvoices2 (ArrayList<Invoice> invoices){
+        System.out.println("Displaying Open Invoices");
+        System.out.println(getInvoiceTableHeader());
+        //sort by date opened
+        Collections.sort(invoices, new OrderDateComparator());
+        for (int i = 0; i < invoices.size(); i++){
+            Invoice inv = invoices.get(i);
+            if (inv.getInvoiceStatus() == true) {
+                System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+                        i + 1, inv.getInvoiceId(), inv.getDateOpened(), inv.getInvoiceStatus(),
+                        inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
+                        inv.getDeliveryStatus(),inv.getProductsPurchased());
+            }
+        }
+    }
+
     public void viewClosedInvoices (ArrayList<Invoice> invoices){
 
         //sort by decreasing order of total cost
         Collections.sort(invoices, new TotalCostComparator());
         System.out.println("Displaying Closed Invoices");
-        for (Invoice inv : invoices) {
+        System.out.println(getInvoiceTableHeader());
+        for (int i = 0; i < invoices.size(); i++){
+            Invoice inv = invoices.get(i);
             if (inv.getInvoiceStatus() == false) {
-                System.out.println(inv);
+                System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+                        i + 1, inv.getInvoiceId(), inv.getDateOpened(), inv.getInvoiceStatus(),
+                        inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
+                        inv.getDeliveryStatus(),inv.getProductsPurchased());
             }
         }
     }
