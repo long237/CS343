@@ -85,7 +85,7 @@ public class SalespersonUI {
             in.nextLine();
         } catch (Exception e) {
             in.nextLine();
-            System.out.println("Invalid Input: Enter a positive numeric value");
+            System.out.println("Invalid Input: Enter a positive numeric value. (Enter -1 to exit)");
             return false;
         }
         if (newID != -1) {
@@ -126,7 +126,7 @@ public class SalespersonUI {
                 throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println("Invalid Input: Enter a positive integer");
+            System.out.println("Invalid Input: Enter a positive integer. (Enter -1 to exit)");
             return false;
         }
         if (newTotalSales != -1) {

@@ -74,7 +74,7 @@ public class CustomerUI {
 
     public void editTaxRate(Customer customer) {
         double newTaxRate;
-        System.out.println("What is the new tax rate for the customer?: ");
+        System.out.println("What is the new tax rate for the customer?: (Enter -1 to exit)");
         while (true) {
             try {
                 newTaxRate = in.nextDouble();
