@@ -240,12 +240,9 @@ public class InvoiceController {
         for (int i = 1; i <= numWarehouse; i++) {
             warehouseList.add(getProducts(i));
         }
-
-        for (int i = 0; i < numWarehouse; i++) {
-            //Display warehouse content
             //Todo: Ask keira or Bryan for a function to print out products to choose from
-            warehouseUI.printProducts(productList);
-        }
+        warehouseUI.printProducts(productList);
+
         String productName = invoiceUI.getProductName();
         boolean productFound = false;
         while (!productFound) {

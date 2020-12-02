@@ -2,6 +2,7 @@ package Warehouses;
 import Products.Product;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -127,13 +128,22 @@ public class WarehouseUI {
                 }
                 catch(Exception e) {
                     System.out.println("(ERROR: Invalid input; Please try again.)");
+                    temp.clear();
+                    temp.add("-1");
+                    return temp;
                 }
             }
             if (i > 1) {
                 try {
-                    Double.parseDouble(input);
+                    double dollarAmount = Double.parseDouble(input);
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    dollarAmount = Double.parseDouble(df.format(dollarAmount));
+                    input = Double.toString(dollarAmount);
                 } catch (Exception e) {
                     System.out.println("(ERROR: Invalid input, please try again.)");
+                    temp.clear();
+                    temp.add("-1");
+                    return temp;
                 }
             }
             temp.add(input);
@@ -185,6 +195,7 @@ public class WarehouseUI {
             productToAddQuantityTo.put(productName, quantityToAdd);
         } catch (Exception e) {
             System.out.println("\t(ERROR: Invalid input; Please try again.)");
+            in.nextLine();
         }
         return productToAddQuantityTo;
     }

@@ -347,5 +347,17 @@ public class Database {
         return warehouseCount - 1;
     }
 
+    public boolean create_warehouse() {
+        int nextWarehouseNum = maxWarehouses() + 1;
+        try {
+            String filename = "Warehouse" + nextWarehouseNum + ".txt";
+            File file = new File(filename);
+            return file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }

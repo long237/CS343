@@ -21,3 +21,5 @@ one a;2.0
 2;2.0
 mooo;3.0
 moo moo 2;3.0
+Rathalos;7.5
+Rathian;8.5

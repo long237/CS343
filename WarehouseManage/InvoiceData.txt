@@ -1,5 +1,5 @@
-1;john doe;false;0.0;false;1234 address;2020-02-22;0.0;Product;R7 5700;0.0;5;RTX 3070;0.0;3;RX 6800;0.0;2;
-2;Alatreon;false;15.0;false;123 Second st;2010-12-21;50.0;Product;R7 5700;0.0;5;strawberries;10.0;5;RTX 3070;0.0;3;RX 6800;0.0;2;
+1;john doe;false;0.0;false;1234 address;2020-02-22;0.0;Product;RTX 3070;0.0;3;R7 5700;0.0;5;RX 6800;0.0;2;
+2;Alatreon;false;15.0;false;123 Second st;2010-12-21;50.0;Product;RTX 3070;0.0;3;R7 5700;0.0;5;strawberries;10.0;5;RX 6800;0.0;2;
 3;Lunastra;false;0.0;false;1234 address;2020-11-24;0.0;Product;R7 5700;0.0;5;RX 6800;0.0;2;
 4;john locke;false;3.0;true;1234 adddy;2000-05-05;400.0;Product;strawberries;10.0;40;
 5;duke;false;1.2;true;12234 toast;1999-01-05;20.0;Product;good burger;5.0;4;
@@ -14,3 +14,4 @@
 14;2;true;2.0;true;213;2000-02-02;20.0;Product;strawberries;10.0;2;
 15;mooo;true;3.0;true;123 54;7000-03-03;30.0;Product;strawberries;10.0;3;
 16;moo moo 2;true;3.0;true;200;2000-02-02;20.0;Product;strawberries;10.0;2;
+17;Rathian;true;8.5;true;456 Third st;2020-12-01;0.0;Product;Strawberries;0.0;0;Raspberries;0.0;0;
