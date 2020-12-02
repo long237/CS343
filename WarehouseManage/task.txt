@@ -21,4 +21,4 @@ shoes 15
 
 Invoice & Controllers should be done by Thursday 26th / 27th!
 
-//Important Main: starting Friday 27th --> Sunday 29th    the whole team
+//Important WarehouseManage: starting Friday 27th --> Sunday 29th    the whole team

@@ -1,5 +1,9 @@
 package Invoices;
+import Database.Database;
+//import com.sun.corba.se.impl.orb.DataCollectorBase;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 // REVIEW: (not sure if "extends" is really the proper way to get access to WarehouseDB methods, retrieve_products() & update_products())
 public class InvoiceController { // extends InvoiceDB
@@ -46,12 +50,40 @@ public class InvoiceController { // extends InvoiceDB
 
         // REVIEW: (Controller "controls" the data, UI Boundary Object should be the only thing that the user accesses/interacts with
         //  Shouldn't UI & Controller be separate from each other to minimize coupling.)
+
         InvoiceUI invoiceUI = new InvoiceUI();
+        Database dataBase = new Database();
         invoiceUI.Menu();
         invoiceUI.customerName();
+
+        ArrayList<Invoice> i_data = Database.retrieve_invoices();
+        Scanner scanner = new Scanner(System.in);
+
+        int menu_op = 0;
+        while (menu_op != -1) {
+            int menu_option = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
+
+//            if (menu_option == 1) {
+//                //edit invoices
+//                invoiceUI.viewAllInvoices(i_data);
+//                int in_option = invoiceUI.chooseInvoice(i_data);
+//                while (in_option < 1 || in_option > i_data.size()){
+//                    in_option = invoiceUI.chooseInvoice(i_data);
+//                }
+//            }
+//
+//            else if (menu_op == 2) {
+//                invoiceUI.editInvoiceMenu();
+//            }
+
+
+            //view in
+        }
+
     }
 
-    public static void createInvoice() {
-
+    public static void main(String[] args) {
+        Icontroller();
     }
+
 }

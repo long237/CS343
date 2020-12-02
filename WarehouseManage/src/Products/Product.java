@@ -109,6 +109,15 @@ public class Product {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Product)) return false;
+        Product o = (Product) obj;
+        return o.mName.toLowerCase().equals(this.mName.toLowerCase());
+    }
+
+    @Override
     public String toString() {
 
         // FOR FUTURE REFERENCE...

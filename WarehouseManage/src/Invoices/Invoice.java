@@ -124,12 +124,13 @@ public class Invoice {
                 ", mAddress='" + mAddress + '\'' +
                 ", mProductsPurchased=" + mProductsPurchased +
                 ", mDateOpened= " + mDateOpened +
+                ", mTotalCost = " + totalCost +
                 '}';
     }
 
     public void calCost() {
         for (Product product : mProductsPurchased){
-            this.totalCost += product.getCost();
+            this.totalCost += product.getCost() * product.getQuantitySold();
         }
     }
 
@@ -208,6 +209,16 @@ public class Invoice {
         System.out.println("Print new line:");
 //        invoice1.Save_Database();
 //        invoice2.Save_Database();
+        ArrayList<Invoice> retriveInvoices = Idata.retrieve_invoices();
+
+        InvoiceUI invUI = new InvoiceUI();
+        System.out.println("All Invoices : ");
+        invUI.viewAllInvoices(retriveInvoices);
+        System.out.println("\n closed invoices: ");
+        invUI.viewClosedInvoices(retriveInvoices);
+        System.out.println("\n Open Invoices");
+        invUI.viewOpenInvoices(retriveInvoices);
+        System.out.println("Hello Wold");
 
     }
 }

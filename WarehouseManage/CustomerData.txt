@@ -1,3 +1,5 @@
-Alex Smith;5.5
+Alex Smith;5.0
 Elizabeth ;10.0
 John Brown;7.3
+John Wick;1.1
+John Wick1;100.0

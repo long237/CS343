@@ -13,7 +13,7 @@ public class Salesperson {
     public Salesperson(){
         this.mSalespersonName = "John Doe";
         this.mSalespersonID = 12345;
-        this.mSalespersonCommission = 10;
+        this.mSalespersonCommission = 10.0;
         this.mTotalSales = 10;
     }
 
@@ -22,10 +22,10 @@ public class Salesperson {
         this.mSalespersonCommission = mSalespersonCommission;
     }
 
-    public Salesperson(String mSalespersonName, double mSalespersonCommission, int mSalespersonID, int mTotalSales) {
+    public Salesperson(String mSalespersonName, int mSalespersonID, double mSalespersonCommission, int mTotalSales) {
         this.mSalespersonName = mSalespersonName;
-        this.mSalespersonCommission = mSalespersonCommission;
         this.mSalespersonID = mSalespersonID;
+        this.mSalespersonCommission = mSalespersonCommission;
         this.mTotalSales = mTotalSales;
     }
 
@@ -63,10 +63,8 @@ public class Salesperson {
 
     @Override
     public String toString() {
-        return "Salesperson{" +
-                "mSalespersonName='" + mSalespersonName + '\'' +
-                ", mSalespersonCommission=" + mSalespersonCommission +
-                '}';
+        return ("Name: " + mSalespersonName + ", Commission Rate: " +
+                mSalespersonCommission + ", ID: " + mSalespersonID + ", Total Sales: " + mTotalSales);
     }
 
     //fixme: main for testing saving person to database
@@ -75,12 +73,18 @@ public class Salesperson {
         Salesperson s2 = new Salesperson("John Brown", 7);
         Salesperson s3 = new Salesperson();
 
-        ArrayList<Salesperson> personList= new ArrayList<Salesperson>();
+        ArrayList<Salesperson> personList= new ArrayList<>();
         personList.add(s1);
         personList.add(s2);
         personList.add(s3);
 
         Database sData = new Database();
         sData.update_Saleperson(personList);
+
+        //test retriving salespeople
+        ArrayList<Salesperson> salesTeam = sData.retrieve_salesPerson();
+        for (Salesperson s : salesTeam) {
+            System.out.println(s);
+        }
     }
 }

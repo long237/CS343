@@ -1,58 +1,167 @@
 package Warehouses;
 import Products.Product;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
-// REVIEW: (Is "extends" really the proper way to connect the Controller & Database.Database Boundary Object?
-//  cannot access getProducts() / addProduct() without this.)
-public class WarehouseUI extends WarehouseController{
 
-    private int mWarehouseNumber;
-    private ArrayList<Product> mProductsToDisplay = getProducts(mWarehouseNumber);
+public class WarehouseUI {
+    Scanner in = new Scanner(System.in);
 
-    public void selectWarehouseNumber() {
-        String menu = "MANAGE WAREHOUSES: \n" +
-                "\t 1. Warehouse 1 \n" +
-                "\t 2. Warehouse 2 \n" +
-                "\t 3. Create a New Warehouse.";
-        mWarehouseNumber = inputInteger(menu, 3);
-    }
-
-    public int selectMenuOption() {
-        displayProducts();
-        String menu = "MANAGE WAREHOUSE " + mWarehouseNumber +": \n" +
-                "\t 1. Add a Product. \n" +
-                "\t 2. Add a Quantity. \n" +
-                "\t 3. Display Products by Decreasing Profit Percent. \n" +
-                "\t 4. Display Low-In-Stock Products. \n" +
-                "\t 5. Display Quantity-In-Stock for each Product by Warehouse.";
-        return inputInteger(menu, 5);
-    }
-
-    // keira: (OPTION methods) -----------------------------------------------------------------------------------------
-    public void selectAddProduct() {
-        Scanner in = new Scanner(System.in);
-        boolean contLoop = true;
-        System.out.println("ADDING PRODUCTS to WAREHOUSE " + mWarehouseNumber + " ... ");
-        while (contLoop) {
-
-            // TODO: validate whether product name already exists (here or in controller?)
-            String productName = inputString("Enter product name: ", 20);
-
-            int quantityInStock = inputInteger("Enter quantity in stock: ", Integer.MAX_VALUE);
-            double cost = inputDouble("Enter cost: ", Double.MAX_VALUE);
-            double retailPrice = inputDouble("Enter retail price: ", Double.MAX_VALUE);
-
-            // REVIEW: (WarehouseController does stuff in response; Should implement as Observer of WarehouseUI?)
-            addProduct(mWarehouseNumber, productName, quantityInStock, cost, retailPrice);
-
-            // Continue?
-            System.out.print("Do you want to enter more products? (y/n): ");
-            String enterProducts = in.nextLine();
-            if (enterProducts.equals("n") || enterProducts.equals("N")){
-                contLoop = false;
-            }
+    public void printWarehouseProducts(int warehouseNumber, ArrayList<Product> products) {
+        if (warehouseNumber == 1) {
+            System.out.println();
         }
+        System.out.println(" WAREHOUSE " + warehouseNumber + ": ");
+        System.out.println(getProductsTable(products));
+    }
+
+    public void printWarehousesProducts(int maxNumOfWarehouses, ArrayList<ArrayList<Product>> allProducts) {
+        for (int i = 0; i < maxNumOfWarehouses; i++) {
+            int warehouseNum = i + 1;
+            printWarehouseProducts(warehouseNum, allProducts.get(i));
+        }
+    }
+
+    public String getProductsTableHeader() {
+        return " " + String.format("%-20s %15s %15s %15s %10s %18s %18s %18s %18s",
+                "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD", "TOTAL-SALES",
+                "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
+    }
+    public String getProductsTable(ArrayList<Product> products) {
+        StringBuilder productsTable = new StringBuilder();
+        String header = getProductsTableHeader();
+        productsTable.append(header);
+        productsTable.append("\n");
+        for (Product product : products) {
+            productsTable.append(product.toString());
+            productsTable.append("\n");
+        }
+        return productsTable.toString();
+    }
+
+    public int selectWarehouseNumber(int flag, int maxNumOfWarehouses) {
+        if (flag == 1) {
+            System.out.println("That warehouse does not exist, please try again: ");
+        }
+        int input;
+        System.out.println("\nMANAGE WAREHOUSES:");
+        for (int i = 1; i <= maxNumOfWarehouses; i++) {
+            System.out.println("\t " + i + ". Warehouse " + i);
+        }
+        System.out.print("Select a warehouse (Enter (-1) to exit): ");
+        try {
+            input = in.nextInt();
+            in.nextLine();
+            return (input);
+        } catch (Exception e) {
+            return -2;
+        }
+    }
+
+    public int selectMenuOption(int warehouseNumber) {
+        int input;
+        System.out.println("MANAGE WAREHOUSE 1: \n" +
+                "\t 1. Add Products. \n" +
+                "\t 2. Remove Products. \n" +
+                "\t 3. Add Product Quantity. \n" +
+                "\t 4. View Products by Decreasing Profit Percent. \n" +
+                "\t 5. View Low-In-Stock Products. \n" +
+                "\t 6. View Quantity-In-Stock for each Product by Warehouse.\n" +
+                "Select a menu option (Enter (-1) to exit): ");
+        try {
+            input = in.nextInt();
+            in.nextLine();
+            return (input);
+        } catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
+            return -2;
+        }
+    }
+
+    public ArrayList<String> addProductMenu() {
+        ArrayList<String> outputList = new ArrayList<>();
+        outputList.add("name? ");
+        outputList.add("quantity in stock?: ");
+        outputList.add("cost?: ");
+        outputList.add("retail price?: ");
+        ArrayList<String> temp = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            System.out.println("\tWhat is the product's " + outputList.get(i));
+            System.out.println("\t(Enter (-1) to ABORT)");
+            System.out.print("\t");
+            String input = in.nextLine();
+            if (input.equals("-1")) {
+                temp.clear();
+                temp.add("-1");
+                return temp;
+            }
+            if (i == 1) {
+                try {
+                    Integer.parseInt(input);
+                }
+                catch(Exception e) {
+                    System.out.println("Invalid input, please try again: ");
+                }
+            }
+            if (i > 1) {
+                try {
+                    Double.parseDouble(input);
+                } catch (Exception e) {
+                    System.out.println("Invalid input, please try again: ");
+                }
+            }
+            temp.add(input);
+        }
+        return temp;
+    }
+
+    public boolean continueThingProducts(int thing) {
+        String[] things = {"", "adding", "removing", "adding quantity to"};
+        boolean continueAddingProducts = false;
+        try {
+            System.out.println("\tCONTINUE " + things[thing].toUpperCase() + " PRODUCTS? (ENTER to continue or -1 to exit): ");
+            System.out.print("\t");
+            String input = in.nextLine();
+
+            continueAddingProducts = !input.equals("-1") && !input.equals("N");
+        } catch (Exception e) {
+            System.out.println("\tInvalid input, please try again.");
+        }
+        return continueAddingProducts;
+    }
+
+    public String removeProductMenu() {
+        String productToRemove = "";
+        boolean flag = true;
+        try {
+            System.out.println("\tWhich product would you like to remove? ");
+            System.out.print("\t");
+            productToRemove = in.nextLine();
+        } catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
+        }
+        return productToRemove;
+    }
+
+    public HashMap<String, Integer> addQuantityMenu() {
+        HashMap<String, Integer> productToAddQuantityTo = new HashMap<>();
+        try {
+            System.out.println("\tEnter a product to add a quantity to: ");
+            System.out.print("\t");
+            String productName = in.nextLine();
+            System.out.println("\tEnter a quantity to add: ");
+            System.out.print("\t");
+            int quantityToAdd = in.nextInt();
+            in.nextLine();
+            productToAddQuantityTo.put(productName, quantityToAdd);
+        } catch (Exception e) {
+            System.out.println("\tInvalid input, please try again.");
+        }
+        return productToAddQuantityTo;
     }
 
     public void selectAddQuantity() {}
@@ -60,37 +169,30 @@ public class WarehouseUI extends WarehouseController{
     public void selectLowInStock() {}
     public void selectQuantityInStock() {}
 
-    // keira: (VALIDATION methods) -------------------------------------------------------------------------------------
 
-    public String inputString(String userPrompt, int maxNumOfChars) {
-        String input = "none";
-        System.out.println(userPrompt);
-        // while (not string || non-alphabetical-letters || >maxNumOfChars) keep going
-        return input;
-    }
-    public int inputInteger(String userPrompt, int maxInt) {
-        int input = 0;
-        System.out.println(userPrompt);
-        // while (not int || non-negative || >maxInt) keep going
-        return input;
-    }
-    public double inputDouble(String userPrompt, double maxDouble) {
-        double input = 0.0;
-        System.out.println(userPrompt);
-        // while (not int || non-negative || >maxDouble) keep going
-        return input;
+    // kkkkk: ERROR MESSAGES -------------------------------------------------------------------------------------------
+
+    //There isn't a reason to save a string here, why are we doing this?
+    public void exitValidation() {
+        System.out.print("Press ENTER to return to MAIN MENU: ");
+        in.nextLine();
     }
 
-    // keira: (DISPLAY methods) ----------------------------------------------------------------------------------------
-    public void displayProducts() {
-        System.out.println("WAREHOUSE " + mWarehouseNumber);
-        for (Product product : mProductsToDisplay) {
-            System.out.println(product.toString());
+    public void badNumber(int num) {
+        if (num == 0) {
+            System.out.println("\t(INVALID QUANTITY; Please try again.)");
+        }
+        else{
+            System.out.println("\t(INVALID COST / RETAIL PRICE; Please try again.)");
         }
     }
-    // TODO: Given a warehouseNumber & its list of Products, prints the Warehouse's list of Products sorted by QuantityInStock.
-    public void byQuantityInStock(int warehouseNumber, ArrayList<Product> products) {
-        ArrayList<Product> productsByQuantityInStock = products;
-        mProductsToDisplay = productsByQuantityInStock;
+
+    public void productExists(boolean productExists) {
+        if (productExists) {
+            System.out.println("\t(PRODUCT ALREADY EXISTS; Please try again.)");
+        }
+        else {
+            System.out.println("\t(PRODUCT DOES NOT EXIST; Please Try Again.)");
+        }
     }
 }
