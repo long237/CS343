@@ -7,9 +7,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import Customers.Customer;
 import java.util.HashSet;
 
 public class Invoice {
+    public static double DELIVERY_CHARGE = 3.99;
+
 
     private int mInvoiceId;
     private String mCustomerName;
@@ -23,7 +26,7 @@ public class Invoice {
 
 
     public Invoice() {
-        this.mInvoiceId = 1234;
+        this.mInvoiceId = -1234;
         this.mCustomerName = "john doe";
         this.mInvoiceStatus = false;
         this.mTaxRate = 0.0;
@@ -31,6 +34,19 @@ public class Invoice {
         this.mAddress = "1234 address";
         this.mProductsPurchased = new HashSet<Product>();
         this.mDateOpened = LocalDate.of(2020,2,22);
+    }
+
+    /**Temporary constructor for adding invoice without the product list **/
+    public Invoice(int mInvoiceId, String mCustomerName, double mTaxRate,
+                   boolean mDeliveryStatus, String mAddress, LocalDate mDateOpened) {
+        this.mInvoiceId = mInvoiceId;
+        this.mCustomerName = mCustomerName;
+        this.mInvoiceStatus = true;
+        this.mTaxRate = mTaxRate;
+        this.mDeliveryStatus = mDeliveryStatus;
+        this.mAddress = mAddress;
+        this.mProductsPurchased = new HashSet<Product>();
+        this.mDateOpened = mDateOpened;
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
@@ -130,7 +146,7 @@ public class Invoice {
 
     public void calCost() {
         for (Product product : mProductsPurchased){
-            this.totalCost += product.getCost() * product.getQuantitySold();
+            this.totalCost += product.getRetailPrice() * product.getQuantitySold();
         }
     }
 
@@ -155,8 +171,43 @@ public class Invoice {
         }
     }
 
+    public void addDeliveryCharge() {
+
+        totalCost += DELIVERY_CHARGE;
+    }
+
+    public void addDiscount(LocalDate dateDelivered) {
+        //first we calculate distance in days
+        int year = dateDelivered.getYear() - mDateOpened.getYear();
+        int month = dateDelivered.getMonthValue() - mDateOpened.getMonthValue();
+        int day = dateDelivered.getDayOfMonth() - mDateOpened.getDayOfMonth();
+
+        int distanceInDays = (year * 365) + (month * 30) + day;
+
+        if (distanceInDays <= 10) {
+            totalCost = totalCost - (totalCost * .10);
+            System.out.println("Distance in days is less than 30: " + distanceInDays);
+        }
+        else if (distanceInDays > 30) {
+            int month_late = distanceInDays / 30;           //Multiplier or run time.
+            for (int i = 0; i < month_late; i++) {
+                this.totalCost = totalCost + (totalCost * 0.02);
+            }
+        }
+    }
+
     //Code for testing
     public static void main(String[] args) {
+        Invoice testDate = new Invoice();
+        Invoice testDate1 = new Invoice();
+        testDate.addProductsPurchased(new Product("prod", 50.0, 8));
+        testDate.calCost();
+        System.out.println("Cost before discount:  " + testDate.getTotalCost());
+        testDate.setmDateOpened(LocalDate.of(2000, 5, 5));
+        testDate.addDiscount(LocalDate.of(2000, 8, 20));
+        System.out.println("Cost after discount:  " + testDate.getTotalCost());
+
+
         Invoice invoice1 = new Invoice();
         System.out.println("This is invoice testing. ");
         System.out.println("Invoices.Invoice: " + invoice1);
@@ -171,6 +222,7 @@ public class Invoice {
 
         Invoice invoice3 = new Invoice();
         invoice3.setmDateOpened(LocalDate.of(2020, 11, 24));
+        invoice3.setmCustomerName("Lunastra");
 
         Product product1 = new Product();
         Product product2 = new Product();
@@ -196,6 +248,7 @@ public class Invoice {
         invoice2.calCost();
 
         invoice3.addProductsPurchased(product2);
+        invoice3.addProductsPurchased(product3);
 
         System.out.println("Invoices.Invoice: " + invoice2);
         System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
@@ -209,6 +262,7 @@ public class Invoice {
         System.out.println("Print new line:");
 //        invoice1.Save_Database();
 //        invoice2.Save_Database();
+//        invoice3.
         ArrayList<Invoice> retriveInvoices = Idata.retrieve_invoices();
 
         InvoiceUI invUI = new InvoiceUI();

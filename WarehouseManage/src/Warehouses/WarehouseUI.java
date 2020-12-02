@@ -2,6 +2,7 @@ package Warehouses;
 import Products.Product;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -11,10 +12,15 @@ import java.util.Set;
 public class WarehouseUI {
     Scanner in = new Scanner(System.in);
 
+    // REVIEW: pretty sure this should go under "View Products" in ProductUI / MainUI,
+    //         kinda awk. to have this option hidden in "Manage Warehouses" but ok
+    public void printProducts(ArrayList<Product> products) {
+        System.out.println();
+        System.out.println(getProductsTable(products));
+    }
+
     public void printWarehouseProducts(int warehouseNumber, ArrayList<Product> products) {
-        if (warehouseNumber == 1) {
-            System.out.println();
-        }
+        System.out.println(); // XXXXX fix extra line when printing multiple warehouses
         System.out.println(" WAREHOUSE " + warehouseNumber + ": ");
         System.out.println(getProductsTable(products));
     }
@@ -45,10 +51,10 @@ public class WarehouseUI {
 
     public int selectWarehouseNumber(int flag, int maxNumOfWarehouses) {
         if (flag == 1) {
-            System.out.println("That warehouse does not exist, please try again: ");
+            System.out.println("(ERROR: Warehouse does not exist; Please try again.)");
         }
         int input;
-        System.out.println("\nMANAGE WAREHOUSES:");
+        System.out.println("\nMANAGE A WAREHOUSE:");
         for (int i = 1; i <= maxNumOfWarehouses; i++) {
             System.out.println("\t " + i + ". Warehouse " + i);
         }
@@ -58,6 +64,23 @@ public class WarehouseUI {
             in.nextLine();
             return (input);
         } catch (Exception e) {
+            return -2;
+        }
+    }
+
+    public int selectMainMenuOption() {
+        int input;
+        System.out.println("\nMANAGE WAREHOUSES: \n" +
+                "\t 1. Create a Warehouse. \n" +
+//                "\t 2. Remove a Warehouse. \n" +
+                "\t 2. Manage a Warehouse. \n" +
+                "Select a menu option (Enter (-1) to exit): ");
+        try {
+            input = in.nextInt();
+            in.nextLine();
+            return (input);
+        } catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
             return -2;
         }
     }
@@ -104,14 +127,23 @@ public class WarehouseUI {
                     Integer.parseInt(input);
                 }
                 catch(Exception e) {
-                    System.out.println("Invalid input, please try again: ");
+                    System.out.println("(ERROR: Invalid input; Please try again.)");
+                    temp.clear();
+                    temp.add("-1");
+                    return temp;
                 }
             }
             if (i > 1) {
                 try {
-                    Double.parseDouble(input);
+                    double dollarAmount = Double.parseDouble(input);
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    dollarAmount = Double.parseDouble(df.format(dollarAmount));
+                    input = Double.toString(dollarAmount);
                 } catch (Exception e) {
-                    System.out.println("Invalid input, please try again: ");
+                    System.out.println("(ERROR: Invalid input, please try again.)");
+                    temp.clear();
+                    temp.add("-1");
+                    return temp;
                 }
             }
             temp.add(input);
@@ -129,7 +161,7 @@ public class WarehouseUI {
 
             continueAddingProducts = !input.equals("-1") && !input.equals("N");
         } catch (Exception e) {
-            System.out.println("\tInvalid input, please try again.");
+            System.out.println("\t(ERROR: Invalid input; Please try again.)");
         }
         return continueAddingProducts;
     }
@@ -139,10 +171,11 @@ public class WarehouseUI {
         boolean flag = true;
         try {
             System.out.println("\tWhich product would you like to remove? ");
+            System.out.println("\t(Enter (-1) to ABORT)");
             System.out.print("\t");
             productToRemove = in.nextLine();
         } catch (Exception e) {
-            System.out.println("Invalid input, please try again.");
+            System.out.println("(ERROR: Invalid input; Please try again.)");
         }
         return productToRemove;
     }
@@ -151,15 +184,18 @@ public class WarehouseUI {
         HashMap<String, Integer> productToAddQuantityTo = new HashMap<>();
         try {
             System.out.println("\tEnter a product to add a quantity to: ");
+            //System.out.println("\t(Enter (-1) to ABORT)");
             System.out.print("\t");
             String productName = in.nextLine();
             System.out.println("\tEnter a quantity to add: ");
+            System.out.println("\t(Enter (-1) to ABORT)");
             System.out.print("\t");
             int quantityToAdd = in.nextInt();
             in.nextLine();
             productToAddQuantityTo.put(productName, quantityToAdd);
         } catch (Exception e) {
-            System.out.println("\tInvalid input, please try again.");
+            System.out.println("\t(ERROR: Invalid input; Please try again.)");
+            in.nextLine();
         }
         return productToAddQuantityTo;
     }
@@ -180,19 +216,19 @@ public class WarehouseUI {
 
     public void badNumber(int num) {
         if (num == 0) {
-            System.out.println("\t(INVALID QUANTITY; Please try again.)");
+            System.out.println("\t(ERROR: Invalid Quantity; Please try again.)");
         }
         else{
-            System.out.println("\t(INVALID COST / RETAIL PRICE; Please try again.)");
+            System.out.println("\t(ERROR: Invalid Cost / Retail Price; Please try again.)");
         }
     }
 
     public void productExists(boolean productExists) {
         if (productExists) {
-            System.out.println("\t(PRODUCT ALREADY EXISTS; Please try again.)");
+            System.out.println("\t(ERROR: Product already exists; Please try again.)");
         }
         else {
-            System.out.println("\t(PRODUCT DOES NOT EXIST; Please Try Again.)");
+            System.out.println("\t(ERROR: Product does not exist; Please try again.)");
         }
     }
 }

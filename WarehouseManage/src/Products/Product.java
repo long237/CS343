@@ -8,12 +8,6 @@ package Products;
 // TODO:        (incomplete)        (#ccff00)
 // REVIEW:      (check / relay)     (#00b9ff)
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
-
 public class Product {
 
     private String mName;
@@ -34,13 +28,13 @@ public class Product {
         this.mTotalSales = 0.0;
     }
 
-    // REVIEW: should this constructor be allowed ...
-    public Product(String name, double cost, int quantitySold ){
+    /**This constructor is for recreating Product obj when retrive from invoice database **/
+    public Product(String name, double retail, int quantitySold ){
         this.mName = name;
         this.mQuantityInStock = 0;
-        this.mCost = cost;
+        this.mCost = 0;
         this.mTotalCost = 0.0;
-        this.mRetailPrice = 0.0;
+        this.mRetailPrice = retail;
         this.mQuantitySold = quantitySold;
         this.mTotalSales = 0.0;
     }
@@ -107,15 +101,33 @@ public class Product {
         double totalProfitPercent = (getTotalProfit() / mTotalCost) * 100;
         return totalProfitPercent;
     }
+    public void setQuantitySold(int amount){
+        mQuantitySold = amount;
+    }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof Product)) return false;
-        Product o = (Product) obj;
-        return o.mName.toLowerCase().equals(this.mName.toLowerCase());
+//        if (obj == null) return false;
+//        if (obj == this) return true;
+//        if (!(obj instanceof Product)) return false;
+//        Product o = (Product) obj;
+//        return o.mName.toLowerCase().equals(this.mName.toLowerCase());
+        if(obj instanceof Product){
+            Product toCompare = (Product) obj;
+            return this.mName.equals(toCompare.mName);
+        }
+        return false;
     }
+
+    @Override
+    public int hashCode() {
+        return mName.hashCode();
+    }
+//    @Override
+//    public int hashCode() {
+//
+//        return 0;
+//    }
 
     @Override
     public String toString() {
@@ -132,4 +144,20 @@ public class Product {
                              mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
     }
 
+
+//    @Override
+//    public String toString() {
+//        return "Product{" +
+//                "mName='" + mName + '\'' +
+//                ", mCost=" + mCost +
+//                ", mRetailPrice" + mRetailPrice +
+//                ", mQuantitySold=" + mQuantitySold +
+//                '}';
+//    }
+
+
+//    @Override
+//    public String toString() {
+//        return mName;
+//    }
 }

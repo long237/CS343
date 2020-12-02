@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
+import Customers.Customer;
 
 public class Database {
 
@@ -27,7 +28,7 @@ public class Database {
                         + invoice.getAddress() + ";" + invoice.getDateOpened() + ";" + invoice.getTotalCost() + ";Product;");
                 HashSet<Product> Product_list = invoice.getProductsPurchased();
                 for (Product temp : Product_list) {
-                    printWriter.print(temp.getName() + ";" + temp.getCost() + ";" + temp.getQuantitySold() + ";");
+                    printWriter.print(temp.getName() + ";" + temp.getRetailPrice() + ";" + temp.getQuantitySold() + ";");
                 }
                 printWriter.println("");
             }
@@ -44,7 +45,7 @@ public class Database {
 
     //fixme: fix the Date of object into Local Date.
     public static ArrayList<Invoice> retrieve_invoices() {
-        ArrayList<Invoice> invoices = new ArrayList<>();
+        ArrayList<Invoice> invoices = new ArrayList<Invoice>();
         ArrayList<String> invoiceString = new ArrayList<>();
         int numOfInvoices = 0;
         try {
@@ -92,7 +93,7 @@ public class Database {
         return invoices;
     }
 
-    // kkkkk: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
+    // TODO: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
     public void update_products(int warehouseNumber, ArrayList<Product> warehouseProducts){
         try {
             String filename = "Warehouse" + warehouseNumber + ".txt";
@@ -114,9 +115,9 @@ public class Database {
         }
     }
 
-    // kkkkk: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
+    // TODO: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
     public ArrayList<Product> retrieve_products(int warehouseNumber) {
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<Product>();
 
         File file = new File("Warehouse" + warehouseNumber + ".txt");
         Scanner input = null;
@@ -139,19 +140,6 @@ public class Database {
             products.add(product);
         }
         return products;
-    }
-
-    public int maxWarehouses() {
-        int warehouseCount = 1;
-        while (true) {
-            File tempFile = new File("Warehouse" + Integer.toString(warehouseCount) + ".txt");
-            boolean exists = tempFile.exists();
-            if (!exists) {
-                break;
-            }
-            warehouseCount++;
-        }
-        return warehouseCount-1;
     }
 
     /** Add an arrayList of customers object into the databse to save the value
@@ -313,4 +301,63 @@ public class Database {
         }
         return salespeople;
     }
+
+    public void updatePass(String userInput) {
+        try{
+            FileWriter passFile = new FileWriter("PasswordData.txt");
+            PrintWriter printwriter = new PrintWriter(passFile);
+            printwriter.println(userInput);
+            printwriter.close();
+            passFile.close();
+
+        }
+         catch (IOException e) {
+            System.out.println("PasswordData.txt does not not exist");
+            e.printStackTrace();
+        }
+    }
+
+    public String retrievePass(){
+        String password = "";
+        try{
+            File passFile = new File("PasswordData.txt");
+            Scanner scanner = new Scanner(passFile);
+            if (scanner.hasNextLine()) {
+                password = scanner.nextLine();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("File passwordData.txt does not exist");
+        }
+        return password;
+    }
+
+    public int maxWarehouses() {
+        int warehouseCount = 1;
+        while (true) {
+
+            File tempFile = new File("Warehouse" + Integer.toString(warehouseCount) + ".txt");
+            boolean exists = tempFile.exists();
+            if (!exists) {
+                break;
+            }
+            warehouseCount++;
+
+        }
+        return warehouseCount - 1;
+    }
+
+    public boolean create_warehouse() {
+        int nextWarehouseNum = maxWarehouses() + 1;
+        try {
+            String filename = "Warehouse" + nextWarehouseNum + ".txt";
+            File file = new File(filename);
+            return file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

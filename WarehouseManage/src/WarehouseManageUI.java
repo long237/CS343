@@ -23,4 +23,11 @@ public class WarehouseManageUI {
         return user;
     }
 
+    public String ChangePasswordUI() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter a new password: ");
+        return in.nextLine();
+
+    }
+
 }
