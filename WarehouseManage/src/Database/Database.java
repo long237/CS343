@@ -332,7 +332,7 @@ public class Database {
         return password;
     }
 
-    public int maxWarehouses() throws IOException {
+    public int maxWarehouses() {
         int warehouseCount = 1;
         while (true) {
 

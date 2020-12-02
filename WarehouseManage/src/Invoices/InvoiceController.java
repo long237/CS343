@@ -2,6 +2,7 @@ package Invoices;
 import Database.Database;
 import Products.Product;
 import Warehouses.Warehouse;
+import Warehouses.WarehouseController;
 import Warehouses.WarehouseUI;
 import Customers.Customer;
 import java.io.IOException;
@@ -14,15 +15,22 @@ public class InvoiceController {
 
     InvoiceUI invoiceUI = new InvoiceUI();
     Database dataBase = new Database();
+    WarehouseUI warehouseUI = new WarehouseUI();
 
     public void Icontroller () throws IOException {
         InvoiceUI invoiceUI = new InvoiceUI();
         Database dataBase = new Database();
+        WarehouseController warehouseCon = new WarehouseController();
+
         Scanner scanner = new Scanner(System.in);
+
+
 
         int menu_op = 0;
         while (menu_op != -1) {
             ArrayList<Invoice> invoiceList = Database.retrieve_invoices();
+            ArrayList<Product> productList = warehouseCon.getAllProducts();
+
             int largestID = invoiceList.get(invoiceList.size() - 1).getInvoiceId();
             menu_op = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
             System.out.println("menu value: " + menu_op);
@@ -70,7 +78,7 @@ public class InvoiceController {
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 6) {   //6. Add invoice
-                    addProductPurchased(in_edit);
+                    addProductPurchased(in_edit, productList);
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 7) {
@@ -110,7 +118,7 @@ public class InvoiceController {
 
             else if (menu_op == 3){             //3.Add invoice.
                 System.out.println("Add Invoice submenu: ");
-                Invoice inputInvoice = addInvoice(largestID);
+                Invoice inputInvoice = addInvoice(largestID, productList);
                 invoiceList.add(inputInvoice);
                 dataBase.update_invoices(invoiceList);                  //update the database with new invoice
             }
@@ -177,7 +185,7 @@ public class InvoiceController {
         return date;
     }
 
-    public Invoice addInvoice(int largestID) throws IOException {
+    public Invoice addInvoice(int largestID, ArrayList<Product> productList) throws IOException {
 
         ArrayList<Customer> customerList = dataBase.retrieve_Customer();
 
@@ -203,7 +211,7 @@ public class InvoiceController {
         boolean doneAddingProducts = true;
 
         while (doneAddingProducts) {
-            addProductPurchased(inputInvoice);
+            addProductPurchased(inputInvoice, productList);
             doneAddingProducts = invoiceUI.addMoreProducts();
         }
         inputInvoice.calCost();
@@ -224,7 +232,7 @@ public class InvoiceController {
         return -1;
     }
 
-    public void addProductPurchased(Invoice invoice) throws IOException {
+    public void addProductPurchased(Invoice invoice, ArrayList<Product> productList) throws IOException {
         ArrayList<ArrayList<Product>> warehouseList = new ArrayList<ArrayList<Product>>();
         int numWarehouse = dataBase.maxWarehouses();
 
@@ -236,6 +244,7 @@ public class InvoiceController {
         for (int i = 0; i < numWarehouse; i++) {
             //Display warehouse content
             //Todo: Ask keira or Bryan for a function to print out products to choose from
+            warehouseUI.printProducts(productList);
         }
         String productName = invoiceUI.getProductName();
         boolean productFound = false;
