@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 public class Invoice {
 
@@ -123,7 +124,7 @@ public class Invoice {
                 ", mTaxRate=" + mTaxRate +
                 ", mDeliveryStatus=" + mDeliveryStatus +
                 ", mAddress='" + mAddress + '\'' +
-                ", mProductsPurchased=" + mProductsPurchased +
+                ", mProductsPurchased=" + mProductsPurchased.stream().map(Product::getName).collect(Collectors.joining(", ")) +
                 ", mDateOpened= " + mDateOpened +
                 ", mTotalCost = " + totalCost +
                 '}';
