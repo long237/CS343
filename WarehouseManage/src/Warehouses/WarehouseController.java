@@ -171,7 +171,7 @@ public class WarehouseController {
                                     dontPrint = true;
                                 }
 
-                                if (productInfo.get(2).length() <= 4 && (Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0)) {
+                                if ((Double.parseDouble(productInfo.get(2)) < 0 || Double.parseDouble(productInfo.get(3)) < 0)) {
                                     ui.badNumber(1);
                                     addFlag = false;
                                     dontPrint = true;
