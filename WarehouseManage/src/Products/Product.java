@@ -120,20 +120,20 @@ public class Product {
         return o.mName.toLowerCase().equals(this.mName.toLowerCase());
     }
 
-//    @Override
-//    public String toString() {
-//
-//        // FOR FUTURE REFERENCE...
-//        // "%":      1 for each variable listed.
-//        // "-":      left-align (w/o -> right-align)
-//        // "[int]":  # of spaces designated for each variable
-//        // "s":      string
-//        // "f":      float (".2f": formats floats as "0.00")
-//
-//        return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
-//                             mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
-//                             mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
-//    }
+    @Override
+    public String toString() {
+
+        // FOR FUTURE REFERENCE...
+        // "%":      1 for each variable listed.
+        // "-":      left-align (w/o -> right-align)
+        // "[int]":  # of spaces designated for each variable
+        // "s":      string
+        // "f":      float (".2f": formats floats as "0.00")
+
+        return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
+                             mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
+                             mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
+    }
 
 
 //    @Override
@@ -147,8 +147,8 @@ public class Product {
 //    }
 
 
-    @Override
-    public String toString() {
-        return mName;
-    }
+//    @Override
+//    public String toString() {
+//        return mName;
+//    }
 }

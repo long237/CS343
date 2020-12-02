@@ -1,7 +1,7 @@
 package Invoices;
 
 import Products.Product;
-
+import java.util.stream.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -262,10 +262,14 @@ public class InvoiceUI {
         for (int i = 0; i < invoices.size(); i++){
             Invoice tempInvoice = invoices.get(i);
             int num = i + 1;
+//            System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+//                    num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
+//                    tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
+//                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased());
             System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
                     num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
                     tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
-                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased());
+                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
         }
     }
 
@@ -299,8 +303,11 @@ public class InvoiceUI {
                         inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
                         inv.getDeliveryStatus(),inv.getProductsPurchased());
             }
+
         }
     }
+
+
 
     public void viewClosedInvoices (ArrayList<Invoice> invoices){
 
