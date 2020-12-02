@@ -15,7 +15,7 @@ public class Product {
     private double mCost;
     private double mTotalCost;
     private double mRetailPrice;
-    private int mQuantitySold;       //how many sold per invoice     //Warehouse_sold = isold1 + isold2 + ....
+    private int mQuantitySold;       //Warehouse_sold = isold1 + isold2 + ....
     private double mTotalSales;
 
     public Product() {

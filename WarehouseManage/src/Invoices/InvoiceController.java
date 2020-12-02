@@ -263,25 +263,38 @@ public class InvoiceController {
 
         boolean isEnough = false;
         double prod_retail = 0.0;
+        int total_stock = 0;
+        for (Product prod : productList){
+            if(prod.getName().equals(productName)){
+                total_stock = prod.getQuantityInStock();
+            }
+        }
+        //Print not enough stock
+        if(total_stock < user_want){
+            System.out.println("Not enough stock");
+            return;
+        }
         for (int i = 0; i < warehouseList.size() && isEnough == false; i++) {        //get the warehouse
             for (Product prod : warehouseList.get(i)) { //iterate the product inside the warehouse
                 if (prod.getName().equals(productName)) {
                     int prod_stock = prod.getQuantityInStock();
                     prod_retail = prod.getRetailPrice();
                     if (prod_stock >= user_quant) {
-                        prod.setQuantityInStock(prod.getQuantityInStock() - user_quant);
+                        //prod.setQuantityInStock(prod.getQuantityInStock() - user_quant);
+                        prod.addQuantitySold(user_quant);
                         user_quant = 0;
                         isEnough = true;
                         break;
                     }
                     else if (prod_stock < user_quant) {
                         user_quant = user_quant - prod_stock;
-                        prod.setQuantityInStock(0);
+                        prod.addQuantitySold(prod_stock);
+                        //prod.setQuantityInStock(0);
                     }
                 }
             }
         }
-        Product in_Product = new Product(productName, prod_retail, user_want - user_quant);
+        Product in_Product = new Product(productName, prod_retail, user_want - user_quant); //update invoice
         invoice.addProductsPurchased(in_Product);
         for (int i = 0; i < warehouseList.size(); i++) {
             dataBase.update_products(i + 1, warehouseList.get(i));

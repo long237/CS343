@@ -133,14 +133,16 @@ public class WarehouseController {
                     int menuOption = 0;
                     // kkkkk: ("MANAGE A WAREHOUSE: " Window) ----------------------------------------------------------
                     warehouseNumber = ui.selectWarehouseNumber(0, getMaxNumOfWarehouses());
-                    if (warehouseNumber == -1) { // User entered "-1" to exit / go back to Main Menu Window.
-                        break;
-                    }
+
                     //Runs the UI again with a flag to print an error message if the warehousenumber is wrong
                     while (warehouseNumber > db.maxWarehouses() || (warehouseNumber < 1 && warehouseNumber != -1)) {
                         warehouseNumber = ui.selectWarehouseNumber(1, getMaxNumOfWarehouses());
                     }
+                    if (warehouseNumber == -1) { // User entered "-1" to exit / go back to Main Menu Window.
+                        break;
+                    }
                     // kkkkk: ("WAREHOUSE 1: ")
+                    System.out.println("hello world");
                     while (menuOption != -1) { // User enters "-1" to exit / go back to "Manage Warehouse: " Window.
 
                         ArrayList<Product> warehouseToDisplay = getProducts(warehouseNumber);

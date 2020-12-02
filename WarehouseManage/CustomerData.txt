@@ -24,3 +24,5 @@ moo moo 2;3.0
 Rathalos;7.5
 Rathian;8.5
 Rathian1;15.0
+Gold Rathian;7.2
+Silver Rathian;5.0

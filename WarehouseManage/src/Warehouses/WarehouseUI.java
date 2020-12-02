@@ -64,6 +64,7 @@ public class WarehouseUI {
             in.nextLine();
             return (input);
         } catch (Exception e) {
+            in.nextLine();
             return -2;
         }
     }
@@ -81,6 +82,7 @@ public class WarehouseUI {
             return (input);
         } catch (Exception e) {
             System.out.println("Invalid input, please try again.");
+            in.nextLine();
             return -2;
         }
     }
@@ -101,6 +103,7 @@ public class WarehouseUI {
             return (input);
         } catch (Exception e) {
             System.out.println("Invalid input, please try again.");
+            in.nextLine();
             return -2;
         }
     }
