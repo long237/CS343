@@ -1,0 +1,23 @@
+Alex Smith;5.5
+Elizabeth ;10.0
+John Brown;7.3
+Val Hazak;5.0
+Zinogre;7.5
+erik;5.0
+long;50.0
+long ngu;200.0
+ertyui;3.0
+right one;4.0
+test;23.0
+john locke;3.0
+new sir;10.0
+jman;50.0
+invmna;2.0
+who;2.0
+was;2.0
+no;2.0
+new new;20.0
+one a;2.0
+2;2.0
+mooo;3.0
+moo moo 2;3.0
