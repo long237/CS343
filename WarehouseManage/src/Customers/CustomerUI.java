@@ -22,6 +22,7 @@ public class CustomerUI {
             return choice;
         } catch (Exception e) {
             System.out.println("Invalid input: Enter the number 1 or 2");
+            in.nextLine();
             return -2;
         }
     }
