@@ -1,12 +1,13 @@
 package Salespeople;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SalespersonUI {
     Scanner in = new Scanner(System.in);
     public int salespersonMenu() {
-        System.out.println("SalesPerson Menu: ");
+        System.out.println("Salesperson Menu: ");
         System.out.println("Option 1 - Edit salesperson: ");
         System.out.println("Option 2 - View sales people: ");
         System.out.println("Option 3 - Add salesperson: ");
@@ -78,16 +79,18 @@ public class SalespersonUI {
         System.out.println("What is the new ID for the salesperson?: ");
         try {
             newID = in.nextInt();
-            if (newID < 0) {
+            if (newID < 0 && newID != -1) {
                 throw new Exception();
             }
             in.nextLine();
         } catch (Exception e) {
             in.nextLine();
-            System.out.println("Invalid Input: Enter a positive numeric value");
+            System.out.println("Invalid Input: Enter a positive numeric value. (Enter -1 to exit)");
             return false;
         }
-        salesperson.setSalespersonID(newID);
+        if (newID != -1) {
+            salesperson.setSalespersonID(newID);
+        }
         return true;
     }
 
@@ -96,18 +99,21 @@ public class SalespersonUI {
         System.out.println("What is the new commission rate for the salesperson?: ");
         try {
             newCommission = in.nextDouble();
-            if (Double.toString(newCommission).length() > 4 || newCommission < 0) {
+            DecimalFormat df = new DecimalFormat("#.00");
+            newCommission = Double.parseDouble(df.format(newCommission));
+            if (newCommission < 0 && newCommission != -1) {
                 throw new Exception();
             }
             in.nextLine();
         } catch (Exception e) {
             in.nextLine();
-            System.out.println("Invalid Input: Enter a correct dollar value");
+            System.out.println("Invalid Input: Enter a correct percent value. (Enter -1 to exit)");
             return false;
         }
-        salesperson.setSalespersonCommission(newCommission);
+        if (newCommission != -1) {
+            salesperson.setSalespersonCommission(newCommission);
+        }
         return true;
-
     }
 
     public boolean editTotalSales(Salesperson salesperson) {
@@ -116,14 +122,16 @@ public class SalespersonUI {
         try {
             newTotalSales = in.nextInt();
             in.nextLine();
-            if (newTotalSales < 0) {
+            if (newTotalSales < 0 && newTotalSales != -1) {
                 throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println("Invalid Input: Enter a positive integer");
+            System.out.println("Invalid Input: Enter a positive integer. (Enter -1 to exit)");
             return false;
         }
-        salesperson.setTotalSales(newTotalSales);
+        if (newTotalSales != -1) {
+            salesperson.setTotalSales(newTotalSales);
+        }
         return true;
     }
 
@@ -161,7 +169,9 @@ public class SalespersonUI {
         while (true) {
             try {
                 rate = in.nextDouble();
-                if (rate < 0 || (Double.toString(rate).length() > 4 && rate < 100.00)) {
+                DecimalFormat df = new DecimalFormat("#.00");
+                rate = Double.parseDouble(df.format(rate));
+                if (rate < 0) {
                     throw new Exception();
                 }
                 in.nextLine();
