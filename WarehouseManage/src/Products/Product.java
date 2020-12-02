@@ -8,12 +8,6 @@ package Products;
 // TODO:        (incomplete)        (#ccff00)
 // REVIEW:      (check / relay)     (#00b9ff)
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
-
 public class Product {
 
     private String mName;
@@ -110,12 +104,27 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof Product)) return false;
-        Product o = (Product) obj;
-        return o.mName.equals(this.mName);
+//        if (obj == null) return false;
+//        if (obj == this) return true;
+//        if (!(obj instanceof Product)) return false;
+//        Product o = (Product) obj;
+//        return o.mName.toLowerCase().equals(this.mName.toLowerCase());
+        if(obj instanceof Product){
+            Product toCompare = (Product) obj;
+            return this.mName.equals(toCompare.mName);
+        }
+        return false;
     }
+
+    @Override
+    public int hashCode() {
+        return mName.hashCode();
+    }
+//    @Override
+//    public int hashCode() {
+//
+//        return 0;
+//    }
 
     @Override
     public String toString() {

@@ -22,7 +22,9 @@ public class WarehouseManage {
         warehouseManageUI.PrintMainMenu();
         int user_input = warehouseManageUI.getUserOption();
 
-
+        if (user_input == 0) {
+            cc.customerController();
+        }
         //while loop
 //        if (user_input == 1) {
 //            invoiceController.Icontroller();
@@ -52,7 +54,6 @@ public class WarehouseManage {
 //        int menuOption = in.nextInt();
 //
 //        if (menuOption == 3) {
-//            // REVIEW: (cannot call WarehouseUI methods)
 //            selectWarehouseNumber();
 //        }
 //        // keira: (END of 11/22) ---------------------------------------------------------------------------------------

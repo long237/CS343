@@ -141,6 +141,23 @@ public class Database {
         return products;
     }
 
+    public boolean create_warehouse() {
+        int nextWarehouseNum = maxWarehouses() + 1;
+        try {
+            String filename = "Warehouse" + nextWarehouseNum + ".txt";
+            File file = new File(filename);
+            return file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean remove_warehouse() {
+        // REVIEW: don't think this option should be allowed...
+        return false;
+    }
+
     public int maxWarehouses() {
         int warehouseCount = 1;
         while (true) {
