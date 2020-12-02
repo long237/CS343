@@ -2,6 +2,7 @@ package Customers;
 
 import Salespeople.Salesperson;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ public class CustomerUI {
         System.out.println("Option 1 - Edit Customer: ");
         System.out.println("Option 2 - View Customers: ");
         System.out.println("Option 3 - Add Customer: ");
+        System.out.println("Enter -1 to exit");
 
         try {
             int choice = in.nextInt();
@@ -76,7 +78,9 @@ public class CustomerUI {
         while (true) {
             try {
                 newTaxRate = in.nextDouble();
-                if (Double.toString(newTaxRate).length() > 4 || (newTaxRate < 0 && newTaxRate != -1)) {
+                DecimalFormat df = new DecimalFormat("#.00");
+                newTaxRate = Double.parseDouble(df.format(newTaxRate));
+                if (newTaxRate < 0 && newTaxRate != -1) {
                     throw new Exception();
                 }
                 in.nextLine();
@@ -113,7 +117,9 @@ public class CustomerUI {
         while (true) {
             try {
                 rateToAdd = in.nextDouble();
-                if ((Double.toString(rateToAdd).length() > 4 && rateToAdd < 100.00) || (rateToAdd < 0 && rateToAdd != -1)) {
+                DecimalFormat df = new DecimalFormat("#.00");
+                rateToAdd = Double.parseDouble(df.format(rateToAdd));
+                if ((rateToAdd < 0 && rateToAdd != -1)) {
                     throw new Exception();
                 }
                 in.nextLine();
