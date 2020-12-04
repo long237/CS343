@@ -61,7 +61,7 @@ public class InvoiceController {
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 3){    //3.Delivery status
-                    Boolean status = this.getStatus();
+                    Boolean status = this.getStatus(0);
                     in_edit.setmDeliveryStatus(status);
                     dataBase.update_invoices(invoiceList);
                 }
@@ -81,8 +81,8 @@ public class InvoiceController {
                     addProductPurchased(in_edit, productList);
                     dataBase.update_invoices(invoiceList);
                 }
-                else if (invoice_part == 7) {
-                    Boolean status = this.getStatus();
+                else if (invoice_part == 7) {       //7. Edit invoice status
+                    Boolean status = this.getStatus(1);
                     in_edit.setmInvoiceStatus(status);
 
                     if (!status) {          //Invoice status != delivery status
@@ -153,13 +153,24 @@ public class InvoiceController {
     }
 
     // TODO: add an error message when the user enter the wrong value
-    public Boolean getStatus(){
-        String status = invoiceUI.editDeliveryStatus();
-        while ( !status.equals("OPEN") && !status.equals("CLOSED")){
-            status = invoiceUI.editDeliveryStatus();
-            //System.out.println("Invalid input, please try again.");
+    public Boolean getStatus(int flag){
+        if (flag == 0) {
+            String status = invoiceUI.editDeliveryStatus();
+            while (!status.equals("Y") && !status.equals("N")) {
+                status = invoiceUI.editDeliveryStatus();
+                //System.out.println("Invalid input, please try again.");
+            }
+            return status.equals("Y");
         }
-        return status.equals("OPEN");
+        else if (flag == 1){
+            String status = invoiceUI.getInvoiceStatus();
+            while (!status.equals("OPEN") && !status.equals("CLOSED")) {
+                status = invoiceUI.getInvoiceStatus();
+                //System.out.println("Invalid input, please try again.");
+            }
+            return status.equals("OPEN");
+        }
+        return false;
     }
 
 //    public Boolean getInvoiceStat(){
@@ -203,7 +214,7 @@ public class InvoiceController {
             taxRate = getTax();
             dataBase.addCustomer(new Customer(incName, taxRate), dataBase.retrieve_Customer());
         }
-        boolean deliStat = getStatus();
+        boolean deliStat = getStatus(0);
         String deliAddress = getAddress();
         //int[] dateValue = getDate();
         LocalDate dateOpen = getDate();
