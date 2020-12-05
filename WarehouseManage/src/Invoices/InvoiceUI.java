@@ -52,7 +52,7 @@ public class InvoiceUI {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Which Invoice would you like to edit");
-        viewAllInvoices(invoiceList);
+        viewAllInvoices2(invoiceList);
         try {
             int choice = in.nextInt();
             in.nextLine();
@@ -115,9 +115,10 @@ public class InvoiceUI {
         }
     }
 
+
     public String editDeliveryStatus() {
         Scanner in = new Scanner(System.in);
-        System.out.println("What is the new status: type OPEN or CLOSED");
+        System.out.println("Do you want delivery: Type 'Y' for Yes and 'N' for No");
         String newDeliveryStatus = in.nextLine();
         return newDeliveryStatus;
 
