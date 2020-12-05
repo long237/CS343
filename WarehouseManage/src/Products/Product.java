@@ -43,7 +43,7 @@ public class Product {
         this.mName = mName;
         this.mQuantityInStock = mQuantityInStock;
         this.mCost = mCost;
-        this.mTotalCost = mQuantityInStock * mCost;
+        this.mTotalCost = (mQuantityInStock + mQuantitySold) * mCost;
         this.mRetailPrice = mRetailPrice;
         this.mQuantitySold = 0;
         this.mTotalSales = 0.0;
@@ -54,7 +54,7 @@ public class Product {
         this.mName = mName;
         this.mQuantityInStock = mQuantityInStock;
         this.mCost = mCost;
-        this.mTotalCost = (mQuantityInStock * mCost);
+        this.mTotalCost = (mQuantityInStock + mQuantitySold) * mCost;
         this.mRetailPrice = mRetailPrice;
         this.mQuantitySold = mQuantitySold;
         this.mTotalSales = mQuantitySold * mRetailPrice;
@@ -72,7 +72,7 @@ public class Product {
     public boolean isLowStock() { return mQuantityInStock <= 5; }
 
     public double getCost() { return mCost; }
-    public void setCost(double cost) { mCost = cost; }
+    public void setCost(double cost) { mCost = cost ; }
 
     public double getTotalCost() {
         return mTotalCost;

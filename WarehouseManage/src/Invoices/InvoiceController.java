@@ -59,7 +59,7 @@ public class InvoiceController {
                     dataBase.update_invoices(invoiceList);
                 }
                 else if (invoice_part == 3){    //3.Delivery status
-                    Boolean status = this.getStatus();
+                    Boolean status = this.getStatus(0);
                     in_edit.setmDeliveryStatus(status);
                     dataBase.update_invoices(invoiceList);
                 }
@@ -79,8 +79,8 @@ public class InvoiceController {
                     addProductPurchased(in_edit, productList);
                     dataBase.update_invoices(invoiceList);
                 }
-                else if (invoice_part == 7) {
-                    Boolean status = this.getStatus();
+                else if (invoice_part == 7) {       //7. Edit invoice status
+                    Boolean status = this.getStatus(1);
                     in_edit.setmInvoiceStatus(status);
 
                     if (!status) {          //Invoice status != delivery status
@@ -151,13 +151,24 @@ public class InvoiceController {
     }
 
     // TODO: add an error message when the user enter the wrong value
-    public Boolean getStatus(){
-        String status = invoiceUI.editDeliveryStatus();
-        while ( !status.equals("OPEN") && !status.equals("CLOSED")){
-            status = invoiceUI.editDeliveryStatus();
-            //System.out.println("Invalid input, please try again.");
+    public Boolean getStatus(int flag){
+        if (flag == 0) {
+            String status = invoiceUI.editDeliveryStatus().toUpperCase();
+            while (!status.equals("Y") && !status.equals("N")) {
+                status = invoiceUI.editDeliveryStatus();
+                //System.out.println("Invalid input, please try again.");
+            }
+            return status.equals("Y");
         }
-        return status.equals("OPEN");
+        else if (flag == 1){
+            String status = invoiceUI.getInvoiceStatus();
+            while (!status.equals("OPEN") && !status.equals("CLOSED")) {
+                status = invoiceUI.getInvoiceStatus();
+                //System.out.println("Invalid input, please try again.");
+            }
+            return status.equals("OPEN");
+        }
+        return false;
     }
 
 //    public Boolean getInvoiceStat(){
@@ -201,7 +212,7 @@ public class InvoiceController {
             taxRate = getTax();
             dataBase.addCustomer(new Customer(incName, taxRate), dataBase.retrieve_Customer());
         }
-        boolean deliStat = getStatus();
+        boolean deliStat = getStatus(0);
         String deliAddress = getAddress();
         //int[] dateValue = getDate();
         LocalDate dateOpen = getDate();
@@ -221,8 +232,8 @@ public class InvoiceController {
         int index = -1;
         //Check to see if the customer name already exist in the database
         for (int i = 0; i < customerList.size(); i++) {
-            String temp_cName = customerList.get(i).getmName();
-            if(temp_cName.equals(incName)) {
+            String temp_cName = customerList.get(i).getmName().toLowerCase();
+            if(temp_cName.equals(incName.toLowerCase())) {
                 index = i;
                 return index;
             }
@@ -238,7 +249,6 @@ public class InvoiceController {
         for (int i = 1; i <= numWarehouse; i++) {
             warehouseList.add(getProducts(i));
         }
-            //Todo: Ask keira or Bryan for a function to print out products to choose from
         warehouseUI.printProducts(productList);
 
         String productName = invoiceUI.getProductName();

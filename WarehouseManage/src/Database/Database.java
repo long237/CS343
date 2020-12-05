@@ -201,7 +201,8 @@ public class Database {
 
             for (Customer customer : customerList) {
                 printWriter.println(customer.getmName() + ";" + customer.getmTaxrate());
-                if (c.getmName().equals(customer.getmName()) || (c.getmName() + customerNameCount).equals(customer.getmName())) {
+                if (c.getmName().toLowerCase().equals(customer.getmName().toLowerCase()) ||
+                        (c.getmName().toLowerCase() + customerNameCount).equals(customer.getmName().toLowerCase())) {
                     customerNameCount++;
                 }
             }
