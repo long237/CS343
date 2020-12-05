@@ -155,7 +155,7 @@ public class InvoiceController {
     // TODO: add an error message when the user enter the wrong value
     public Boolean getStatus(int flag){
         if (flag == 0) {
-            String status = invoiceUI.editDeliveryStatus();
+            String status = invoiceUI.editDeliveryStatus().toUpperCase();
             while (!status.equals("Y") && !status.equals("N")) {
                 status = invoiceUI.editDeliveryStatus();
                 //System.out.println("Invalid input, please try again.");
@@ -234,8 +234,8 @@ public class InvoiceController {
         int index = -1;
         //Check to see if the customer name already exist in the database
         for (int i = 0; i < customerList.size(); i++) {
-            String temp_cName = customerList.get(i).getmName();
-            if(temp_cName.equals(incName)) {
+            String temp_cName = customerList.get(i).getmName().toLowerCase();
+            if(temp_cName.equals(incName.toLowerCase())) {
                 index = i;
                 return index;
             }
@@ -251,7 +251,6 @@ public class InvoiceController {
         for (int i = 1; i <= numWarehouse; i++) {
             warehouseList.add(getProducts(i));
         }
-            //Todo: Ask keira or Bryan for a function to print out products to choose from
         warehouseUI.printProducts(productList);
 
         String productName = invoiceUI.getProductName();
