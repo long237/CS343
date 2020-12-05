@@ -1,6 +1,6 @@
 package Warehouses;
 import Products.Product;
-import java.lang.reflect.Array;
+
 import java.util.*;
 import Database.Database;
 import Products.ProfitPercentComparator;
@@ -34,7 +34,7 @@ public class WarehouseController {
     }
 
     // kkkkk: returns a list of products from the given warehouse
-    public ArrayList<Product> getProducts(int warehouseNumber) { return db.retrieve_products(warehouseNumber); }
+    public ArrayList<Product> getProducts(int warehouseNumber) { return db.retrieve_warehouse(warehouseNumber); }
 
     // kkkkk: returns list of products from each & every warehouse (ie. allProducts.get(0) == the products in WAREHOUSE 1)
     public ArrayList<ArrayList<Product>> getProductsFromEachWarehouse() {
@@ -74,7 +74,7 @@ public class WarehouseController {
         if (!findProduct(warehouseNumber, productToAdd.getName())) {
             ArrayList<Product> warehouseProducts = getProducts(warehouseNumber);
             warehouseProducts.add(productToAdd);
-            db.update_products(warehouseNumber, warehouseProducts);
+            db.update_warehouse(warehouseNumber, warehouseProducts);
             addedProduct = true;
         }
         return addedProduct;
@@ -88,7 +88,7 @@ public class WarehouseController {
             //System.out.println("REMOVING: " + getProduct(warehouseNumber, productToRemove).getName());
             warehouseProducts.remove(getProduct(warehouseNumber, productToRemove));
             //System.out.println("WAREHOUSE AFTER REMOVING: " + warehouseProducts);
-            db.update_products(warehouseNumber, warehouseProducts);
+            db.update_warehouse(warehouseNumber, warehouseProducts);
             removedProduct = true;
         }
         return removedProduct;
@@ -105,7 +105,7 @@ public class WarehouseController {
                 //System.out.println("ADDING " + quantityToAdd + " " + productName.toUpperCase() + "'s...");
                 product.addQuantityInStock(quantityToAdd);
                 //System.out.println(product);
-                db.update_products(warehouseNumber, warehouseProducts);
+                db.update_warehouse(warehouseNumber, warehouseProducts);
                 addedQuantity = true;
             }
         }
@@ -232,25 +232,19 @@ public class WarehouseController {
                                 }
                             }
                         }
-                        // kkkkk: (4. View Products By Decreasing Profit Percent.)
-                        else if (menuOption == 4) {
-                            Collections.sort(productsToView, new ProfitPercentComparator());
-                            ui.printProducts(productsToView);
-                            ui.exitValidation();
-                        }
-                        // kkkkk: (5. View Low-In-Stock products.)
-                        else if (menuOption ==5) {
+                        // kkkkk: (4. View Low-In-Stock products.)
+                        else if (menuOption ==4) {
                             ArrayList<Product> temp = new ArrayList<>();
                             for (Product p : productsToView) {
                                 if (p.isLowStock()) {
                                     temp.add(p);
                                 }
                             }
-                            ui.printProducts(temp);
+                            ui.printProductsWOBusinessLogic(temp);
                             ui.exitValidation();
                         }
-                        // kkkkk: (6. View Products By Increasing Quantity-In-Stock.)
-                        else if (menuOption == 6) {
+                        // kkkkk: (5. View Products By Increasing Quantity-In-Stock.)
+                        else if (menuOption == 5) {
                             ArrayList<ArrayList<Product>> warehouses = getProductsFromEachWarehouse();
                             for (ArrayList<Product> warehouse : warehouses) {
                                 Collections.sort(warehouse, new QuantityInStockComparator());
@@ -261,6 +255,17 @@ public class WarehouseController {
                         }
                     }
                 }
+            }
+            // kkkkk: (3. View All Products.)
+            else if (mainMenuOption == 3) {
+//                // kkkkk: (4. View Products By Decreasing Profit Percent.)
+//                Collections.sort(productsToView, new ProfitPercentComparator());
+//                ui.printProducts(productsToView);
+//                ui.exitValidation();
+                ArrayList<Product> productsToView = getAllProducts();
+                Collections.sort(productsToView, new ProfitPercentComparator());
+                ui.printProducts(productsToView);
+                ui.exitValidation();
             }
             // (END of mainMenuOption == 3)
         }

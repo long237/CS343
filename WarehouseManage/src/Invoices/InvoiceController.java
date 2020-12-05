@@ -1,12 +1,10 @@
 package Invoices;
 import Database.Database;
 import Products.Product;
-import Warehouses.Warehouse;
 import Warehouses.WarehouseController;
 import Warehouses.WarehouseUI;
 import Customers.Customer;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -297,7 +295,7 @@ public class InvoiceController {
         Product in_Product = new Product(productName, prod_retail, user_want - user_quant); //update invoice
         invoice.addProductsPurchased(in_Product);
         for (int i = 0; i < warehouseList.size(); i++) {
-            dataBase.update_products(i + 1, warehouseList.get(i));
+            dataBase.update_warehouse(i + 1, warehouseList.get(i));
         }
     }
 
@@ -320,7 +318,7 @@ public class InvoiceController {
 
 
     public ArrayList<Product> getProducts(int warehouseNumber) {
-        return dataBase.retrieve_products(warehouseNumber);
+        return dataBase.retrieve_warehouse(warehouseNumber);
     }
 
     public static void main(String[] args) throws IOException {
