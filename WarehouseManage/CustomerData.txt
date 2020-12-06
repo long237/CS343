@@ -27,3 +27,4 @@ Rathian1;15.0
 Gold Rathian;7.2
 Silver Rathian;5.0
 AJ Fahim;40.0
+Fatalis;10.0

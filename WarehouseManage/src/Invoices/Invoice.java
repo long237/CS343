@@ -148,6 +148,8 @@ public class Invoice {
         for (Product product : mProductsPurchased){
             this.totalCost += product.getRetailPrice() * product.getQuantitySold();
         }
+        //After tax:
+        this.totalCost = totalCost + (totalCost * mTaxRate);
     }
 
     public void Save_Database (){

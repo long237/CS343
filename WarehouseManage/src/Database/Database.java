@@ -84,8 +84,9 @@ public class Database {
             for (Product p : tempProducts) {
                 tempInvoice.addProductsPurchased(p);
             }
+            //fixme: calculate cost here would cause an overwrite that we don't want
             //re-caluclate total cost for invoice
-            tempInvoice.calCost();
+            //tempInvoice.calCost();
             // add all invoices ot arraylist
             invoices.add(tempInvoice);
         }

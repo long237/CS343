@@ -33,7 +33,6 @@ public class InvoiceController {
 
             int largestID = invoiceList.get(invoiceList.size() - 1).getInvoiceId();
             menu_op = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
-            System.out.println("menu value: " + menu_op);
 
             if (menu_op == 1) {         //1. Edit invoices
                 //edit invoices
@@ -104,10 +103,10 @@ public class InvoiceController {
                     user_op = getViewInv();
                     if (user_op == 1){
 //                        invoiceUI.viewAllInvoices(invoiceList);
-                        invoiceUI.viewAllInvoices2(invoiceList);
+                        invoiceUI.viewAllInvoices(invoiceList);
                     }
                     else if(user_op == 2) {
-                        invoiceUI.viewOpenInvoices2(invoiceList);
+                        invoiceUI.viewOpenInvoices(invoiceList);
                     }
                     else if (user_op == 3) {
                         invoiceUI.viewClosedInvoices(invoiceList);
@@ -157,14 +156,16 @@ public class InvoiceController {
         if (flag == 0) {
             String status = invoiceUI.editDeliveryStatus().toUpperCase();
             while (!status.equals("Y") && !status.equals("N")) {
+                System.out.println("Invalid input, please try again.");
                 status = invoiceUI.editDeliveryStatus();
                 //System.out.println("Invalid input, please try again.");
             }
             return status.equals("Y");
         }
         else if (flag == 1){
-            String status = invoiceUI.getInvoiceStatus();
+            String status = invoiceUI.getInvoiceStatus().toUpperCase();
             while (!status.equals("OPEN") && !status.equals("CLOSED")) {
+                System.out.println("Invalid input, please try again.");
                 status = invoiceUI.getInvoiceStatus();
                 //System.out.println("Invalid input, please try again.");
             }

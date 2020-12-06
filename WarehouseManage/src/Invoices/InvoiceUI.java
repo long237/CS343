@@ -52,7 +52,7 @@ public class InvoiceUI {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Which Invoice would you like to edit");
-        viewAllInvoices2(invoiceList);
+        viewAllInvoices(invoiceList);
         try {
             int choice = in.nextInt();
             in.nextLine();
@@ -248,16 +248,16 @@ public class InvoiceUI {
         }
     }
 
-    public void viewAllInvoices(ArrayList<Invoice> invoices) {
-        //add formating later
-        System.out.println("Displaying all invoices");
-        for (int i = 0; i < invoices.size(); i++) {
-            int num = i + 1;
-            System.out.println(num + " " + invoices.get(i));
-        }
-    }
+//    public void viewAllInvoices(ArrayList<Invoice> invoices) {
+//        //add formating later
+//        System.out.println("Displaying all invoices");
+//        for (int i = 0; i < invoices.size(); i++) {
+//            int num = i + 1;
+//            System.out.println(num + " " + invoices.get(i));
+//        }
+//    }
 
-    public void viewAllInvoices2(ArrayList<Invoice> invoices){
+    public void viewAllInvoices(ArrayList<Invoice> invoices){
         System.out.println("Displaying all invoices");
         System.out.println(getInvoiceTableHeader());
         for (int i = 0; i < invoices.size(); i++){
@@ -267,7 +267,7 @@ public class InvoiceUI {
 //                    num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
 //                    tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
 //                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased());
-            System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+            System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s \n",
                     num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
                     tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
                     tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
@@ -275,23 +275,23 @@ public class InvoiceUI {
     }
 
     public String getInvoiceTableHeader() {
-        return String.format("%-5s %15s %15s %15s %10s %18s %18s %18s %25s",
+        return String.format("%-5s %15s %15s %15s %20s %18s %18s %18s %25s",
                 "#", "INVOICE ID", "DATE OPEN", "STATUS", "#CUSTOMER", "AMOUNT", "TAX RATE", "DELIVERY",
                 "PRODUCT");
     }
 
-    public void viewOpenInvoices (ArrayList<Invoice> invoices){
-        System.out.println("Displaying Open Invoices");
-        //sort by date opened
-        Collections.sort(invoices, new OrderDateComparator());
-        for (Invoice inv : invoices) {
-            if (inv.getInvoiceStatus() == true) {
-                System.out.println(inv);
-            }
-        }
-    }
+//    public void viewOpenInvoices (ArrayList<Invoice> invoices){
+//        System.out.println("Displaying Open Invoices");
+//        //sort by date opened
+//        Collections.sort(invoices, new OrderDateComparator());
+//        for (Invoice inv : invoices) {
+//            if (inv.getInvoiceStatus() == true) {
+//                System.out.println(inv);
+//            }
+//        }
+//    }
 
-    public void viewOpenInvoices2 (ArrayList<Invoice> invoices){
+    public void viewOpenInvoices (ArrayList<Invoice> invoices){
         System.out.println("Displaying Open Invoices");
         System.out.println(getInvoiceTableHeader());
         //sort by date opened
@@ -299,10 +299,10 @@ public class InvoiceUI {
         for (int i = 0; i < invoices.size(); i++){
             Invoice inv = invoices.get(i);
             if (inv.getInvoiceStatus() == true) {
-                System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+                System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s \n",
                         i + 1, inv.getInvoiceId(), inv.getDateOpened(), inv.getInvoiceStatus(),
                         inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
-                        inv.getDeliveryStatus(),inv.getProductsPurchased());
+                        inv.getDeliveryStatus(),inv.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
             }
 
         }
@@ -319,10 +319,10 @@ public class InvoiceUI {
         for (int i = 0; i < invoices.size(); i++){
             Invoice inv = invoices.get(i);
             if (inv.getInvoiceStatus() == false) {
-                System.out.printf("%-5s %15s %15s %15s %10s %18s %18s %18s %25s \n",
+                System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s \n",
                         i + 1, inv.getInvoiceId(), inv.getDateOpened(), inv.getInvoiceStatus(),
                         inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
-                        inv.getDeliveryStatus(),inv.getProductsPurchased());
+                        inv.getDeliveryStatus(),inv.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
             }
         }
     }
