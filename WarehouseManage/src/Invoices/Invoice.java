@@ -50,7 +50,7 @@ public class Invoice {
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress, LocalDate dateOpened) {
+                   boolean mDeliveryStatus, String mAddress, LocalDate dateOpened, double totalCost) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = mInvoiceStatus;
@@ -59,6 +59,7 @@ public class Invoice {
         this.mAddress = mAddress;
         this.mProductsPurchased = new HashSet<Product>();
         this.mDateOpened = dateOpened;
+        this.totalCost = totalCost;
     }
 
     public int getInvoiceId() {
@@ -149,7 +150,7 @@ public class Invoice {
             this.totalCost += product.getRetailPrice() * product.getQuantitySold();
         }
         //After tax:
-        this.totalCost = totalCost + (totalCost * mTaxRate);
+        this.totalCost = totalCost + (totalCost * mTaxRate / 100.0);
     }
 
     public void Save_Database (){
@@ -199,82 +200,82 @@ public class Invoice {
     }
 
     //Code for testing
-    public static void main(String[] args) {
-        Invoice testDate = new Invoice();
-        Invoice testDate1 = new Invoice();
-        testDate.addProductsPurchased(new Product("prod", 50.0, 8));
-        testDate.calCost();
-        System.out.println("Cost before discount:  " + testDate.getTotalCost());
-        testDate.setmDateOpened(LocalDate.of(2000, 5, 5));
-        testDate.addDiscount(LocalDate.of(2000, 8, 20));
-        System.out.println("Cost after discount:  " + testDate.getTotalCost());
-
-
-        Invoice invoice1 = new Invoice();
-        System.out.println("This is invoice testing. ");
-        System.out.println("Invoices.Invoice: " + invoice1);
-
-        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 21));
-
-        invoice2.setmAddress("123 Second st");
-        invoice2.setmCustomerName("Alatreon");
-        invoice2.setmDeliveryStatus(false);
-        invoice2.setmTaxRate(15);
-        System.out.println("After: " + invoice2);
-
-        Invoice invoice3 = new Invoice();
-        invoice3.setmDateOpened(LocalDate.of(2020, 11, 24));
-        invoice3.setmCustomerName("Lunastra");
-
-        Product product1 = new Product();
-        Product product2 = new Product();
-        Product product3 = new Product();
-        product1.setName("RTX 3070");
-        product2.setName("RX 6800");
-        product3.setName("R7 5700");
-        product1.setCost(30);
-        product2.setCost(20);
-        product3.setCost(50);
-        product1.addQuantitySold(3);
-        product2.addQuantitySold(2);
-        product3.addQuantitySold(5);
-
-        invoice1.addProductsPurchased(product1);
-        invoice1.addProductsPurchased(product2);
-        invoice1.addProductsPurchased(product3);
-        invoice1.calCost();
-
-        invoice2.addProductsPurchased(product1);
-        invoice2.addProductsPurchased(product2);
-        invoice2.addProductsPurchased(product3);
-        invoice2.calCost();
-
-        invoice3.addProductsPurchased(product2);
-        invoice3.addProductsPurchased(product3);
-
-        System.out.println("Invoices.Invoice: " + invoice2);
-        System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
-
-        ArrayList<Invoice> invoicesList = new ArrayList<Invoice>();
-        invoicesList.add(invoice1);
-        invoicesList.add(invoice2);
-        invoicesList.add(invoice3);
-        Database Idata= new Database();
-        Idata.update_invoices(invoicesList);
-        System.out.println("Print new line:");
-//        invoice1.Save_Database();
-//        invoice2.Save_Database();
-//        invoice3.
-        ArrayList<Invoice> retriveInvoices = Idata.retrieve_invoices();
-
-        InvoiceUI invUI = new InvoiceUI();
-        System.out.println("All Invoices : ");
-        invUI.viewAllInvoices(retriveInvoices);
-        System.out.println("\n closed invoices: ");
-        invUI.viewClosedInvoices(retriveInvoices);
-        System.out.println("\n Open Invoices");
-        invUI.viewOpenInvoices(retriveInvoices);
-        System.out.println("Hello Wold");
-
-    }
+//    public static void main(String[] args) {
+//        Invoice testDate = new Invoice();
+//        Invoice testDate1 = new Invoice();
+//        testDate.addProductsPurchased(new Product("prod", 50.0, 8));
+//        testDate.calCost();
+//        System.out.println("Cost before discount:  " + testDate.getTotalCost());
+//        testDate.setmDateOpened(LocalDate.of(2000, 5, 5));
+//        testDate.addDiscount(LocalDate.of(2000, 8, 20));
+//        System.out.println("Cost after discount:  " + testDate.getTotalCost());
+//
+//
+//        Invoice invoice1 = new Invoice();
+//        System.out.println("This is invoice testing. ");
+//        System.out.println("Invoices.Invoice: " + invoice1);
+//
+//        Invoice invoice2 = new Invoice(4567, "Fatalis", true, 10, true, "123 Main st", LocalDate.of(2010, 12, 21));
+//
+//        invoice2.setmAddress("123 Second st");
+//        invoice2.setmCustomerName("Alatreon");
+//        invoice2.setmDeliveryStatus(false);
+//        invoice2.setmTaxRate(15);
+//        System.out.println("After: " + invoice2);
+//
+//        Invoice invoice3 = new Invoice();
+//        invoice3.setmDateOpened(LocalDate.of(2020, 11, 24));
+//        invoice3.setmCustomerName("Lunastra");
+//
+//        Product product1 = new Product();
+//        Product product2 = new Product();
+//        Product product3 = new Product();
+//        product1.setName("RTX 3070");
+//        product2.setName("RX 6800");
+//        product3.setName("R7 5700");
+//        product1.setCost(30);
+//        product2.setCost(20);
+//        product3.setCost(50);
+//        product1.addQuantitySold(3);
+//        product2.addQuantitySold(2);
+//        product3.addQuantitySold(5);
+//
+//        invoice1.addProductsPurchased(product1);
+//        invoice1.addProductsPurchased(product2);
+//        invoice1.addProductsPurchased(product3);
+//        invoice1.calCost();
+//
+//        invoice2.addProductsPurchased(product1);
+//        invoice2.addProductsPurchased(product2);
+//        invoice2.addProductsPurchased(product3);
+//        invoice2.calCost();
+//
+//        invoice3.addProductsPurchased(product2);
+//        invoice3.addProductsPurchased(product3);
+//
+//        System.out.println("Invoices.Invoice: " + invoice2);
+//        System.out.println("Date of Invoice 1: " + invoice1.getDateOpened());
+//
+//        ArrayList<Invoice> invoicesList = new ArrayList<Invoice>();
+//        invoicesList.add(invoice1);
+//        invoicesList.add(invoice2);
+//        invoicesList.add(invoice3);
+//        Database Idata= new Database();
+//        Idata.update_invoices(invoicesList);
+//        System.out.println("Print new line:");
+////        invoice1.Save_Database();
+////        invoice2.Save_Database();
+////        invoice3.
+//        ArrayList<Invoice> retriveInvoices = Idata.retrieve_invoices();
+//
+//        InvoiceUI invUI = new InvoiceUI();
+//        System.out.println("All Invoices : ");
+//        invUI.viewAllInvoices(retriveInvoices);
+//        System.out.println("\n closed invoices: ");
+//        invUI.viewClosedInvoices(retriveInvoices);
+//        System.out.println("\n Open Invoices");
+//        invUI.viewOpenInvoices(retriveInvoices);
+//        System.out.println("Hello Wold");
+//
+//    }
 }

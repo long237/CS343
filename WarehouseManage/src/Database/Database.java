@@ -73,7 +73,7 @@ public class Database {
             // recreates invoices
            Invoice tempInvoice = new Invoice(Integer.parseInt(invoiceData[0]), invoiceData[1],
                    Boolean.parseBoolean(invoiceData[2]), Double.parseDouble(invoiceData[3]),
-                   Boolean.parseBoolean(invoiceData[4]), invoiceData[5], LocalDate.of(year,month,day));
+                   Boolean.parseBoolean(invoiceData[4]), invoiceData[5], LocalDate.of(year,month,day), Double.parseDouble(invoiceData[7]));
             // recreates products
             for (int j = 9; j < invoiceData.length; j += 3) {
                 Product tempProduct = new Product(invoiceData[j], Double.parseDouble(invoiceData[j + 1]),

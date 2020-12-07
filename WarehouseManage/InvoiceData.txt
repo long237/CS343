@@ -22,4 +22,6 @@
 22;Gold Rathian;true;7.2;true;1234 main st;2020-12-01;2000.0;Product;strawberries;10.0;200;
 23;Zinogre;true;7.5;true;1234 main st;2020-12-01;0.0;Product;
 24;AJ Fahim;true;40.0;true;100 Main st;2045-12-15;4.1979E10;Product;cat bed;2.1E7;1999;
-25;Alatreon;true;5.0;true;1234 Second st, Long Beach;2020-12-08;2500.00;Product;apple cider;100.0;20;strawberries;10.0;50;
+25;Alatreon;false;5.0;true;1234 Second st, Long Beach;2020-12-08;2253.99;Product;apple cider;100.0;20;strawberries;10.0;50;
+26;Fatalis;true;10.0;false;123 Main St, Long Beach;2020-12-05;2200.0;Product;strawberries;10.0;20;
+27;Stygian Zinogre;false;10.0;false;123 Main st, Long Beach;2020-06-06;198.0;Product;strawberries;10.0;20;
