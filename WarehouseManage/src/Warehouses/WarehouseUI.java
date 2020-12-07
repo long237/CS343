@@ -93,9 +93,9 @@ public class WarehouseUI {
         int input;
         System.out.println("\nMANAGE WAREHOUSES: \n" +
                 "\t 1. Create a Warehouse. \n" +
-//                "\t 2. Remove a Warehouse. \n" +
                 "\t 2. Manage a Warehouse. \n" +
-                "\t 3. View All Products. \n" + // xxxxx: Add this functionality
+                "\t 3. View All Products. \n" +
+                "\t 4. View Quantity-In-Stock for each Product by Warehouse.\n" +
                 "Select a menu option (Enter (-1) to exit): ");
         try {
             input = in.nextInt();
@@ -114,9 +114,7 @@ public class WarehouseUI {
                 "\t 1. Add Products. \n" +
                 "\t 2. Remove Products. \n" +
                 "\t 3. Add Product Quantity. \n" +
-                //"\t 4. View Products by Decreasing Profit Percent. \n" + (xxxxx: fix so no longer supports
                 "\t 4. View Low-In-Stock Products. \n" +
-                "\t 5. View Quantity-In-Stock for each Product by Warehouse.\n" +
                 "Select a menu option (Enter (-1) to exit): ");
         try {
             input = in.nextInt();

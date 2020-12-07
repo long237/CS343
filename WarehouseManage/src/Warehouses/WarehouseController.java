@@ -242,16 +242,6 @@ public class WarehouseController {
                             ui.printProductsWOBusinessLogic(temp);
                             ui.exitValidation();
                         }
-                        // kkkkk: (5. View Products By Increasing Quantity-In-Stock.)
-                        else if (menuOption == 5) {
-                            ArrayList<ArrayList<Product>> warehouses = getProductsFromEachWarehouse();
-                            for (ArrayList<Product> warehouse : warehouses) {
-                                Collections.sort(warehouse, new QuantityInStockComparator());
-                            }
-                            //ui.printWarehouseProducts(warehouseNumber, productsToView);
-                            ui.printWarehousesProducts(getMaxNumOfWarehouses(), warehouses);
-                            ui.exitValidation();
-                        }
                     }
                 }
             }
@@ -267,6 +257,17 @@ public class WarehouseController {
                 ui.exitValidation();
             }
             // (END of mainMenuOption == 3)
+
+            // kkkkk: (5. View Products By Increasing Quantity-In-Stock.)
+            else if (mainMenuOption == 4) {
+                ArrayList<ArrayList<Product>> warehouses = getProductsFromEachWarehouse();
+                for (ArrayList<Product> warehouse : warehouses) {
+                    Collections.sort(warehouse, new QuantityInStockComparator());
+                }
+                //ui.printWarehouseProducts(warehouseNumber, productsToView);
+                ui.printWarehousesProducts(getMaxNumOfWarehouses(), warehouses);
+                ui.exitValidation();
+            }
         }
     }
 }
