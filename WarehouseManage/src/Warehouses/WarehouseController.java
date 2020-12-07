@@ -142,7 +142,6 @@ public class WarehouseController {
                         break;
                     }
                     // kkkkk: ("WAREHOUSE 1: ")
-                    System.out.println("hello world");
                     while (menuOption != -1) { // User enters "-1" to exit / go back to "Manage Warehouse: " Window.
 
                         ArrayList<Product> warehouseToDisplay = getProducts(warehouseNumber);

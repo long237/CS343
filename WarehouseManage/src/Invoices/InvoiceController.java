@@ -88,11 +88,12 @@ public class InvoiceController {
                         System.out.println("Ok enter a closing date for the invoice: ");
                         int[] closingDate = invoiceUI.changeDateOpened();
                         in_edit.addDiscount(LocalDate.of(closingDate[0], closingDate[1], closingDate[2]));
+                        if (in_edit.getDeliveryStatus()) {
+                            in_edit.addDeliveryCharge();
+                        }
                     }
                     /**Add delivery charge to the invoice if the user want delivery **/
-                    if (in_edit.getDeliveryStatus()) {
-                        in_edit.addDeliveryCharge();
-                    }
+
                     dataBase.update_invoices(invoiceList);
                 }
             }
