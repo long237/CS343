@@ -94,8 +94,14 @@ public class Database {
         return invoices;
     }
 
+    public void update_products() {
+    }
+
+    public void retrieve_products() {
+    }
+
     // TODO: Given a Warehouse & a list of Products, rewrites that Warehouse's DB to contain those Products.
-    public void update_products(int warehouseNumber, ArrayList<Product> warehouseProducts){
+    public void update_warehouse(int warehouseNumber, ArrayList<Product> warehouseProducts){
         try {
             String filename = "Warehouse" + warehouseNumber + ".txt";
             FileWriter outfile = new FileWriter(filename, false);
@@ -117,7 +123,7 @@ public class Database {
     }
 
     // TODO: Given a Warehouse, returns a list of Products currently stored in that Warehouse.
-    public ArrayList<Product> retrieve_products(int warehouseNumber) {
+    public ArrayList<Product> retrieve_warehouse(int warehouseNumber) {
         ArrayList<Product> products = new ArrayList<Product>();
 
         File file = new File("Warehouse" + warehouseNumber + ".txt");

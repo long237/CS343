@@ -43,7 +43,7 @@ public class Product {
         this.mName = mName;
         this.mQuantityInStock = mQuantityInStock;
         this.mCost = mCost;
-        this.mTotalCost = mQuantityInStock * mCost;
+        this.mTotalCost = (mQuantityInStock + mQuantitySold) * mCost;
         this.mRetailPrice = mRetailPrice;
         this.mQuantitySold = 0;
         this.mTotalSales = 0.0;
@@ -54,7 +54,7 @@ public class Product {
         this.mName = mName;
         this.mQuantityInStock = mQuantityInStock;
         this.mCost = mCost;
-        this.mTotalCost = mQuantityInStock * mCost;
+        this.mTotalCost = (mQuantityInStock + mQuantitySold) * mCost;
         this.mRetailPrice = mRetailPrice;
         this.mQuantitySold = mQuantitySold;
         this.mTotalSales = mQuantitySold * mRetailPrice;
@@ -72,7 +72,7 @@ public class Product {
     public boolean isLowStock() { return mQuantityInStock <= 5; }
 
     public double getCost() { return mCost; }
-    public void setCost(double cost) { mCost = cost; }
+    public void setCost(double cost) { mCost = cost ; }
 
     public double getTotalCost() {
         return mTotalCost;
@@ -142,6 +142,19 @@ public class Product {
         return String.format(" %-20s %15s %15.2f %15.2f %10s %18.2f %18.2f %18.2f %17.1f%%",
                              mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold,
                              mTotalSales, mTotalCost, getTotalProfit(), getTotalProfitPercent());
+    }
+
+    public String toWarehouseString() {
+
+        // FOR FUTURE REFERENCE...
+        // "%":      1 for each variable listed.
+        // "-":      left-align (w/o -> right-align)
+        // "[int]":  # of spaces designated for each variable
+        // "s":      string
+        // "f":      float (".2f": formats floats as "0.00")
+
+        return String.format(" %-20s %15s %15.2f %15.2f %10s",
+                mName, mQuantityInStock, mCost, mRetailPrice, mQuantitySold);
     }
 
 

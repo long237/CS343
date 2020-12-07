@@ -19,10 +19,15 @@ public class WarehouseUI {
         System.out.println(getProductsTable(products));
     }
 
+    public void printProductsWOBusinessLogic(ArrayList<Product> products) {
+        System.out.println();
+        System.out.println(getProductsTableWOBusinessLogic(products));
+    }
+
     public void printWarehouseProducts(int warehouseNumber, ArrayList<Product> products) {
         System.out.println(); // XXXXX fix extra line when printing multiple warehouses
         System.out.println(" WAREHOUSE " + warehouseNumber + ": ");
-        System.out.println(getProductsTable(products));
+        System.out.println(getProductsTableWOBusinessLogic(products));
     }
 
     public void printWarehousesProducts(int maxNumOfWarehouses, ArrayList<ArrayList<Product>> allProducts) {
@@ -37,6 +42,10 @@ public class WarehouseUI {
                 "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD", "TOTAL-SALES",
                 "TOTAL-COST", "TOTAL-PROFIT", "TOTAL-PROFIT-%");
     }
+    public String getProductsTableHeaderWOBusinessLogic() {
+        return " " + String.format("%-20s %15s %15s %15s %10s",
+                "PRODUCT-NAME", "#-IN-STOCK", "COST", "RETAIL-PRICE", "#-SOLD");
+    }
     public String getProductsTable(ArrayList<Product> products) {
         StringBuilder productsTable = new StringBuilder();
         String header = getProductsTableHeader();
@@ -44,6 +53,17 @@ public class WarehouseUI {
         productsTable.append("\n");
         for (Product product : products) {
             productsTable.append(product.toString());
+            productsTable.append("\n");
+        }
+        return productsTable.toString();
+    }
+    public String getProductsTableWOBusinessLogic(ArrayList<Product> products) {
+        StringBuilder productsTable = new StringBuilder();
+        String header = getProductsTableHeaderWOBusinessLogic();
+        productsTable.append(header);
+        productsTable.append("\n");
+        for (Product product : products) {
+            productsTable.append(product.toWarehouseString());
             productsTable.append("\n");
         }
         return productsTable.toString();
@@ -75,6 +95,7 @@ public class WarehouseUI {
                 "\t 1. Create a Warehouse. \n" +
 //                "\t 2. Remove a Warehouse. \n" +
                 "\t 2. Manage a Warehouse. \n" +
+                "\t 3. View All Products. \n" + // xxxxx: Add this functionality
                 "Select a menu option (Enter (-1) to exit): ");
         try {
             input = in.nextInt();
@@ -93,9 +114,9 @@ public class WarehouseUI {
                 "\t 1. Add Products. \n" +
                 "\t 2. Remove Products. \n" +
                 "\t 3. Add Product Quantity. \n" +
-                "\t 4. View Products by Decreasing Profit Percent. \n" +
-                "\t 5. View Low-In-Stock Products. \n" +
-                "\t 6. View Quantity-In-Stock for each Product by Warehouse.\n" +
+                //"\t 4. View Products by Decreasing Profit Percent. \n" + (xxxxx: fix so no longer supports
+                "\t 4. View Low-In-Stock Products. \n" +
+                "\t 5. View Quantity-In-Stock for each Product by Warehouse.\n" +
                 "Select a menu option (Enter (-1) to exit): ");
         try {
             input = in.nextInt();
