@@ -1,6 +1,7 @@
 package Invoices;
 import Database.Database;
 import Products.Product;
+import Salespeople.Salesperson;
 import Warehouses.WarehouseController;
 import Warehouses.WarehouseUI;
 import Customers.Customer;
@@ -19,7 +20,6 @@ public class InvoiceController {
         InvoiceUI invoiceUI = new InvoiceUI();
         Database dataBase = new Database();
         WarehouseController warehouseCon = new WarehouseController();
-
         Scanner scanner = new Scanner(System.in);
 
 
@@ -142,6 +142,17 @@ public class InvoiceController {
         return c_name;
     }
 
+    public String getSaleName(){
+        String s_name = invoiceUI.getSalePersonName();
+        boolean exist = checkSaleperson(s_name);
+        //Check to see if the saleperson exist, if doesn't ask again.
+        while(s_name.equals("-2") || !exist){
+            s_name = invoiceUI.getSalePersonName();
+            exist = checkSaleperson(s_name);
+        }
+        return s_name;
+    }
+
     public double getTax(){
         double tax_input = -2;
         while (tax_input == -2 || tax_input < 0){
@@ -201,6 +212,7 @@ public class InvoiceController {
         ArrayList<Customer> customerList = dataBase.retrieve_Customer();
 
         String incName = getcName();
+        String salePName = getSaleName();
         double taxRate = -1;
         //Check to see if the customer name already exist in the database
         int cIndex = isInCData(incName, customerList);
@@ -331,6 +343,18 @@ public class InvoiceController {
 
     public ArrayList<Product> getProducts(int warehouseNumber) {
         return dataBase.retrieve_warehouse(warehouseNumber);
+    }
+
+    //Return true if saleperson exist, false if does not exist
+    public boolean checkSaleperson(String saleperson){
+        ArrayList<Salesperson> sList = dataBase.retrieve_salesPerson();
+        for (Salesperson sPerson : sList){
+            String sNametemp = sPerson.getSalespersonName().toLowerCase();
+            if (sNametemp.equals(saleperson.toLowerCase())){
+                    return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) throws IOException {

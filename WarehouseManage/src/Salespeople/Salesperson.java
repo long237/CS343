@@ -8,7 +8,8 @@ public class Salesperson {
     private String mSalespersonName;
     private double mSalespersonCommission;
     private int mSalespersonID;
-    private int mTotalSales;
+    private double mTotalSales;
+    private double mSalary = -1;
 
     public Salesperson(){
         this.mSalespersonName = "John Doe";
@@ -22,11 +23,21 @@ public class Salesperson {
         this.mSalespersonCommission = mSalespersonCommission;
     }
 
-    public Salesperson(String mSalespersonName, int mSalespersonID, double mSalespersonCommission, int mTotalSales) {
+    /**Use in controller when add new sale person**/
+    public Salesperson(String mSalespersonName, int mSalespersonID, double mSalespersonCommission, double mTotalSales) {
         this.mSalespersonName = mSalespersonName;
         this.mSalespersonID = mSalespersonID;
         this.mSalespersonCommission = mSalespersonCommission;
         this.mTotalSales = mTotalSales;
+    }
+
+    /**For use in the Database when retrieve **/
+    public Salesperson(String mSalespersonName, int mSalespersonID, double mSalespersonCommission, double mTotalSales, double mSalary) {
+        this.mSalespersonName = mSalespersonName;
+        this.mSalespersonCommission = mSalespersonCommission;
+        this.mSalespersonID = mSalespersonID;
+        this.mTotalSales = mTotalSales;
+        this.mSalary = mSalary;
     }
 
     public String getSalespersonName() {
@@ -53,12 +64,24 @@ public class Salesperson {
         this.mSalespersonID = mSalespersonID;
     }
 
-    public int getTotalSales() {
+    public double getTotalSales() {
         return mTotalSales;
     }
 
     public void setTotalSales(int mTotalSales) {
         this.mTotalSales = mTotalSales;
+    }
+
+    public double getmSalary() {
+        return mSalary;
+    }
+
+    public void addSales(double mSale){
+        this.mTotalSales = this.mTotalSales + mSale;
+    }
+
+    public void calSalary(){
+        mSalary = mTotalSales * mSalespersonCommission / 100;
     }
 
     @Override

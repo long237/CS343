@@ -230,11 +230,11 @@ public class Database {
             //adds the original list
             for (Salesperson person : employeeList){
                 printWriter.println(person.getSalespersonName() + ";" + person.getSalespersonID() + ";"
-                        + person.getSalespersonCommission() + ";" + person.getTotalSales());
+                        + person.getSalespersonCommission() + ";" + person.getTotalSales() + ";" + person.getmSalary());
             }
             //adds the new person
             printWriter.println(sp.getSalespersonName() + ";" + sp.getSalespersonID() + ";"
-                    + sp.getSalespersonCommission() + ";" + sp.getTotalSales());
+                    + sp.getSalespersonCommission() + ";" + sp.getTotalSales() + ";" + sp.getmSalary());
 
             printWriter.close();
             outfile.close();
@@ -267,7 +267,7 @@ public class Database {
     }
 
     /** Add saleperson info to data and overwrite previous value in database, NOT APPEND**/
-    //format database: name;ID;commision;totalsales
+    //format database: name;ID;commision;totalsales;Salary
     public void update_Saleperson(ArrayList<Salesperson> employeeList) {
         try{
             FileWriter outfile = new FileWriter("SalepersonData.txt");
@@ -275,7 +275,7 @@ public class Database {
 
             for (Salesperson person : employeeList){
                 printWriter.println(person.getSalespersonName() + ";" + person.getSalespersonID() + ";"
-                        + person.getSalespersonCommission() + ";" + person.getTotalSales());
+                        + person.getSalespersonCommission() + ";" + person.getTotalSales() + ";" + person.getmSalary());
             }
             printWriter.close();
             outfile.close();
@@ -305,7 +305,8 @@ public class Database {
         for (int i = 0; i < salesPeopleData.size(); i++) {
             String[] singleSalesPerson = salesPeopleData.get(i).split(";");
             salespeople.add(new Salesperson(singleSalesPerson[0], Integer.parseInt(singleSalesPerson[1]),
-                    Double.parseDouble(singleSalesPerson[2]), Integer.parseInt(singleSalesPerson[3])));
+                    Double.parseDouble(singleSalesPerson[2]), Double.parseDouble(singleSalesPerson[3]),
+                    Double.parseDouble(singleSalesPerson[4])));
         }
         return salespeople;
     }

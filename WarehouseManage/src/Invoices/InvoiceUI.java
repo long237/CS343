@@ -102,6 +102,19 @@ public class InvoiceUI {
         }
     }
 
+    public String getSalePersonName() {
+        Scanner in = new Scanner(System.in);
+        String newName = "";
+        System.out.println("What is the name of the Saleperson? ");
+        try{
+            newName = in.nextLine();
+            return (newName);
+        } catch (Exception e) {
+            System.out.println("Invalid input, please try again.");
+            return "-2";
+        }
+    }
+
     public double editTaxRate() {
         Scanner in = new Scanner(System.in);
         System.out.println("What is the new tax rate of the customer? ");
