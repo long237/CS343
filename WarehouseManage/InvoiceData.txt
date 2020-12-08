@@ -25,3 +25,5 @@
 25;Alatreon;false;5.0;true;1234 Second st, Long Beach;2020-12-08;2253.99;Product;apple cider;100.0;20;strawberries;10.0;50;
 26;Fatalis;true;10.0;false;123 Main St, Long Beach;2020-12-05;2200.0;Product;strawberries;10.0;20;
 27;Stygian Zinogre;false;10.0;false;123 Main st, Long Beach;2020-06-06;198.0;Product;strawberries;10.0;20;
+28;Fatalis;true;10.0;false;1234 Third st, Long Beach;2020-12-08;220.0;Product;strawberries;10.0;20;
+29;Fatalis;true;10.0;false;678 Valley st, Riverside;2020-12-08;220.0;Product;strawberries;10.0;20;

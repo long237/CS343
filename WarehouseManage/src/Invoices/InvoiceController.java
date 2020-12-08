@@ -5,6 +5,8 @@ import Salespeople.Salesperson;
 import Warehouses.WarehouseController;
 import Warehouses.WarehouseUI;
 import Customers.Customer;
+
+import javax.net.ssl.SSLEngineResult;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class InvoiceController {
         while (menu_op != -1) {
             ArrayList<Invoice> invoiceList = Database.retrieve_invoices();
             ArrayList<Product> productList = warehouseCon.getAllProducts();
+            ArrayList<Salesperson> salePersonList = dataBase.retrieve_salesPerson();
 
             int largestID = invoiceList.get(invoiceList.size() - 1).getInvoiceId();
             menu_op = invoiceUI.invoiceMenu();            //Display the menu and ask for an option
@@ -116,9 +119,10 @@ public class InvoiceController {
 
             else if (menu_op == 3){             //3.Add invoice.
                 System.out.println("Add Invoice submenu: ");
-                Invoice inputInvoice = addInvoice(largestID, productList);
+                Invoice inputInvoice = addInvoice(largestID, productList, salePersonList);
                 invoiceList.add(inputInvoice);
                 dataBase.update_invoices(invoiceList);                  //update the database with new invoice
+                dataBase.update_Saleperson(salePersonList);             //Update the database with new sale and salary
             }
 
 
@@ -207,12 +211,14 @@ public class InvoiceController {
         return date;
     }
 
-    public Invoice addInvoice(int largestID, ArrayList<Product> productList) throws IOException {
+    public Invoice addInvoice(int largestID, ArrayList<Product> productList, ArrayList<Salesperson> salePersonList) throws IOException {
 
         ArrayList<Customer> customerList = dataBase.retrieve_Customer();
 
         String incName = getcName();
         String salePName = getSaleName();
+        //Get the salePerson to add in the sale value
+        Salesperson salePerson = salePersonList.get(findSaleperson(salePersonList, salePName));
         double taxRate = -1;
         //Check to see if the customer name already exist in the database
         int cIndex = isInCData(incName, customerList);
@@ -238,6 +244,9 @@ public class InvoiceController {
             doneAddingProducts = invoiceUI.addMoreProducts();
         }
         inputInvoice.calCost();
+        //Add the sale money to the saleperson
+        salePerson.addSales(inputInvoice.getTotalCost());
+        salePerson.calSalary();
 
         return inputInvoice;
     }
@@ -355,6 +364,16 @@ public class InvoiceController {
             }
         }
         return false;
+    }
+
+    public int findSaleperson(ArrayList<Salesperson> saleList, String salepersonName){
+        for (int i = 0; i < saleList.size(); i++) {
+            String sNametemp = saleList.get(i).getSalespersonName().toLowerCase();
+            if (sNametemp.equals(salepersonName.toLowerCase())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static void main(String[] args) throws IOException {
