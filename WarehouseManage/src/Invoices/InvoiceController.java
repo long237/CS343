@@ -2,6 +2,7 @@ package Invoices;
 import Database.Database;
 import Products.Product;
 import Salespeople.Salesperson;
+import Salespeople.SalespersonUI;
 import Warehouses.WarehouseController;
 import Warehouses.WarehouseUI;
 import Customers.Customer;
@@ -17,14 +18,13 @@ public class InvoiceController {
     InvoiceUI invoiceUI = new InvoiceUI();
     Database dataBase = new Database();
     WarehouseUI warehouseUI = new WarehouseUI();
+    SalespersonUI salespersonUI = new SalespersonUI();
 
     public void Icontroller () throws IOException {
         InvoiceUI invoiceUI = new InvoiceUI();
         Database dataBase = new Database();
         WarehouseController warehouseCon = new WarehouseController();
         Scanner scanner = new Scanner(System.in);
-
-
 
         int menu_op = 0;
         while (menu_op != -1) {
@@ -216,6 +216,7 @@ public class InvoiceController {
         ArrayList<Customer> customerList = dataBase.retrieve_Customer();
 
         String incName = getcName();
+        salespersonUI.viewSalesperson(salePersonList);
         String salePName = getSaleName();
         //Get the salePerson to add in the sale value
         Salesperson salePerson = salePersonList.get(findSaleperson(salePersonList, salePName));
@@ -236,7 +237,7 @@ public class InvoiceController {
         String deliAddress = getAddress();
         //int[] dateValue = getDate();
         LocalDate dateOpen = getDate();
-        Invoice inputInvoice = new Invoice(largestID + 1, incName, taxRate, deliStat, deliAddress, dateOpen);
+        Invoice inputInvoice = new Invoice(largestID + 1, incName, taxRate, deliStat, deliAddress, dateOpen, salePName);
         boolean doneAddingProducts = true;
 
         while (doneAddingProducts) {
@@ -247,6 +248,7 @@ public class InvoiceController {
         //Add the sale money to the saleperson
         salePerson.addSales(inputInvoice.getTotalCost());
         salePerson.calSalary();
+        inputInvoice.calCostWithTax();
 
         return inputInvoice;
     }

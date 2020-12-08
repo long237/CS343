@@ -280,17 +280,18 @@ public class InvoiceUI {
 //                    num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
 //                    tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
 //                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased());
-            System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s \n",
+            System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s %18s %35s \n",
                     num, tempInvoice.getInvoiceId(), tempInvoice.getDateOpened(), tempInvoice.getInvoiceStatus(),
                     tempInvoice.getCustomerName(), tempInvoice.getTotalCost(), tempInvoice.getTaxRate(),
-                    tempInvoice.getDeliveryStatus(),tempInvoice.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
+                    tempInvoice.getDeliveryStatus(),tempInvoice.getAddress(), tempInvoice. getmSalePName(),
+                    tempInvoice.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
         }
     }
 
     public String getInvoiceTableHeader() {
-        return String.format("%-5s %15s %15s %15s %20s %18s %18s %18s %25s",
-                "#", "INVOICE ID", "DATE OPEN", "STATUS", "#CUSTOMER", "AMOUNT", "TAX RATE", "DELIVERY",
-                "PRODUCT");
+        return String.format("%-5s %15s %15s %15s %20s %18s %18s %18s %35s %18s %35s",
+                "#", "INVOICE ID", "DATE OPEN", "STATUS", "#CUSTOMER", "AMOUNT", "TAX RATE", "DELIVERY", "ADDRESS",
+                "SALEPERSON","PRODUCT");
     }
 
 //    public void viewOpenInvoices (ArrayList<Invoice> invoices){
@@ -312,10 +313,11 @@ public class InvoiceUI {
         for (int i = 0; i < invoices.size(); i++){
             Invoice inv = invoices.get(i);
             if (inv.getInvoiceStatus() == true) {
-                System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s \n",
+                System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s %18s %35s \n",
                         i + 1, inv.getInvoiceId(), inv.getDateOpened(), inv.getInvoiceStatus(),
                         inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
-                        inv.getDeliveryStatus(),inv.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
+                        inv.getDeliveryStatus(), inv.getAddress(), inv.getmSalePName(),
+                        inv.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
             }
 
         }
@@ -332,10 +334,11 @@ public class InvoiceUI {
         for (int i = 0; i < invoices.size(); i++){
             Invoice inv = invoices.get(i);
             if (inv.getInvoiceStatus() == false) {
-                System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s \n",
+                System.out.printf("%-5s %15s %15s %15s %20s %18s %18s %18s %35s %18s %35s \n",
                         i + 1, inv.getInvoiceId(), inv.getDateOpened(), inv.getInvoiceStatus(),
                         inv.getCustomerName(), inv.getTotalCost(), inv.getTaxRate(),
-                        inv.getDeliveryStatus(),inv.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
+                        inv.getDeliveryStatus(), inv.getAddress(),inv.getmSalePName(),
+                        inv.getProductsPurchased().stream().map(Product::getName).collect(Collectors.joining(", ")));
             }
         }
     }
@@ -353,6 +356,6 @@ public class InvoiceUI {
     }
 
     public void noProduct(){
-        System.out.print("Product does not exist");
+        System.out.println("Product does not exist");
     }
 }

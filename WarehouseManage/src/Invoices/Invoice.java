@@ -23,6 +23,7 @@ public class Invoice {
     private HashSet<Product> mProductsPurchased;
     private double totalCost = 0;
     private LocalDate mDateOpened;
+    private String mSalePName = "John Doe";
 
 
     public Invoice() {
@@ -34,11 +35,12 @@ public class Invoice {
         this.mAddress = "1234 address";
         this.mProductsPurchased = new HashSet<Product>();
         this.mDateOpened = LocalDate.of(2020,2,22);
+        this.mSalePName = "John Doe";
     }
 
     /**Temporary constructor for adding invoice without the product list **/
     public Invoice(int mInvoiceId, String mCustomerName, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress, LocalDate mDateOpened) {
+                   boolean mDeliveryStatus, String mAddress, LocalDate mDateOpened, String mSalePName) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = true;
@@ -47,10 +49,11 @@ public class Invoice {
         this.mAddress = mAddress;
         this.mProductsPurchased = new HashSet<Product>();
         this.mDateOpened = mDateOpened;
+        this.mSalePName = mSalePName;
     }
 
     public Invoice(int mInvoiceId, String mCustomerName, boolean mInvoiceStatus, double mTaxRate,
-                   boolean mDeliveryStatus, String mAddress, LocalDate dateOpened, double totalCost) {
+                   boolean mDeliveryStatus, String mAddress, LocalDate dateOpened, double totalCost, String mSalePName) {
         this.mInvoiceId = mInvoiceId;
         this.mCustomerName = mCustomerName;
         this.mInvoiceStatus = mInvoiceStatus;
@@ -60,6 +63,7 @@ public class Invoice {
         this.mProductsPurchased = new HashSet<Product>();
         this.mDateOpened = dateOpened;
         this.totalCost = totalCost;
+        this.mSalePName = mSalePName;
     }
 
     public int getInvoiceId() {
@@ -89,6 +93,14 @@ public class Invoice {
     public LocalDate getDateOpened() { return mDateOpened; }
 
     public double getTotalCost() { return  totalCost; }
+
+    public String getmSalePName() {
+        return mSalePName;
+    }
+
+    public void setmSalePName(String mSalePName) {
+        this.mSalePName = mSalePName;
+    }
 
     public HashSet<Product> getProductsPurchased() {
         return mProductsPurchased;
@@ -150,7 +162,11 @@ public class Invoice {
             this.totalCost += product.getRetailPrice() * product.getQuantitySold();
         }
         //After tax:
-        this.totalCost = totalCost + (totalCost * mTaxRate / 100.0);
+        //this.totalCost = Math.round((totalCost + (totalCost * mTaxRate / 100.0)) * 100.0) / 100.0;
+    }
+
+    public void calCostWithTax(){
+        this.totalCost = Math.round((totalCost + (totalCost * mTaxRate / 100.0)) * 100.0) / 100.0;
     }
 
     public void Save_Database (){
@@ -188,13 +204,13 @@ public class Invoice {
         int distanceInDays = (year * 365) + (month * 30) + day;
 
         if (distanceInDays <= 10) {
-            totalCost = totalCost - (totalCost * .10);
+            totalCost = Math.round((totalCost - (totalCost * .10)) * 100.0) / 100.0;
             System.out.println("Distance in days is less than 30: " + distanceInDays);
         }
         else if (distanceInDays > 30) {
             int month_late = distanceInDays / 30;           //Multiplier or run time.
             for (int i = 0; i < month_late; i++) {
-                this.totalCost = totalCost + (totalCost * 0.02);
+                this.totalCost = Math.round((totalCost + (totalCost * 0.02)) * 100.0) / 100.0;
             }
         }
     }

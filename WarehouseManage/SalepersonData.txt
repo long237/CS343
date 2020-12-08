@@ -4,4 +4,5 @@ John Jamison;98765;12.0;12.0;0.0
 Alexia Jones;123456;12.0;12.0;0.0
 James Smith;14270;12.0;15.0;0.0
 Stygian Zinogre;45678;10.0;60.0;0.0
-Nergigante;1234;10.0;440.0;44.0
+Nergigante;1234;10.0;1073.0;107.3
+Deviljho;6789;7.7;220.0;16.94

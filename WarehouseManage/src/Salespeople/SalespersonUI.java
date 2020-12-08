@@ -137,9 +137,19 @@ public class SalespersonUI {
 
     public void viewSalesperson(ArrayList<Salesperson> salesTeam) {
         //format later
+        System.out.println(getSalePersonTableHeader());
         for (int i = 0; i < salesTeam.size(); i++) {
-            System.out.println((i+ 1) + " " + salesTeam.get(i));
+            //System.out.println((i+ 1) + " " + salesTeam.get(i));
+            Salesperson sPerson = salesTeam.get(i);
+            System.out.printf("%-5s %20s %15s %15s %15s %15s \n",
+                    (i + 1), sPerson.getSalespersonName(), sPerson.getSalespersonCommission(), sPerson.getSalespersonID()
+                    , sPerson.getTotalSales(), sPerson.getmSalary());
         }
+    }
+
+    public String getSalePersonTableHeader() {
+        return String.format("%-5s %20s %15s %15s %15s %15s",
+                "#","NAME", "COMMISION RATE", "ID", "TOTAL SALES", "SALARY");
     }
 
     public ArrayList<String> addSalesperson() {

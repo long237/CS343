@@ -81,13 +81,13 @@ public class Salesperson {
     }
 
     public void calSalary(){
-        mSalary = mTotalSales * mSalespersonCommission / 100;
+        mSalary = Math.round(mTotalSales * mSalespersonCommission / 100.0 * 100.0)/ 100.0;
     }
 
     @Override
     public String toString() {
         return ("Name: " + mSalespersonName + ", Commission Rate: " +
-                mSalespersonCommission + ", ID: " + mSalespersonID + ", Total Sales: " + mTotalSales);
+                mSalespersonCommission + ", ID: " + mSalespersonID + ", Total Sales: " + mTotalSales + ", Salary: " + mSalary);
     }
 
     //fixme: main for testing saving person to database
